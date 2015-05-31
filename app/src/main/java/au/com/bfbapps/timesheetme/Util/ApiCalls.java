@@ -1,5 +1,9 @@
 package au.com.bfbapps.timesheetme.Util;
 
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
+
 import java.util.Map;
 
 import retrofit.Callback;
@@ -43,7 +47,7 @@ public class ApiCalls {
 
 	public interface RegisterInterface {
 		@POST(API_FILE)
-		void register(@Body Map<String, String> params, Callback<String> message);
+		void register(@Body Map<String, String> params, Callback<JsonObject> message);
 	}
 	//endregion
 
@@ -59,7 +63,7 @@ public class ApiCalls {
 
 	public interface LoginInterface {
 		@POST(API_FILE)
-		void login(@Body Map<String, String> params, Callback<String> message);
+		void login(@Body Map<String, String> params, Callback<JsonObject> message);
 	}
 	//endregion
 }

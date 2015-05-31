@@ -4,6 +4,15 @@
                 android:layout_height="match_parent"
               android:orientation="vertical"
                 tools:context="au.com.bfbapps.timesheetme.UI.loginregister.LoginRegisterActivity">
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/primaryColor"
+        android:text="TimesheetMe"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textColor="@color/textIcons"/>
 
     <au.com.bfbapps.timesheetme.Util.SlidingTabLayout
         android:id="@+id/tabs"

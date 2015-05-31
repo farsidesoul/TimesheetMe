@@ -1,5 +1,6 @@
 package au.com.bfbapps.timesheetme.UI.loginregister;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,11 +11,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import au.com.bfbapps.timesheetme.R;
+import au.com.bfbapps.timesheetme.UI.MainActivity;
 import au.com.bfbapps.timesheetme.Util.ApiCalls;
+import au.com.bfbapps.timesheetme.Util.ResponseChecker;
+import au.com.bfbapps.timesheetme.models.User;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -25,6 +35,7 @@ public class LoginFragment extends Fragment {
 	private EditText mUsernameEditText;
 	private EditText mPasswordEditText;
 	private Button mLoginButton;
+	private User mUser;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,17 +70,33 @@ public class LoginFragment extends Fragment {
 
 		ApiCalls.getLoginInterface()
 				.login(params,
-						new Callback<String>() {
+						new Callback<JsonObject>() {
 							@Override
-							public void success(String s, Response response) {
-								Log.d("LOGIN", response.toString());
+							public void success(JsonObject s, Response response) {
+
+								if (!ResponseChecker.CheckForErrorInResponse(s)) {
+									mUser = createUser(s);
+									Log.d("USER", mUser.getFirstName());
+									Intent intent = new Intent(getActivity(), MainActivity.class);
+									intent.putExtra("user", mUser);
+									startActivity(intent);
+								} else {
+									Toast.makeText(getActivity(),
+											ResponseChecker.GetErrorMessage(s),
+											Toast.LENGTH_SHORT).show();
+								}
 							}
 
 							@Override
 							public void failure(RetrofitError error) {
-								Log.d("LOGIN", error.toString());
-
+								Toast.makeText(getActivity(), "Cannot connect to server.", Toast.LENGTH_SHORT).show();
 							}
 						});
+	}
+
+	private static User createUser(JsonObject s){
+		Gson gson = new Gson();
+		JsonElement user = s.get("user");
+		return gson.fromJson(user, User.class);
 	}
 }

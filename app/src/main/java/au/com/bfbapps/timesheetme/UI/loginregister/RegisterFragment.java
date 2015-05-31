@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,10 +43,9 @@ public class RegisterFragment extends Fragment {
 		params.put("email", "Bilbo@bilbo.com");
 		params.put("organisation", "1");
 		ApiCalls.getRegisterInterface()
-				.register(params, new Callback<String>() {
+				.register(params, new Callback<JsonObject>() {
 					@Override
-					public void success(String s, Response response) {
-						Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+					public void success(JsonObject s, Response response) {
 					}
 
 					@Override
