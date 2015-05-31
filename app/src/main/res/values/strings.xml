@@ -8,4 +8,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_closed">Closed</string>
+    <string name="title_activity_login_register">LoginRegisterActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

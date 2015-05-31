@@ -2,6 +2,7 @@ package au.com.bfbapps.timesheetme.UI.loginregister;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,38 +34,21 @@ public class LoginFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState){
-		View rootView = inflater.inflate(R.layout.activity_login, container, false);
+		View rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
 		mUsernameEditText = (EditText)rootView.findViewById(R.id.login_username_editText);
 		mPasswordEditText = (EditText)rootView.findViewById(R.id.login_password_editText);
 		mLoginButton = (Button)rootView.findViewById(R.id.login_login_button);
+		mLoginButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				login(mUsernameEditText.getText().toString(),
+						mPasswordEditText.getText().toString());
+
+			}
+		});
 
 		return rootView;
-	}
-
-
-
-	private void register(){
-		Map<String, String> params = new HashMap<>();
-		params.put("tag", "register");
-		params.put("firstName", "Bilbo");
-		params.put("lastName", "Baggins");
-		params.put("username", "c");
-		params.put("password", "b");
-		params.put("email", "Bilbo@bilbo.com");
-		params.put("organisation", "1");
-		ApiCalls.getRegisterInterface()
-				.register(params, new Callback<String>() {
-					@Override
-					public void success(String s, Response response) {
-						Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
-					}
-
-					@Override
-					public void failure(RetrofitError error) {
-
-					}
-				});
 	}
 
 	private void login(String username, String password){
@@ -78,11 +62,12 @@ public class LoginFragment extends Fragment {
 						new Callback<String>() {
 							@Override
 							public void success(String s, Response response) {
-								Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+								Log.d("LOGIN", response.toString());
 							}
 
 							@Override
 							public void failure(RetrofitError error) {
+								Log.d("LOGIN", error.toString());
 
 							}
 						});
