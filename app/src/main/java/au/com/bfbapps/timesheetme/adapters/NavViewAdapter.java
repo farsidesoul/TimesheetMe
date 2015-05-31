@@ -7,13 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
-import au.com.bfbapps.timesheetme.ui.navdrawer.NavDrawerItem;
+import au.com.bfbapps.timesheetme.UI.navdrawer.NavDrawerItem;
 
 public class NavViewAdapter extends RecyclerView.Adapter<NavViewAdapter.NavItemViewHolder> {
 

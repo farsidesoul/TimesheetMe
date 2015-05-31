@@ -1,4 +1,4 @@
-package au.com.bfbapps.timesheetme.ui.loginregister;
+package au.com.bfbapps.timesheetme.UI.loginregister;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

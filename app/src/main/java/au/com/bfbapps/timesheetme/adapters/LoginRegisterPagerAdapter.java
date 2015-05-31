@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import au.com.bfbapps.timesheetme.ui.loginregister.LoginFragment;
+import au.com.bfbapps.timesheetme.UI.loginregister.LoginFragment;
 
 public class LoginRegisterPagerAdapter extends FragmentPagerAdapter {
 	public LoginRegisterPagerAdapter(FragmentManager fm) {

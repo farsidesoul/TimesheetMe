@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import au.com.bfbapps.timesheetme.R;
+import au.com.bfbapps.timesheetme.UI.navdrawer.NavigationDrawerFragment;
 
 
 public class MainActivity extends ActionBarActivity {

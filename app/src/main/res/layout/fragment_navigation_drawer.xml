@@ -1,9 +1,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="#eee"
-             tools:context="au.com.bfbapps.timesheetme.NavigationDrawerFragment">
+                tools:context="au.com.bfbapps.timesheetme.UI.navdrawer.NavigationDrawerFragment">
 
+    <ImageView
+        android:id="@+id/containerDrawerImage"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/nav_drawer_image"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/nav_drawer_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/containerDrawerImage"/>
 
 </RelativeLayout>

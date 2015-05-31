@@ -1,4 +1,4 @@
-package au.com.bfbapps.timesheetme.ui.navdrawer;
+package au.com.bfbapps.timesheetme.UI.navdrawer;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,18 +6,24 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
+import au.com.bfbapps.timesheetme.adapters.NavViewAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NavigationDrawerFragment extends Fragment {
+public class NavigationDrawerFragment extends Fragment implements NavViewAdapter.ClickListener {
 
 	public static final String PREF_FILE_NAME = "pref";
 	public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
@@ -25,6 +31,7 @@ public class NavigationDrawerFragment extends Fragment {
 	private RecyclerView mRecyclerView;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private DrawerLayout mDrawerLayout;
+	private NavViewAdapter mNavViewAdapter;
 
 	private boolean mUserLearnedDrawer;
 	private boolean mFromSavedInstanceState;
@@ -51,9 +58,30 @@ public class NavigationDrawerFragment extends Fragment {
 		View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
 
 		mRecyclerView = (RecyclerView)layout.findViewById(R.id.nav_drawer_list);
+		mNavViewAdapter = new NavViewAdapter(getActivity(), getNavItems());
+		mNavViewAdapter.setClickListener(this);
+		mRecyclerView.setAdapter(mNavViewAdapter);
+		mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 		// Inflate the layout for this fragment
 		return layout;
+	}
+
+	public static List<NavDrawerItem> getNavItems(){
+		List<NavDrawerItem> data = new ArrayList<>();
+		int[] icons = {R.mipmap.ic_home_black_48dp,
+				R.mipmap.ic_assessment_black_48dp,
+				R.mipmap.ic_get_app_black_48dp,
+				R.mipmap.ic_input_black_48dp};
+
+		String[] titles = {"Home", "Review", "Download", "Logout"};
+
+		for (int i = 0; i< titles.length && i < icons.length; i++){
+			NavDrawerItem currentItem = new NavDrawerItem(icons[i], titles[i]);
+			data.add(currentItem);
+		}
+
+		return data;
 	}
 	
 	
@@ -111,5 +139,12 @@ public class NavigationDrawerFragment extends Fragment {
 		SharedPreferences sharedPreferences =
 				context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
 		return sharedPreferences.getString(preferenceName, defaultValue);
+	}
+
+	@Override
+	public void itemClicked(View view, int position) {
+		// depending on position clicked, start relevant activity
+
+		Toast.makeText(getActivity(), "Clicked item at position: " + position, Toast.LENGTH_SHORT).show();
 	}
 }

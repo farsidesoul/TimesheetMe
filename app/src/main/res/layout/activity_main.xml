@@ -7,15 +7,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <include
-            android:id="@+id/app_bar"
-            layout="@layout/app_bar"/>
-
-    </RelativeLayout>
 
     <fragment
         android:id="@+id/fragment_navigation_drawer"
@@ -23,7 +14,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:layout="@layout/fragment_navigation_drawer"
-        android:name="au.com.bfbapps.timesheetme.NavigationDrawerFragment"
+        android:name="au.com.bfbapps.timesheetme.UI.navdrawer.NavigationDrawerFragment"
         tools:layout="@layout/fragment_navigation_drawer"/>
 
 </android.support.v4.widget.DrawerLayout>
