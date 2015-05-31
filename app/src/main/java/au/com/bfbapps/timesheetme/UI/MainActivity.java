@@ -1,4 +1,4 @@
-package au.com.bfbapps.timesheetme;
+package au.com.bfbapps.timesheetme.UI;
 
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import au.com.bfbapps.timesheetme.R;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -15,7 +17,7 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_main_appbar);
 
 		mToolbar = (Toolbar)findViewById(R.id.app_bar);
 		setSupportActionBar(mToolbar);

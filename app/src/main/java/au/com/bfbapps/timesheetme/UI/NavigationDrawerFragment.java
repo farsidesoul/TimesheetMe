@@ -1,4 +1,4 @@
-package au.com.bfbapps.timesheetme;
+package au.com.bfbapps.timesheetme.UI;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import au.com.bfbapps.timesheetme.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +22,7 @@ public class NavigationDrawerFragment extends Fragment {
 	public static final String PREF_FILE_NAME = "pref";
 	public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
 
+	private RecyclerView mRecyclerView;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private DrawerLayout mDrawerLayout;
 
@@ -44,8 +48,12 @@ public class NavigationDrawerFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
+		View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+
+		mRecyclerView = (RecyclerView)layout.findViewById(R.id.nav_drawer_list);
+
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+		return layout;
 	}
 	
 	

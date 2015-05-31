@@ -1,10 +1,8 @@
-package au.com.bfbapps.timesheetme;
+package au.com.bfbapps.timesheetme.ui.loginregister;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -14,6 +12,7 @@ import android.widget.Toast;
 import java.util.HashMap;
 import java.util.Map;
 
+import au.com.bfbapps.timesheetme.R;
 import au.com.bfbapps.timesheetme.Util.ApiCalls;
 import retrofit.Callback;
 import retrofit.RetrofitError;

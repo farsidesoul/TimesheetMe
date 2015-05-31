@@ -1,11 +1,10 @@
 package au.com.bfbapps.timesheetme.adapters;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import au.com.bfbapps.timesheetme.LoginFragment;
+import au.com.bfbapps.timesheetme.ui.loginregister.LoginFragment;
 
 public class LoginRegisterPagerAdapter extends FragmentPagerAdapter {
 	public LoginRegisterPagerAdapter(FragmentManager fm) {
