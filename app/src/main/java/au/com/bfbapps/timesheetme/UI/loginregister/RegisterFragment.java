@@ -5,7 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.gson.JsonObject;
 
@@ -19,6 +20,13 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class RegisterFragment extends Fragment {
+
+	private EditText mEmailEditText;
+	private EditText mUserNameEditText;
+	private EditText mPasswordEditText;
+	private EditText mPasswordConfirmEditText;
+	private Button mRegisterButton;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -29,6 +37,18 @@ public class RegisterFragment extends Fragment {
 	                         Bundle savedInstanceState){
 		View rootView = inflater.inflate(R.layout.fragment_register, container, false);
 
+		mEmailEditText = (EditText)rootView.findViewById(R.id.register_email);
+		mUserNameEditText = (EditText)rootView.findViewById(R.id.register_username);
+		mPasswordEditText = (EditText)rootView.findViewById(R.id.register_password);
+		mPasswordConfirmEditText = (EditText)rootView.findViewById(R.id.register_password_confirm);
+
+		mRegisterButton = (Button)rootView.findViewById(R.id.register_register_button);
+		mRegisterButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+
+			}
+		});
 
 		return rootView;
 	}
@@ -36,12 +56,9 @@ public class RegisterFragment extends Fragment {
 	private void register(){
 		Map<String, String> params = new HashMap<>();
 		params.put("tag", "register");
-		params.put("firstName", "Bilbo");
-		params.put("lastName", "Baggins");
-		params.put("username", "c");
-		params.put("password", "b");
-		params.put("email", "Bilbo@bilbo.com");
-		params.put("organisation", "1");
+		params.put("username", mUserNameEditText.getText().toString());
+		params.put("password", mPasswordEditText.getText().toString());
+		params.put("email", mEmailEditText.getText().toString());
 		ApiCalls.getRegisterInterface()
 				.register(params, new Callback<JsonObject>() {
 					@Override
