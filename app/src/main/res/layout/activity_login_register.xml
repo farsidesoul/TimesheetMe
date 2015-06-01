@@ -10,6 +10,7 @@
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/primaryColor"
         android:text="TimesheetMe"
+        android:textStyle="bold"
         android:gravity="center"
         android:textSize="30sp"
         android:textColor="@color/textIcons"/>
