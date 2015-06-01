@@ -66,4 +66,36 @@ public class ApiCalls {
 		void login(@Body Map<String, String> params, Callback<JsonObject> message);
 	}
 	//endregion
+
+	//region Get Times for Date
+	private static GetTimesForDateInterface sGetTimesForDateInterface;
+	public static GetTimesForDateInterface getGetTimesForDateInterface(){
+		if (sGetTimesForDateInterface == null){
+			sGetTimesForDateInterface = GetRestAdapter()
+					.create(GetTimesForDateInterface.class);
+		}
+		return sGetTimesForDateInterface;
+	}
+
+	public interface GetTimesForDateInterface {
+		@POST(API_FILE)
+		void getTimes(@Body Map<String, String> params, Callback<JsonObject> message);
+	}
+	//endregion
+
+	//region Set Times for Date
+	private static SetTimesForDateInterface sSetTimesForDateInterface;
+	public static SetTimesForDateInterface getSetTimesForDateInterface() {
+		if (sSetTimesForDateInterface == null){
+			sSetTimesForDateInterface = GetRestAdapter()
+					.create(SetTimesForDateInterface.class);
+		}
+		return sSetTimesForDateInterface;
+	}
+
+	public interface SetTimesForDateInterface {
+		@POST(API_FILE)
+		void setTimes(@Body Map<String, String> params, Callback<JsonObject> message);
+	}
+	//endregion
 }
