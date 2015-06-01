@@ -1,5 +1,6 @@
 package au.com.bfbapps.timesheetme.UI;
 
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -38,6 +39,16 @@ public class MainActivity extends ActionBarActivity {
 		drawerFragment.setUp(R.id.fragment_navigation_drawer,
 				(DrawerLayout)findViewById(R.id.drawer_layout),
 				mToolbar);
+
+		Bundle fragmentExtras = new Bundle();
+		fragmentExtras.putParcelable("user", mUser);
+
+		// Create the fragment
+		WeeklyScheduleFragment weeklyScheduleFragment = new WeeklyScheduleFragment();
+		weeklyScheduleFragment.setArguments(fragmentExtras);
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.main_content_pager, weeklyScheduleFragment)
+				.commit();
 
 	}
 	
