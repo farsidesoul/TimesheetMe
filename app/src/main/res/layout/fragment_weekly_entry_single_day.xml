@@ -6,6 +6,7 @@
     android:background="#fafafa">
 
     <TextView
+        android:id="@+id/weekly_entry_day_of_week"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:text="A date/day"
@@ -31,6 +32,7 @@
             android:textStyle="bold"/>
 
         <TextView
+            android:id="@+id/weekly_entry_hours_worked"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
