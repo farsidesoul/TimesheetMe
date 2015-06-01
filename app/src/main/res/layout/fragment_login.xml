@@ -2,8 +2,8 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#1E1E24"
-                tools:context=".LoginActivity">
+                tools:context=".LoginActivity"
+    android:gravity="center">
 
     <ImageView
         android:id="@+id/logo_imageView"
@@ -46,7 +46,7 @@
     <Button
         android:id="@+id/login_login_button"
         android:layout_width="280dp"
-        android:layout_height="48dp"
+        android:layout_height="36dp"
         android:layout_below="@id/login_password_editText"
         android:layout_margin="10dp"
         android:layout_centerHorizontal="true"

@@ -1,32 +1,40 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-              android:orientation="vertical"
-                tools:context="au.com.bfbapps.timesheetme.UI.loginregister.LoginRegisterActivity">
+                android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/login_register_view_pager_background"/>
+
+
+        <au.com.bfbapps.timesheetme.Util.SlidingTabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primaryColor"/>
+
+    </LinearLayout>
 
     <TextView
+        android:id="@+id/title_textView"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/primaryColor"
-        android:text="TimesheetMe"
-        android:textStyle="bold"
+        android:layout_height="200dp"
+        android:fontFamily="sans-serif-thin"
         android:gravity="center"
-        android:textSize="30sp"
-        android:textColor="@color/textIcons"/>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:text="TimesheetMe"
+        android:textColor="@color/textIcons"
+        android:textSize="50sp"/>
 
 
-    <au.com.bfbapps.timesheetme.Util.SlidingTabLayout
-        android:id="@+id/tabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/primaryColor"/>
+</RelativeLayout>
 
-</LinearLayout>
 

@@ -13,8 +13,10 @@
         android:padding="8dp"
         android:background="@drawable/login_register_edittext_background"
         android:hint="Email"
+        android:textColorHint="@color/primaryHintText"
         android:singleLine="true"
-        android:inputType="textEmailAddress"/>
+        android:inputType="textEmailAddress"
+        android:textColor="@color/primaryText"/>
 
     <EditText
         android:id="@+id/register_username"
@@ -24,7 +26,9 @@
         android:padding="8dp"
         android:background="@drawable/login_register_edittext_background"
         android:singleLine="true"
-        android:hint="Username"/>
+        android:hint="Username"
+        android:textColorHint="@color/primaryHintText"
+        android:textColor="@color/primaryText"/>
 
     <EditText
         android:id="@+id/register_password"
@@ -35,7 +39,9 @@
         android:background="@drawable/login_register_edittext_background"
         android:singleLine="true"
         android:hint="Password"
-        android:inputType="textPassword"/>
+        android:textColorHint="@color/primaryHintText"
+        android:inputType="textPassword"
+        android:textColor="@color/primaryText"/>
 
     <EditText
         android:id="@+id/register_password_confirm"
@@ -46,12 +52,14 @@
         android:background="@drawable/login_register_edittext_background"
         android:singleLine="true"
         android:hint="Confirm Password"
-        android:inputType="textPassword"/>
+        android:textColorHint="@color/primaryHintText"
+        android:inputType="textPassword"
+        android:textColor="@color/primaryText"/>
 
     <Button
         android:id="@+id/register_register_button"
         android:layout_width="280dp"
-        android:layout_height="48dp"
+        android:layout_height="36dp"
         android:text="Register"
         android:layout_margin="10dp"
         android:background="@drawable/login_register_button"/>
