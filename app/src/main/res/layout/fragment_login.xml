@@ -9,7 +9,7 @@
     <EditText
         android:id="@+id/login_username_editText"
         android:layout_width="280dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:padding="8dp"
         android:background="@drawable/login_register_edittext_background"
@@ -19,7 +19,7 @@
     <EditText
         android:id="@+id/login_password_editText"
         android:layout_width="280dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_below="@id/login_username_editText"
         android:padding="8dp"
