@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import au.com.bfbapps.timesheetme.R;
 import au.com.bfbapps.timesheetme.Util.SlidingTabLayout;
@@ -25,7 +26,6 @@ public class LoginRegisterActivity extends FragmentActivity {
 		mSlidingTabLayout = (SlidingTabLayout)findViewById(R.id.tabs);
 		mSlidingTabLayout.setDistributeEvenly(true);
 		mSlidingTabLayout.setViewPager(mViewPager);
-		mSlidingTabLayout.setBackgroundColor(getResources().getColor(R.color.primaryColor));
 
 	}
 	

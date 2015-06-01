@@ -79,6 +79,8 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
 	private final SlidingTabStrip mTabStrip;
 
+	View oldSelection = null; // new field indicating old selected item
+
 	public SlidingTabLayout(Context context) {
 		this(context, null);
 	}
@@ -225,6 +227,8 @@ public class SlidingTabLayout extends HorizontalScrollView {
 				tabView.setSelected(true);
 			}
 		}
+		removeOldSelection();
+		oldSelection = null;
 	}
 
 	public void setContentDescription(int i, String desc) {
@@ -240,6 +244,13 @@ public class SlidingTabLayout extends HorizontalScrollView {
 		}
 	}
 
+	// Method to remove 'selected' state from old tab
+	private void removeOldSelection(){
+		if(oldSelection != null){
+			oldSelection.setSelected(false);
+		}
+	}
+
 	private void scrollToTab(int tabIndex, int positionOffset) {
 		final int tabStripChildCount = mTabStrip.getChildCount();
 		if (tabStripChildCount == 0 || tabIndex < 0 || tabIndex >= tabStripChildCount) {
@@ -248,6 +259,13 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
 		View selectedChild = mTabStrip.getChildAt(tabIndex);
 		if (selectedChild != null) {
+
+			if(positionOffset == 0 && selectedChild != oldSelection) { // added part
+				selectedChild.setSelected(true);
+				removeOldSelection();
+				oldSelection = selectedChild;
+			}
+
 			int targetScrollX = selectedChild.getLeft() + positionOffset;
 
 			if (tabIndex > 0 || positionOffset > 0) {
