@@ -33,7 +33,7 @@
         android:layout_height="48dp"
         android:layout_margin="10dp"
         android:layout_below="@id/login_password_editText"
-        android:background="@color/accentColor"
+        android:background="@drawable/login_register_button"
         android:text="@string/login_login_button_text"/>
 
 </RelativeLayout>

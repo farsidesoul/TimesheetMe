@@ -46,5 +46,5 @@
         android:layout_height="48dp"
         android:text="Register"
         android:layout_margin="10dp"
-        android:background="@color/accentColor"/>
+        android:background="@drawable/login_register_button"/>
 </LinearLayout>
