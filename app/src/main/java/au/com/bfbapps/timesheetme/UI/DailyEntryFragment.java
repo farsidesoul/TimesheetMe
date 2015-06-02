@@ -23,6 +23,7 @@ public class DailyEntryFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_daily_entry, container, false);
+		((MainActivity)getActivity()).setActionBarTitle("");
 
 		Date date = new Date();
 		DateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());

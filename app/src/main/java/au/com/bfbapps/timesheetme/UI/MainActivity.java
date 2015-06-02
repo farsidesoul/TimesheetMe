@@ -31,8 +31,11 @@ public class MainActivity extends ActionBarActivity {
 
 		mToolbar = (Toolbar)findViewById(R.id.app_bar);
 		setSupportActionBar(mToolbar);
-		if(getSupportActionBar() != null)
+		if(getSupportActionBar() != null){
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			getSupportActionBar().setTitle("");
+		}
+
 
 		NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment)
 				getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
@@ -73,5 +76,10 @@ public class MainActivity extends ActionBarActivity {
 		}
 		
 		return super.onOptionsItemSelected(item);
+	}
+
+	public void setActionBarTitle(String title){
+		if(getSupportActionBar() != null)
+			getSupportActionBar().setTitle(title);
 	}
 }
