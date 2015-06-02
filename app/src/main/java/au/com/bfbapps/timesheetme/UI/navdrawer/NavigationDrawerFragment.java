@@ -57,16 +57,16 @@ public class NavigationDrawerFragment extends Fragment implements NavViewAdapter
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
-		View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+		View v = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
 
-		mRecyclerView = (RecyclerView)layout.findViewById(R.id.nav_drawer_list);
+		mRecyclerView = (RecyclerView)v.findViewById(R.id.nav_drawer_list);
 		mNavViewAdapter = new NavViewAdapter(getActivity(), getNavItems());
 		mNavViewAdapter.setClickListener(this);
 		mRecyclerView.setAdapter(mNavViewAdapter);
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 		// Inflate the layout for this fragment
-		return layout;
+		return v;
 	}
 
 	public static List<NavDrawerItem> getNavItems(){

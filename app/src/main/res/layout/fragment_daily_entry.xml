@@ -47,6 +47,12 @@
         android:src="@mipmap/add_cross"
         android:background="@drawable/floating_action_button"/>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/daily_entry_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fake_bar_linear_layout"/>
+
 
 
 </RelativeLayout>
