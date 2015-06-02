@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
+import au.com.bfbapps.timesheetme.UI.DailyEntryFragment;
+import au.com.bfbapps.timesheetme.UI.WeeklyScheduleFragment;
 import au.com.bfbapps.timesheetme.adapters.NavViewAdapter;
 
 /**
@@ -145,6 +147,23 @@ public class NavigationDrawerFragment extends Fragment implements NavViewAdapter
 	public void itemClicked(View view, int position) {
 		// depending on position clicked, start relevant activity
 
+		switch (position){
+			case 0:
+				DailyEntryFragment dailyEntryFragment = new DailyEntryFragment();
+				mDrawerLayout.closeDrawers();
+				getActivity().getSupportFragmentManager().beginTransaction()
+						.replace(R.id.main_content_pager, dailyEntryFragment)
+						.commit();
+				break;
+			case 1:
+				// Create the fragment
+				WeeklyScheduleFragment weeklyScheduleFragment = new WeeklyScheduleFragment();
+				mDrawerLayout.closeDrawers();
+				getActivity().getSupportFragmentManager().beginTransaction()
+						.replace(R.id.main_content_pager, weeklyScheduleFragment)
+						.commit();
+				break;
+		}
 		Toast.makeText(getActivity(), "Clicked item at position: " + position, Toast.LENGTH_SHORT).show();
 	}
 }

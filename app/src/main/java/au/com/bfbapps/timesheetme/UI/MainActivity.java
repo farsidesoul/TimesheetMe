@@ -37,18 +37,19 @@ public class MainActivity extends ActionBarActivity {
 		NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment)
 				getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
 		drawerFragment.setUp(R.id.fragment_navigation_drawer,
-				(DrawerLayout)findViewById(R.id.drawer_layout),
+				(DrawerLayout) findViewById(R.id.drawer_layout),
 				mToolbar);
 
 		Bundle fragmentExtras = new Bundle();
 		fragmentExtras.putParcelable("user", mUser);
 
-		// Create the fragment
-		WeeklyScheduleFragment weeklyScheduleFragment = new WeeklyScheduleFragment();
-		weeklyScheduleFragment.setArguments(fragmentExtras);
+		DailyEntryFragment dailyEntryFragment = new DailyEntryFragment();
+		dailyEntryFragment.setArguments(fragmentExtras);
 		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.main_content_pager, weeklyScheduleFragment)
+				.replace(R.id.main_content_pager, dailyEntryFragment)
 				.commit();
+
+
 
 	}
 	
