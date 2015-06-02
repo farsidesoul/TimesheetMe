@@ -4,33 +4,49 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/fake_bar_linear_layout"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="125dp"
         android:background="@color/primaryColor"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:gravity="center_vertical">
 
         <TextView
+            android:id="@+id/daily_entry_date_field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:textStyle="bold"
             android:text="Date"
+            android:textColor="@color/textIcons"
             android:textSize="30sp"/>
 
-    </LinearLayout>
 
-    <Button
+        <TextClock
+            android:id="@+id/daily_entry_time_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="@color/textIcons"
+            android:textSize="40sp"
+            android:layout_below="@+id/daily_entry_date_field"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="43dp"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/floating_action_button"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:text="Add"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="124dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginTop="97dp"
         android:layout_marginEnd="16dp"
+        android:src="@mipmap/add_cross"
         android:background="@drawable/floating_action_button"/>
+
+
 
 </RelativeLayout>
