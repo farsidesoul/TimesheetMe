@@ -76,7 +76,7 @@ public class NavigationDrawerFragment extends Fragment implements NavViewAdapter
 				R.mipmap.ic_get_app_black_48dp,
 				R.mipmap.ic_input_black_48dp};
 
-		String[] titles = {"Home", "Review", "Download", "Logout"};
+		String[] titles = {"Home", "Weekly Review", "Download", "Logout"};
 
 		for (int i = 0; i< titles.length && i < icons.length; i++){
 			NavDrawerItem currentItem = new NavDrawerItem(icons[i], titles[i]);
