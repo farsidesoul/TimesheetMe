@@ -11,11 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
-import org.json.JSONException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +19,7 @@ import java.util.Map;
 import au.com.bfbapps.timesheetme.R;
 import au.com.bfbapps.timesheetme.UI.MainActivity;
 import au.com.bfbapps.timesheetme.Util.ApiCalls;
+import au.com.bfbapps.timesheetme.Util.GsonConversions;
 import au.com.bfbapps.timesheetme.Util.ResponseChecker;
 import au.com.bfbapps.timesheetme.models.User;
 import retrofit.Callback;
@@ -32,7 +29,7 @@ import retrofit.client.Response;
 
 public class LoginFragment extends Fragment {
 
-	private EditText mUsernameEditText;
+	private EditText mEmailEditText;
 	private EditText mPasswordEditText;
 	private Button mLoginButton;
 	private User mUser;
@@ -47,13 +44,13 @@ public class LoginFragment extends Fragment {
 	                         Bundle savedInstanceState){
 		View rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
-		mUsernameEditText = (EditText)rootView.findViewById(R.id.login_username_editText);
+		mEmailEditText = (EditText)rootView.findViewById(R.id.login_email_editText);
 		mPasswordEditText = (EditText)rootView.findViewById(R.id.login_password_editText);
 		mLoginButton = (Button)rootView.findViewById(R.id.login_login_button);
 		mLoginButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				login(mUsernameEditText.getText().toString(),
+				login(mEmailEditText.getText().toString(),
 						mPasswordEditText.getText().toString());
 
 			}
@@ -62,10 +59,10 @@ public class LoginFragment extends Fragment {
 		return rootView;
 	}
 
-	private void login(String username, String password){
+	private void login(String email, String password){
 		Map<String, String> params = new HashMap<>();
 		params.put("tag", "login");
-		params.put("username", username);
+		params.put("email", email);
 		params.put("password", password);
 
 		ApiCalls.getLoginInterface()
@@ -75,7 +72,7 @@ public class LoginFragment extends Fragment {
 							public void success(JsonObject s, Response response) {
 
 								if (!ResponseChecker.CheckForErrorInResponse(s)) {
-									mUser = createUser(s);
+									mUser = GsonConversions.createUser(s);
 									Log.d("USER", mUser.getFirstName());
 									Intent intent = new Intent(getActivity(), MainActivity.class);
 									intent.putExtra("user", mUser);
@@ -94,9 +91,4 @@ public class LoginFragment extends Fragment {
 						});
 	}
 
-	private static User createUser(JsonObject s){
-		Gson gson = new Gson();
-		JsonElement user = s.get("user");
-		return gson.fromJson(user, User.class);
-	}
 }
