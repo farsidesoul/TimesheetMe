@@ -39,7 +39,10 @@ public class DailyEntryFragment extends Fragment implements DailyEntryRecyclerVi
 		mDateTextView = (TextView)v.findViewById(R.id.daily_entry_date_field);
 		mDateTextView.setText(dateFormat.format(date));
 
-		mDailyEntries = new ArrayList<>();
+
+		// TEST DATA
+		mDailyEntries = CreateTestData();
+
 		mRecyclerView = (RecyclerView)v.findViewById(R.id.daily_entry_list);
 		mDailyEntryAdapter = new DailyEntryRecyclerViewAdapter(getActivity(), mDailyEntries);
 		mDailyEntryAdapter.setClickListener(this);
@@ -53,5 +56,13 @@ public class DailyEntryFragment extends Fragment implements DailyEntryRecyclerVi
 	@Override
 	public void itemClicked(View view, int position) {
 		//TODO: Create method to go to detailed view of item clicked
+	}
+
+	private List<DailyEntry> CreateTestData(){
+		List<DailyEntry> data = new ArrayList<>();
+		data.add(new DailyEntry("27/6/15", "Possum Magic", "Graphic Design", "08:00", "11:00", "3"));
+		data.add(new DailyEntry("27/6/15", "Serious Sam", "Programming", "11:00", "12:30", "1.5"));
+		data.add(new DailyEntry("27/6/15", "Possum Magic", "Graphic Design", "13:30", "17:00", "3.5"));
+		return data;
 	}
 }

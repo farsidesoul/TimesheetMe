@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
 import au.com.bfbapps.timesheetme.models.DailyEntry;
 
-public class DailyEntryRecyclerViewAdapter extends RecyclerView.Adapter<DailyEntryRecyclerViewAdapter.DailyEntryItemViewHolder> {
+public class DailyEntryRecyclerViewAdapter
+		extends RecyclerView.Adapter<DailyEntryRecyclerViewAdapter.DailyEntryItemViewHolder> {
 
 	private Context mContext;
 	private List<DailyEntry> mDailyEntryItemList;
@@ -27,17 +29,19 @@ public class DailyEntryRecyclerViewAdapter extends RecyclerView.Adapter<DailyEnt
 
 	@Override
 	public DailyEntryItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		//TODO: Create custom view for daily entry
-		View view = mInflater.inflate(R.layout.nav_row_item, parent, false);
+		View view = mInflater.inflate(R.layout.fragment_daily_entry_item, parent, false);
 		DailyEntryItemViewHolder holder = new DailyEntryItemViewHolder(view);
-		return null;
+		return holder;
 	}
 
 	@Override
 	public void onBindViewHolder(DailyEntryItemViewHolder holder, int position) {
-		//TODO: Add elements to Daily Entry
 		DailyEntry currentItem = mDailyEntryItemList.get(position);
-		holder.title.setText("");
+		holder.title.setText(currentItem.getTitle());
+		holder.subTitle.setText(currentItem.getSubTitle());
+		holder.start.setText(currentItem.getStart());
+		holder.finish.setText(currentItem.getFinish());
+		holder.totalHours.setText(currentItem.getTotalHours());
 	}
 
 	@Override
@@ -58,10 +62,19 @@ public class DailyEntryRecyclerViewAdapter extends RecyclerView.Adapter<DailyEnt
 	class DailyEntryItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 		TextView title;
+		TextView subTitle;
+		TextView start;
+		TextView finish;
+		TextView totalHours;
+
 		public DailyEntryItemViewHolder(View itemView) {
 			super(itemView);
 			itemView.setOnClickListener(this);
-			title = (TextView)itemView.findViewById(R.id.nav_drawer_list_item_text);
+			title = (TextView)itemView.findViewById(R.id.daily_entry_item_title);
+			subTitle = (TextView)itemView.findViewById(R.id.daily_entry_item_sub_title);
+			start = (TextView)itemView.findViewById(R.id.daily_entry_item_start_time);
+			finish = (TextView)itemView.findViewById(R.id.daily_entry_item_finish_time);
+			totalHours = (TextView)itemView.findViewById(R.id.daily_entry_item_total_hours);
 		}
 
 		@Override
