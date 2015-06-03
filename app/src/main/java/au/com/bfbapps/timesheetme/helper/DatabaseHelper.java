@@ -1,8 +1,14 @@
 package au.com.bfbapps.timesheetme.helper;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import au.com.bfbapps.timesheetme.Util.Dates;
+import au.com.bfbapps.timesheetme.models.Entry;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -76,4 +82,52 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Create new Tables
         onCreate(sqLiteDatabase);
     }
+
+	/**
+	 * Create entry in DB
+	 * @param entry Entry to be inserted into DB
+	 * @return entryId of inserted entry
+	 */
+    public long createEntry(Entry entry){
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(COLUMN_DATE, entry.getDate().toString());
+		values.put(COLUMN_START_TIME, entry.getStart().toString());
+		values.put(COLUMN_FINISH_TIME, entry.getFinish().toString());
+		values.put(COLUMN_TOTAL_BREAK, entry.getTotalBreak());
+		values.put(COLUMN_TOTAL_HOURS_WORKED, entry.getTotalHoursWorked());
+		values.put(COLUMN_JOB_ID, entry.getJobId());
+		values.put(COLUMN_TASK_ID, entry.getTaskId());
+
+		// insert row
+		long entryId = db.insert(TABLE_DAILY_ENTRY, null, values);
+
+		return entryId;
+    }
+
+	/**
+	 * Fetching entries
+	 */
+	public Entry getEntry(long entryId){
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		String selectQuery = "SELECT * FROM " + TABLE_DAILY_ENTRY + " WHERE "
+				+ COLUMN_ID + " = " + entryId;
+
+		Log.e(TAG, selectQuery);
+
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		if (c != null){
+			c.moveToFirst();
+		}
+
+		Entry entry = new Entry();
+		entry.setEntryId(c.getInt(c.getColumnIndex(COLUMN_ID)));
+		entry.setDate(Dates.ConvertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
+		entry.setStart(Dates.ConvertStringToTime(c.getString(c.getColumnIndex(COLUMN_START_TIME))));
+
+		return entry;
+	}
 }

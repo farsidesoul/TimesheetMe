@@ -23,14 +23,14 @@ import java.util.Locale;
 
 import au.com.bfbapps.timesheetme.R;
 import au.com.bfbapps.timesheetme.adapters.DailyEntryRecyclerViewAdapter;
-import au.com.bfbapps.timesheetme.models.DailyEntry;
+import au.com.bfbapps.timesheetme.models.Entry;
 
 public class DailyEntryFragment extends Fragment implements DailyEntryRecyclerViewAdapter.ClickListener {
 
 	private TextView mDateTextView;
 	private RecyclerView mRecyclerView;
 	private DailyEntryRecyclerViewAdapter mDailyEntryAdapter;
-	private List<DailyEntry> mDailyEntries;
+	private List<Entry> mDailyEntries;
 
 	private FloatingActionButton mAddTimesButton;
 	private FloatingActionButton mSubmitTimesButton;
@@ -80,11 +80,11 @@ public class DailyEntryFragment extends Fragment implements DailyEntryRecyclerVi
 		//TODO: Create method to go to detailed view of item clicked
 	}
 
-	private List<DailyEntry> CreateTestData(){
-		List<DailyEntry> data = new ArrayList<>();
-		data.add(new DailyEntry("27/6/15", "Possum Magic", "Graphic Design", "08:00", "11:00", "3"));
-		data.add(new DailyEntry("27/6/15", "Serious Sam", "Programming", "11:00", "12:30", "1.5"));
-		data.add(new DailyEntry("27/6/15", "Possum Magic", "Graphic Design", "13:30", "17:00", "3.5"));
+	private List<Entry> CreateTestData(){
+		List<Entry> data = new ArrayList<>();
+//		data.add(new Entry("27/6/15", "Possum Magic", "Graphic Design", "08:00", "11:00", "3"));
+//		data.add(new Entry("27/6/15", "Serious Sam", "Programming", "11:00", "12:30", "1.5"));
+//		data.add(new Entry("27/6/15", "Possum Magic", "Graphic Design", "13:30", "17:00", "3.5"));
 		return data;
 	}
 }

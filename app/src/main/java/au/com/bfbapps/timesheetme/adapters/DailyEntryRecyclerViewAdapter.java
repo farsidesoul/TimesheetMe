@@ -7,23 +7,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
-import au.com.bfbapps.timesheetme.models.DailyEntry;
+import au.com.bfbapps.timesheetme.models.Entry;
 
 public class DailyEntryRecyclerViewAdapter
 		extends RecyclerView.Adapter<DailyEntryRecyclerViewAdapter.DailyEntryItemViewHolder> {
 
 	private Context mContext;
-	private List<DailyEntry> mDailyEntryItemList;
+	private List<Entry> mEntryItemList;
 	private LayoutInflater mInflater;
 	private ClickListener mClickListener;
 
-	public DailyEntryRecyclerViewAdapter(Context context, List<DailyEntry> data){
+	public DailyEntryRecyclerViewAdapter(Context context, List<Entry> data){
 		mContext = context;
-		mDailyEntryItemList = data;
+		mEntryItemList = data;
 		mInflater = LayoutInflater.from(context);
 	}
 
@@ -36,22 +35,22 @@ public class DailyEntryRecyclerViewAdapter
 
 	@Override
 	public void onBindViewHolder(DailyEntryItemViewHolder holder, int position) {
-		DailyEntry currentItem = mDailyEntryItemList.get(position);
-		holder.title.setText(currentItem.getTitle());
-		holder.subTitle.setText(currentItem.getSubTitle());
-		holder.start.setText(currentItem.getStart());
-		holder.finish.setText(currentItem.getFinish());
-		holder.totalHours.setText(currentItem.getTotalHours());
+//		Entry currentItem = mEntryItemList.get(position);
+//		holder.title.setText(currentItem.get());
+//		holder.subTitle.setText(currentItem.getSubTitle());
+//		holder.start.setText(currentItem.getStart());
+//		holder.finish.setText(currentItem.getFinish());
+//		holder.totalHours.setText(currentItem.getTotalHours());
 	}
 
 	@Override
 	public int getItemCount() {
-		return mDailyEntryItemList.size();
+		return mEntryItemList.size();
 	}
 
 	public void delete(int position){
 		//TODO: Create call to DB to remove item from DB
-		mDailyEntryItemList.remove(position);
+		mEntryItemList.remove(position);
 		notifyItemRemoved(position);
 	}
 

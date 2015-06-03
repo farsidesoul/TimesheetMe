@@ -4,16 +4,16 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class DailyEntry {
+public class Entry {
 
 	@SerializedName("entryId")
 	private int mEntryId;
 	@SerializedName("date")
 	private Date mDate;
 	@SerializedName("startTime")
-	private String mStart;
+	private Date mStart;
 	@SerializedName("finishTime")
-	private String mFinish;
+	private Date mFinish;
     @SerializedName("totalBreak")
     private double mTotalBreak;
 	@SerializedName("totalHoursWorked")
@@ -21,9 +21,13 @@ public class DailyEntry {
     @SerializedName("jobId")
     private int mJobId;
     @SerializedName("taskId")
-    private int mtaskId;
+    private int mTaskId;
 
-    public DailyEntry(int mEntryId, Date mDate, String mStart, String mFinish, double mTotalBreak, double mTotalHoursWorked, int mJobId, int mtaskId) {
+	public Entry(){
+
+	}
+
+    public Entry(int mEntryId, Date mDate, Date mStart, Date mFinish, double mTotalBreak, double mTotalHoursWorked, int mJobId, int mtaskId) {
         this.mEntryId = mEntryId;
         this.mDate = mDate;
         this.mStart = mStart;
@@ -31,7 +35,7 @@ public class DailyEntry {
         this.mTotalBreak = mTotalBreak;
         this.mTotalHoursWorked = mTotalHoursWorked;
         this.mJobId = mJobId;
-        this.mtaskId = mtaskId;
+        this.mTaskId = mtaskId;
     }
 
 	public int getEntryId() {
@@ -50,19 +54,19 @@ public class DailyEntry {
 		mDate = date;
 	}
 
-	public String getStart() {
+	public Date getStart() {
 		return mStart;
 	}
 
-	public void setStart(String start) {
+	public void setStart(Date start) {
 		mStart = start;
 	}
 
-	public String getFinish() {
+	public Date getFinish() {
 		return mFinish;
 	}
 
-	public void setFinish(String finish) {
+	public void setFinish(Date finish) {
 		mFinish = finish;
 	}
 
@@ -90,11 +94,11 @@ public class DailyEntry {
 		mJobId = jobId;
 	}
 
-	public int getMtaskId() {
-		return mtaskId;
+	public int getTaskId() {
+		return mTaskId;
 	}
 
-	public void setMtaskId(int mtaskId) {
-		this.mtaskId = mtaskId;
+	public void setTaskId(int mtaskId) {
+		this.mTaskId = mtaskId;
 	}
 }
