@@ -2,52 +2,52 @@ package au.com.bfbapps.timesheetme.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class DailyEntry {
 
+	@SerializedName("entryId")
+	private int mEntryId;
 	@SerializedName("date")
-	private String mDate;
-	@SerializedName("title")
-	private String mTitle;
-	@SerializedName("subTitle")
-	private String mSubTitle;
-	@SerializedName("start")
+	private Date mDate;
+	@SerializedName("startTime")
 	private String mStart;
-	@SerializedName("finish")
+	@SerializedName("finishTime")
 	private String mFinish;
-	@SerializedName("totalHours")
-	private String mTotalHours;
+    @SerializedName("totalBreak")
+    private double mTotalBreak;
+	@SerializedName("totalHoursWorked")
+	private double mTotalHoursWorked;
+    @SerializedName("jobId")
+    private int mJobId;
+    @SerializedName("taskId")
+    private int mtaskId;
 
-	public DailyEntry(String date, String title, String subTitle, String start, String finish, String totalHours){
-		mDate = date;
-		mTitle = title;
-		mSubTitle = subTitle;
-		mStart = start;
-		mFinish = finish;
-		mTotalHours = totalHours;
+    public DailyEntry(int mEntryId, Date mDate, String mStart, String mFinish, double mTotalBreak, double mTotalHoursWorked, int mJobId, int mtaskId) {
+        this.mEntryId = mEntryId;
+        this.mDate = mDate;
+        this.mStart = mStart;
+        this.mFinish = mFinish;
+        this.mTotalBreak = mTotalBreak;
+        this.mTotalHoursWorked = mTotalHoursWorked;
+        this.mJobId = mJobId;
+        this.mtaskId = mtaskId;
+    }
+
+	public int getEntryId() {
+		return mEntryId;
 	}
 
-	public String getDate() {
+	public void setEntryId(int entryId) {
+		mEntryId = entryId;
+	}
+
+	public Date getDate() {
 		return mDate;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		mDate = date;
-	}
-
-	public String getTitle() {
-		return mTitle;
-	}
-
-	public void setTitle(String title) {
-		mTitle = title;
-	}
-
-	public String getSubTitle() {
-		return mSubTitle;
-	}
-
-	public void setSubTitle(String subTitle) {
-		mSubTitle = subTitle;
 	}
 
 	public String getStart() {
@@ -66,11 +66,35 @@ public class DailyEntry {
 		mFinish = finish;
 	}
 
-	public String getTotalHours() {
-		return mTotalHours;
+	public double getTotalBreak() {
+		return mTotalBreak;
 	}
 
-	public void setTotalHours(String totalHours) {
-		mTotalHours = totalHours;
+	public void setTotalBreak(double totalBreak) {
+		mTotalBreak = totalBreak;
+	}
+
+	public double getTotalHoursWorked() {
+		return mTotalHoursWorked;
+	}
+
+	public void setTotalHoursWorked(double totalHoursWorked) {
+		mTotalHoursWorked = totalHoursWorked;
+	}
+
+	public int getJobId() {
+		return mJobId;
+	}
+
+	public void setJobId(int jobId) {
+		mJobId = jobId;
+	}
+
+	public int getMtaskId() {
+		return mtaskId;
+	}
+
+	public void setMtaskId(int mtaskId) {
+		this.mtaskId = mtaskId;
 	}
 }
