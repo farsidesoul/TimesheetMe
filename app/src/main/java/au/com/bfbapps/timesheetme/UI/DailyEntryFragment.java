@@ -9,6 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,6 +31,10 @@ public class DailyEntryFragment extends Fragment implements DailyEntryRecyclerVi
 	private RecyclerView mRecyclerView;
 	private DailyEntryRecyclerViewAdapter mDailyEntryAdapter;
 	private List<DailyEntry> mDailyEntries;
+
+	private FloatingActionButton mAddTimesButton;
+	private FloatingActionButton mSubmitTimesButton;
+	private FloatingActionMenu mFloatingActionMenu;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,6 +46,20 @@ public class DailyEntryFragment extends Fragment implements DailyEntryRecyclerVi
 		DateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
 		mDateTextView = (TextView)v.findViewById(R.id.daily_entry_date_field);
 		mDateTextView.setText(dateFormat.format(date));
+
+		// Floating Action Button menu
+		mFloatingActionMenu = (FloatingActionMenu)v.findViewById(R.id.fab);
+		mAddTimesButton = (FloatingActionButton)v.findViewById(R.id.add_times_menu);
+		mSubmitTimesButton = (FloatingActionButton)v.findViewById(R.id.submit_times_menu);
+
+		mAddTimesButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(getActivity(), "Clicked Add item", Toast.LENGTH_SHORT).show();
+				mFloatingActionMenu.close(true);
+
+			}
+		});
 
 
 		// TEST DATA
