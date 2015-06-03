@@ -36,6 +36,12 @@
 
     </RelativeLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/daily_entry_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fake_bar_linear_layout"/>
+
     <ImageView
         android:id="@+id/floating_action_button"
         android:layout_width="56dp"
@@ -45,14 +51,7 @@
         android:layout_marginTop="97dp"
         android:layout_marginEnd="16dp"
         android:src="@mipmap/add_cross"
-        android:background="@drawable/floating_action_button"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/daily_entry_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/fake_bar_linear_layout"/>
-
-
+        android:background="@drawable/floating_action_button"
+        android:contentDescription="Add" />
 
 </RelativeLayout>
