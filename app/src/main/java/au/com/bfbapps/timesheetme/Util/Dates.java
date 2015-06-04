@@ -5,8 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Dates {
-	private static final String DATE_FORMAT = "dd/MM/yyyy";
-	private static final String TIME_FORMAT = "hh:mm:ss a";
+	public static final String DATE_FORMAT = "dd/MM/yyyy";
+	public static final String TIME_FORMAT = "hh:mm:ss a";
 
 	/**
 	 * Convert String date into Java Date

@@ -29,8 +29,7 @@
 				android:paddingBottom="4dp"
 				android:text="This is the job I did"
 				android:textColor="@color/primaryText"
-				android:textSize="18sp"
-				android:textStyle="bold" />
+				android:textSize="18sp" />
 
 			<TextView
 				android:id="@+id/daily_entry_item_sub_title"

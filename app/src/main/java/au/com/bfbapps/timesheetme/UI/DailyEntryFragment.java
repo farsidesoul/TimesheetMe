@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,21 +28,20 @@ import au.com.bfbapps.timesheetme.R;
 import au.com.bfbapps.timesheetme.UI.navdrawer.NavigationDrawerFragment;
 import au.com.bfbapps.timesheetme.Util.Dates;
 import au.com.bfbapps.timesheetme.adapters.DailyEntryRecyclerViewAdapter;
+import au.com.bfbapps.timesheetme.adapters.DailyEntryViewPagerAdapter;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
 import au.com.bfbapps.timesheetme.models.Entry;
 
-public class DailyEntryFragment extends Fragment implements DailyEntryRecyclerViewAdapter.ClickListener {
+public class DailyEntryFragment extends Fragment {
 
 	private TextView mDateTextView;
-	private RecyclerView mRecyclerView;
-	private DailyEntryRecyclerViewAdapter mDailyEntryAdapter;
-	private List<Entry> mDailyEntries;
 
 	private FloatingActionButton mAddTimesButton;
 	private FloatingActionButton mSubmitTimesButton;
 	private FloatingActionMenu mFloatingActionMenu;
 
-	private DatabaseHelper mDb;
+	private ViewPager mViewPager;
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +49,32 @@ public class DailyEntryFragment extends Fragment implements DailyEntryRecyclerVi
 		View v = inflater.inflate(R.layout.fragment_daily_entry, container, false);
 		((MainActivity)getActivity()).setActionBarTitle("");
 
-		mDb = new DatabaseHelper(getActivity().getApplicationContext());
+		mViewPager = (ViewPager)v.findViewById(R.id.daily_entry_pager);
+		mViewPager.setAdapter(new DailyEntryViewPagerAdapter(getResources(), getActivity().getSupportFragmentManager()));
+		mViewPager.setCurrentItem(5000, false);
+		mViewPager.post(new Runnable() {
+			public void run() {
+				mViewPager.setCurrentItem(5000, false);
+			}
+		});
+		mViewPager.getAdapter().notifyDataSetChanged();
+		mViewPager.setOffscreenPageLimit(0);
+		mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+			@Override
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+			}
+
+			@Override
+			public void onPageSelected(int position) {
+
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int state) {
+
+			}
+		});
 
 		Date date = new Date();
 		DateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
@@ -70,28 +95,9 @@ public class DailyEntryFragment extends Fragment implements DailyEntryRecyclerVi
 			}
 		});
 
-		CreateTestData();
-
-		mDailyEntries = mDb.getAllEntriesByDate(date);
-		mRecyclerView = (RecyclerView)v.findViewById(R.id.daily_entry_list);
-		mDailyEntryAdapter = new DailyEntryRecyclerViewAdapter(getActivity(), mDailyEntries);
-		mDailyEntryAdapter.setClickListener(this);
-		mRecyclerView.setAdapter(mDailyEntryAdapter);
-		mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
 		return v;
 	}
 	
 	
-	@Override
-	public void itemClicked(View view, int position) {
-		//TODO: Create method to go to detailed view of item clicked
-	}
 
-	private void CreateTestData(){
-		mDb.createEntry(new Entry(Dates.ConvertStringToDate("04/06/2015"), "08:00 AM", "11:30 AM", 0, 3.5, 1, 1));
-		mDb.createEntry(new Entry(Dates.ConvertStringToDate("04/06/2015"), "12:30 PM", "01:00 PM", 0, 0.5, 2, 2));
-		mDb.createEntry(new Entry(Dates.ConvertStringToDate("04/06/2015"), "01:30 PM", "03:00 PM", 0, 1.5, 3, 3));
-		mDb.createEntry(new Entry(Dates.ConvertStringToDate("04/06/2015"), "03:30 PM", "05:00 PM", 0, 1.5, 4, 4));
-	}
 }

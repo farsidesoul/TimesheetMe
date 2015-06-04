@@ -11,7 +11,9 @@ import android.view.MenuItem;
 
 import au.com.bfbapps.timesheetme.R;
 import au.com.bfbapps.timesheetme.UI.navdrawer.NavigationDrawerFragment;
+import au.com.bfbapps.timesheetme.Util.Dates;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
+import au.com.bfbapps.timesheetme.models.Entry;
 import au.com.bfbapps.timesheetme.models.Job;
 import au.com.bfbapps.timesheetme.models.Task;
 import au.com.bfbapps.timesheetme.models.User;
@@ -102,5 +104,10 @@ public class MainActivity extends ActionBarActivity {
 		db.createTask(new Task("School stuff"));
 		db.createTask(new Task("Design and Development"));
 		db.createTask(new Task("Boring old people"));
+
+		db.createEntry(new Entry(Dates.ConvertStringToDate("04/06/2015"), "08:00 AM", "11:30 AM", 0, 3.5, 1, 1));
+		db.createEntry(new Entry(Dates.ConvertStringToDate("04/06/2015"), "12:30 PM", "01:00 PM", 0, 0.5, 2, 2));
+		db.createEntry(new Entry(Dates.ConvertStringToDate("04/06/2015"), "01:30 PM", "03:00 PM", 0, 1.5, 3, 3));
+		db.createEntry(new Entry(Dates.ConvertStringToDate("04/06/2015"), "03:30 PM", "05:00 PM", 0, 1.5, 4, 4));
 	}
 }
