@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import au.com.bfbapps.timesheetme.Util.Dates;
@@ -99,9 +100,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put(COLUMN_DATE, entry.getDate().toString());
-		values.put(COLUMN_START_TIME, entry.getStart().toString());
-		values.put(COLUMN_FINISH_TIME, entry.getFinish().toString());
+		values.put(COLUMN_DATE, Dates.ConvertDateToString(entry.getDate()));
+		values.put(COLUMN_START_TIME, entry.getStart());
+		values.put(COLUMN_FINISH_TIME, entry.getFinish());
 		values.put(COLUMN_TOTAL_BREAK, entry.getTotalBreak());
 		values.put(COLUMN_TOTAL_HOURS_WORKED, entry.getTotalHoursWorked());
 		values.put(COLUMN_JOB_ID, entry.getJobId());
@@ -133,8 +134,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 			entry.setEntryId(c.getInt(c.getColumnIndex(COLUMN_ID)));
 			entry.setDate(Dates.ConvertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
-			entry.setStart(Dates.ConvertStringToTime(c.getString(c.getColumnIndex(COLUMN_START_TIME))));
-			entry.setFinish(Dates.ConvertStringToTime(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME))));
+			entry.setStart(c.getString(c.getColumnIndex(COLUMN_START_TIME)));
+			entry.setFinish(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME)));
 			entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
 			entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
 			entry.setJobId(c.getInt(c.getColumnIndex(COLUMN_JOB_ID)));
@@ -162,8 +163,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				Entry entry = new Entry();
 				entry.setEntryId(c.getInt(c.getColumnIndex(COLUMN_ID)));
 				entry.setDate(Dates.ConvertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
-				entry.setStart(Dates.ConvertStringToTime(c.getString(c.getColumnIndex(COLUMN_START_TIME))));
-				entry.setFinish(Dates.ConvertStringToTime(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME))));
+				entry.setStart(c.getString(c.getColumnIndex(COLUMN_START_TIME)));
+				entry.setFinish(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME)));
 				entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
 				entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
 				entry.setJobId(c.getInt(c.getColumnIndex(COLUMN_JOB_ID)));
@@ -173,8 +174,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 			} while (c.moveToNext());
 		}
-
+		c.close();
 		return entries;
+	}
+
+	public List<Entry> getAllEntriesByDate(Date date){
+		List<Entry> entries = new ArrayList<>();
+
+		String selectQuery = "SELECT * FROM " + TABLE_ENTRY + " WHERE "
+				+ COLUMN_DATE + " = '" + Dates.ConvertDateToString(date) + "'";
+
+		Log.e(TAG, selectQuery);
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		if(c.moveToFirst()){
+			do {
+				Entry entry = new Entry();
+				entry.setEntryId(c.getInt(c.getColumnIndex(COLUMN_ID)));
+				entry.setDate(Dates.ConvertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
+				entry.setStart(c.getString(c.getColumnIndex(COLUMN_START_TIME)));
+				entry.setFinish(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME)));
+				entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
+				entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
+				entry.setJobId(c.getInt(c.getColumnIndex(COLUMN_JOB_ID)));
+				entry.setTaskId(c.getInt(c.getColumnIndex(COLUMN_TASK_ID)));
+
+				entries.add(entry);
+			} while (c.moveToNext());
+		}
+		c.close();
+		return entries;
+
 	}
 
 	/**
@@ -199,8 +231,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				Entry entry = new Entry();
 				entry.setEntryId(c.getInt(c.getColumnIndex(COLUMN_ID)));
 				entry.setDate(Dates.ConvertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
-				entry.setStart(Dates.ConvertStringToTime(c.getString(c.getColumnIndex(COLUMN_START_TIME))));
-				entry.setFinish(Dates.ConvertStringToTime(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME))));
+				entry.setStart(c.getString(c.getColumnIndex(COLUMN_START_TIME)));
+				entry.setFinish(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME)));
 				entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
 				entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
 				entry.setJobId(c.getInt(c.getColumnIndex(COLUMN_JOB_ID)));
@@ -209,6 +241,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				entries.add(entry);
 			} while (c.moveToNext());
 		}
+		c.close();
 		return entries;
 	}
 
@@ -229,8 +262,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				Entry entry = new Entry();
 				entry.setEntryId(c.getInt(c.getColumnIndex(COLUMN_ID)));
 				entry.setDate(Dates.ConvertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
-				entry.setStart(Dates.ConvertStringToTime(c.getString(c.getColumnIndex(COLUMN_START_TIME))));
-				entry.setFinish(Dates.ConvertStringToTime(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME))));
+				entry.setStart(c.getString(c.getColumnIndex(COLUMN_START_TIME)));
+				entry.setFinish(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME)));
 				entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
 				entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
 				entry.setJobId(c.getInt(c.getColumnIndex(COLUMN_JOB_ID)));
@@ -239,6 +272,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				entries.add(entry);
 			} while (c.moveToNext());
 		}
+		c.close();
 		return entries;
 	}
 
@@ -251,9 +285,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put(COLUMN_DATE, entry.getDate().toString());
-		values.put(COLUMN_START_TIME, entry.getStart().toString());
-		values.put(COLUMN_FINISH_TIME, entry.getFinish().toString());
+		values.put(COLUMN_DATE, Dates.ConvertDateToString(entry.getDate()));
+		values.put(COLUMN_START_TIME, entry.getStart());
+		values.put(COLUMN_FINISH_TIME, entry.getFinish());
 		values.put(COLUMN_TOTAL_BREAK, entry.getTotalBreak());
 		values.put(COLUMN_TOTAL_HOURS_WORKED, entry.getTotalHoursWorked());
 		values.put(COLUMN_JOB_ID, entry.getJobId());
@@ -285,7 +319,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put(COLUMN_ID, task.getTaskId());
 		values.put(COLUMN_TASK_NAME, task.getTaskName());
 
 		// insert row
@@ -319,6 +352,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return tasks;
 	}
 
+	public Task getTaskById(int taskId){
+		Task task = new Task();
+		String selectQuery = "SELECT * FROM " + TABLE_TASK + " WHERE " + COLUMN_ID + " = " + taskId;
+
+		Log.e(TAG, selectQuery);
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		if (c != null){
+			c.moveToFirst();
+
+			task.setTaskId(c.getInt(c.getColumnIndex(COLUMN_ID)));
+			task.setTaskName(c.getString(c.getColumnIndex(COLUMN_TASK_NAME)));
+
+			c.close();
+			return task;
+		}
+		return new Task(0, "");
+	}
 
 	/**
 	 * Update task
@@ -369,7 +422,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put(COLUMN_ID, job.getJobId());
 		values.put(COLUMN_JOB_NAME, job.getJobName());
 
 		// insert row
@@ -403,6 +455,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return jobs;
 	}
 
+	public Job getJobById(int jobId){
+
+		String selectQuery = "SELECT * FROM " + TABLE_JOB + " WHERE " + COLUMN_ID + " = " + jobId;
+
+		Log.e(TAG, selectQuery);
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		if (c != null){
+			c.moveToFirst();
+			Job job = new Job();
+			job.setJobId(c.getInt(c.getColumnIndex(COLUMN_ID)));
+			job.setJobName(c.getString(c.getColumnIndex(COLUMN_JOB_NAME)));
+
+			c.close();
+			return job;
+		}
+		return new Job(0, "");
+	}
+
 	/**
 	 * Update job
 	 * @param job Job details to update
@@ -419,7 +492,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	/**
-	 * Delete a task by id
+	 * Delete a job by id
 	 * @param job task to be deleted
 	 * @param shouldDeleteAllEntries if true, delete all entries that have this taskId
 	 */

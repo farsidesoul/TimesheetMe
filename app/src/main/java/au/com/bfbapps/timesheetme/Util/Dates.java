@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Dates {
 	private static final String DATE_FORMAT = "dd/MM/yyyy";
-	private static final String TIME_FORMAT = "hh:mm a";
+	private static final String TIME_FORMAT = "hh:mm:ss a";
 
 	/**
 	 * Convert String date into Java Date
@@ -19,7 +19,7 @@ public class Dates {
 		try {
 			return formatter.parse(date);
 		} catch (ParseException e) {
-			return null;
+			return new Date();
 		}
 	}
 
@@ -33,19 +33,6 @@ public class Dates {
 		return formatter.format(date);
 	}
 
-	/**
-	 * Convert String to Java Date for DB Storage
-	 * @param time String time to convert
-	 * @return time in date format
-	 */
-	public static Date ConvertStringToTime(String time){
-		SimpleDateFormat formatter = new SimpleDateFormat(TIME_FORMAT);
-		try {
-			return formatter.parse(time);
-		} catch (ParseException e) {
-			return null;
-		}
-	}
 
 	/**
 	 * Convert Java Date to String for UI Use

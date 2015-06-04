@@ -10,7 +10,11 @@ import android.widget.TextView;
 import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
+import au.com.bfbapps.timesheetme.Util.Dates;
+import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
 import au.com.bfbapps.timesheetme.models.Entry;
+import au.com.bfbapps.timesheetme.models.Job;
+import au.com.bfbapps.timesheetme.models.Task;
 
 public class DailyEntryRecyclerViewAdapter
 		extends RecyclerView.Adapter<DailyEntryRecyclerViewAdapter.DailyEntryItemViewHolder> {
@@ -19,6 +23,8 @@ public class DailyEntryRecyclerViewAdapter
 	private List<Entry> mEntryItemList;
 	private LayoutInflater mInflater;
 	private ClickListener mClickListener;
+
+	private DatabaseHelper mDb;
 
 	public DailyEntryRecyclerViewAdapter(Context context, List<Entry> data){
 		mContext = context;
@@ -35,12 +41,17 @@ public class DailyEntryRecyclerViewAdapter
 
 	@Override
 	public void onBindViewHolder(DailyEntryItemViewHolder holder, int position) {
-//		Entry currentItem = mEntryItemList.get(position);
-//		holder.title.setText(currentItem.get());
-//		holder.subTitle.setText(currentItem.getSubTitle());
-//		holder.start.setText(currentItem.getStart());
-//		holder.finish.setText(currentItem.getFinish());
-//		holder.totalHours.setText(currentItem.getTotalHours());
+		mDb = new DatabaseHelper(mContext.getApplicationContext());
+
+		Entry currentItem = mEntryItemList.get(position);
+		Job currentItemJob = mDb.getJobById(currentItem.getJobId());
+		Task currentItemTask = mDb.getTaskById(currentItem.getTaskId());
+
+		holder.title.setText(currentItemJob.getJobName());
+		holder.subTitle.setText(currentItemTask.getTaskName());
+		holder.start.setText(currentItem.getStart());
+		holder.finish.setText(currentItem.getFinish());
+		holder.totalHours.setText(currentItem.getTotalHoursWorked() + "");
 	}
 
 	@Override

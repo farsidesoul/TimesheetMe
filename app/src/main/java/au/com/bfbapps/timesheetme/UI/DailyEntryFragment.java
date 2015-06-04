@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,11 +68,11 @@ public class DailyEntryFragment extends Fragment implements DailyEntryRecyclerVi
 			}
 		});
 
-
 		CreateTestData();
 
-		mDailyEntries = mDb.getAllEntries();
+		List<Entry> DailyEntries = mDb.getAllEntries();
 
+		mDailyEntries = mDb.getAllEntriesByDate(date);
 		mRecyclerView = (RecyclerView)v.findViewById(R.id.daily_entry_list);
 		mDailyEntryAdapter = new DailyEntryRecyclerViewAdapter(getActivity(), mDailyEntries);
 		mDailyEntryAdapter.setClickListener(this);
@@ -88,8 +89,9 @@ public class DailyEntryFragment extends Fragment implements DailyEntryRecyclerVi
 	}
 
 	private void CreateTestData(){
-		mDb.createEntry(new Entry(Dates.ConvertStringToDate("20/05/15"), Dates.ConvertStringToTime("08:00"), Dates.ConvertStringToTime("11:00"), 0, 3, 0, 0));
-		mDb.createEntry(new Entry(Dates.ConvertStringToDate("04/06/15"), Dates.ConvertStringToTime("08:00"), Dates.ConvertStringToTime("11:30"), 0, 3, 0, 0));
-		mDb.createEntry(new Entry(Dates.ConvertStringToDate("04/06/15"), Dates.ConvertStringToTime("12:30"), Dates.ConvertStringToTime("15:00"), 0, 3, 1, 1));
+		Log.d("date format", Dates.ConvertStringToDate("20/05/2015").toString());
+		mDb.createEntry(new Entry(Dates.ConvertStringToDate("20/05/2015"), "08:00 AM", "11:00 AM", 0, 3, 1, 1));
+		mDb.createEntry(new Entry(Dates.ConvertStringToDate("04/06/2015"), "08:00 AM", "11:30 AM", 0, 3, 1, 2));
+		mDb.createEntry(new Entry(Dates.ConvertStringToDate("04/06/2015"), "12:30 PM", "03:00 PM", 0, 3, 2, 1));
 	}
 }

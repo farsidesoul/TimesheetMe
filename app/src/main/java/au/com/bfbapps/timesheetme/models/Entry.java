@@ -11,9 +11,9 @@ public class Entry {
 	@SerializedName("date")
 	private Date mDate;
 	@SerializedName("startTime")
-	private Date mStart;
+	private String mStart;
 	@SerializedName("finishTime")
-	private Date mFinish;
+	private String mFinish;
     @SerializedName("totalBreak")
     private double mTotalBreak;
 	@SerializedName("totalHoursWorked")
@@ -27,7 +27,7 @@ public class Entry {
 
 	}
 
-	public Entry(Date mDate, Date mStart, Date mFinish, double mTotalBreak, double mTotalHoursWorked, int mJobId, int mtaskId) {
+	public Entry(Date mDate, String mStart, String mFinish, double mTotalBreak, double mTotalHoursWorked, int mJobId, int mtaskId) {
 		this.mDate = mDate;
 		this.mStart = mStart;
 		this.mFinish = mFinish;
@@ -37,7 +37,7 @@ public class Entry {
 		this.mTaskId = mtaskId;
 	}
 
-    public Entry(int mEntryId, Date mDate, Date mStart, Date mFinish, double mTotalBreak, double mTotalHoursWorked, int mJobId, int mtaskId) {
+    public Entry(int mEntryId, Date mDate, String mStart, String mFinish, double mTotalBreak, double mTotalHoursWorked, int mJobId, int mtaskId) {
         this.mEntryId = mEntryId;
         this.mDate = mDate;
         this.mStart = mStart;
@@ -64,19 +64,19 @@ public class Entry {
 		mDate = date;
 	}
 
-	public Date getStart() {
+	public String getStart() {
 		return mStart;
 	}
 
-	public void setStart(Date start) {
+	public void setStart(String start) {
 		mStart = start;
 	}
 
-	public Date getFinish() {
+	public String getFinish() {
 		return mFinish;
 	}
 
-	public void setFinish(Date finish) {
+	public void setFinish(String finish) {
 		mFinish = finish;
 	}
 
