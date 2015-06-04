@@ -41,9 +41,12 @@ public class DailyEntryViewPagerFragment extends Fragment implements DailyEntryR
 		// Inflate the layout for this fragment
 		View v = inflater.inflate(R.layout.fragment_daily_entry_view_pager, container, false);
 
+		Bundle fragmentExtras = getArguments();
+		Date dateToShow = new Date(fragmentExtras.getString("date"));
+
 		mDb = new DatabaseHelper(getActivity().getApplicationContext());
 
-		mDailyEntries = mDb.getAllEntriesByDate(new Date());
+		mDailyEntries = mDb.getAllEntriesByDate(dateToShow);
 		mRecyclerView = (RecyclerView)v.findViewById(R.id.daily_entry_list);
 		mDailyEntryAdapter = new DailyEntryRecyclerViewAdapter(getActivity(), mDailyEntries);
 		mDailyEntryAdapter.setClickListener(this);
