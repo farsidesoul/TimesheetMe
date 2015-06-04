@@ -22,7 +22,9 @@ import java.util.List;
 import java.util.Locale;
 
 import au.com.bfbapps.timesheetme.R;
+import au.com.bfbapps.timesheetme.Util.Dates;
 import au.com.bfbapps.timesheetme.adapters.DailyEntryRecyclerViewAdapter;
+import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
 import au.com.bfbapps.timesheetme.models.Entry;
 
 public class DailyEntryFragment extends Fragment implements DailyEntryRecyclerViewAdapter.ClickListener {
@@ -35,12 +37,16 @@ public class DailyEntryFragment extends Fragment implements DailyEntryRecyclerVi
 	private FloatingActionButton mAddTimesButton;
 	private FloatingActionButton mSubmitTimesButton;
 	private FloatingActionMenu mFloatingActionMenu;
-	
+
+	private DatabaseHelper mDb;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_daily_entry, container, false);
 		((MainActivity)getActivity()).setActionBarTitle("");
+
+		mDb = new DatabaseHelper(getActivity().getApplicationContext());
 
 		Date date = new Date();
 		DateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
@@ -62,8 +68,9 @@ public class DailyEntryFragment extends Fragment implements DailyEntryRecyclerVi
 		});
 
 
-		// TEST DATA
-		mDailyEntries = CreateTestData();
+		CreateTestData();
+
+		mDailyEntries = mDb.getAllEntries();
 
 		mRecyclerView = (RecyclerView)v.findViewById(R.id.daily_entry_list);
 		mDailyEntryAdapter = new DailyEntryRecyclerViewAdapter(getActivity(), mDailyEntries);
@@ -80,11 +87,9 @@ public class DailyEntryFragment extends Fragment implements DailyEntryRecyclerVi
 		//TODO: Create method to go to detailed view of item clicked
 	}
 
-	private List<Entry> CreateTestData(){
-		List<Entry> data = new ArrayList<>();
-//		data.add(new Entry("27/6/15", "Possum Magic", "Graphic Design", "08:00", "11:00", "3"));
-//		data.add(new Entry("27/6/15", "Serious Sam", "Programming", "11:00", "12:30", "1.5"));
-//		data.add(new Entry("27/6/15", "Possum Magic", "Graphic Design", "13:30", "17:00", "3.5"));
-		return data;
+	private void CreateTestData(){
+		mDb.createEntry(new Entry(Dates.ConvertStringToDate("20/05/15"), Dates.ConvertStringToTime("08:00"), Dates.ConvertStringToTime("11:00"), 0, 3, 0, 0));
+		mDb.createEntry(new Entry(Dates.ConvertStringToDate("04/06/15"), Dates.ConvertStringToTime("08:00"), Dates.ConvertStringToTime("11:30"), 0, 3, 0, 0));
+		mDb.createEntry(new Entry(Dates.ConvertStringToDate("04/06/15"), Dates.ConvertStringToTime("12:30"), Dates.ConvertStringToTime("15:00"), 0, 3, 1, 1));
 	}
 }

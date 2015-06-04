@@ -13,6 +13,10 @@ public class Job {
 
 	}
 
+	public Job(String jobName){
+		mJobName = jobName;
+	}
+
 	public Job( int jobId, String jobName){
 		mJobId = jobId;
 		mJobName = jobName;

@@ -11,6 +11,9 @@ import android.view.MenuItem;
 
 import au.com.bfbapps.timesheetme.R;
 import au.com.bfbapps.timesheetme.UI.navdrawer.NavigationDrawerFragment;
+import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
+import au.com.bfbapps.timesheetme.models.Job;
+import au.com.bfbapps.timesheetme.models.Task;
 import au.com.bfbapps.timesheetme.models.User;
 
 
@@ -24,10 +27,13 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_appbar);
 
+
 		Bundle extras = getIntent().getExtras();
 		if(extras != null){
 			mUser = extras.getParcelable("user");
 		}
+
+		CreateInitialJobAndTaskDate();
 
 		mToolbar = (Toolbar)findViewById(R.id.app_bar);
 		setSupportActionBar(mToolbar);
@@ -81,5 +87,14 @@ public class MainActivity extends ActionBarActivity {
 	public void setActionBarTitle(String title){
 		if(getSupportActionBar() != null)
 			getSupportActionBar().setTitle(title);
+	}
+
+	private void CreateInitialJobAndTaskDate(){
+		DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+		db.createJob(new Job("Job 1"));
+		db.createJob(new Job("JOb 2"));
+
+		db.createTask(new Task("Task 1"));
+		db.createTask(new Task("Task 2"));
 	}
 }

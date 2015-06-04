@@ -439,4 +439,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				new String[]{String.valueOf(job.getJobId())});
 	}
 	//endregion
+
+	// Close the db
+	public void closeDB(){
+		SQLiteDatabase db = this.getReadableDatabase();
+		if (db != null && db.isOpen())
+			db.close();
+	}
 }

@@ -27,6 +27,16 @@ public class Entry {
 
 	}
 
+	public Entry(Date mDate, Date mStart, Date mFinish, double mTotalBreak, double mTotalHoursWorked, int mJobId, int mtaskId) {
+		this.mDate = mDate;
+		this.mStart = mStart;
+		this.mFinish = mFinish;
+		this.mTotalBreak = mTotalBreak;
+		this.mTotalHoursWorked = mTotalHoursWorked;
+		this.mJobId = mJobId;
+		this.mTaskId = mtaskId;
+	}
+
     public Entry(int mEntryId, Date mDate, Date mStart, Date mFinish, double mTotalBreak, double mTotalHoursWorked, int mJobId, int mtaskId) {
         this.mEntryId = mEntryId;
         this.mDate = mDate;

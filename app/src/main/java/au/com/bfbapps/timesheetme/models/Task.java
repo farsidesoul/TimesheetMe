@@ -13,6 +13,10 @@ public class Task {
 
 	}
 
+	public Task(String taskName){
+		mTaskName = taskName;
+	}
+
 	public Task(int taskId, String taskName){
 		mTaskId = taskId;
 		mTaskName = taskName;
