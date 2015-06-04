@@ -186,8 +186,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		List<Entry> entries = new ArrayList<>();
 
 		String selectQuery = "SELECT * FROM " + TABLE_ENTRY + " te, "
-				+ TABLE_JOB + " tj, WHERE tj." + COLUMN_JOB_ID + " = te."
+				+ TABLE_JOB + " tj, WHERE tj." + COLUMN_ID + " = te."
 				+ COLUMN_JOB_ID;
+
+		Log.e(TAG, selectQuery);
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		if(c.moveToFirst()){
+			do {
+				Entry entry = new Entry();
+				entry.setEntryId(c.getInt(c.getColumnIndex(COLUMN_ID)));
+				entry.setDate(Dates.ConvertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
+				entry.setStart(Dates.ConvertStringToTime(c.getString(c.getColumnIndex(COLUMN_START_TIME))));
+				entry.setFinish(Dates.ConvertStringToTime(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME))));
+				entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
+				entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
+				entry.setJobId(c.getInt(c.getColumnIndex(COLUMN_JOB_ID)));
+				entry.setTaskId(c.getInt(c.getColumnIndex(COLUMN_TASK_ID)));
+
+				entries.add(entry);
+			} while (c.moveToNext());
+		}
+		return entries;
+	}
+
+	public List<Entry> getAllEntriesByTaskId(int taskId){
+		List<Entry> entries = new ArrayList<>();
+
+		String selectQuery = "SELECT * FROM " + TABLE_ENTRY + " te, "
+				+ TABLE_TASK + " tt, WHERE tt." + COLUMN_ID + " = te."
+				+ COLUMN_TASK_ID;
 
 		Log.e(TAG, selectQuery);
 
@@ -307,12 +337,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	/**
 	 * Delete a task by id
-	 * @param taskId id of task to be deleted
+	 * @param task task to be deleted
+	 * @param shouldDeleteAllEntries if true, delete all entries that have this taskId
 	 */
-	public void deleteTask(long taskId){
+	public void deleteTask(Task task, boolean shouldDeleteAllEntries){
 		SQLiteDatabase db = this.getWritableDatabase();
+
+		if(shouldDeleteAllEntries){
+			List<Entry> allEntires = getAllEntriesByTaskId(task.getTaskId());
+
+			// Delete all Entries
+			for (Entry entries : allEntires){
+				deleteEntry(entries.getEntryId());
+			}
+		}
+
 		db.delete(TABLE_TASK, COLUMN_ID + " = ?",
-				new String[]{String.valueOf(taskId)});
+				new String[]{String.valueOf(task.getTaskId())});
 	}
 
 	//endregion
@@ -378,13 +419,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	/**
-	 * Delete a job by id
-	 * @param jobId id of task to be deleted
+	 * Delete a task by id
+	 * @param job task to be deleted
+	 * @param shouldDeleteAllEntries if true, delete all entries that have this taskId
 	 */
-	public void deleteJob(long jobId){
+	public void deleteJob(Job job, boolean shouldDeleteAllEntries){
 		SQLiteDatabase db = this.getWritableDatabase();
-		db.delete(TABLE_JOB, COLUMN_ID + " = ?",
-				new String[]{String.valueOf(jobId)});
+
+		if(shouldDeleteAllEntries){
+			List<Entry> allEntires = getAllEntriesByJobId(job.getJobId());
+
+			// Delete all Entries
+			for (Entry entries : allEntires){
+				deleteEntry(entries.getEntryId());
+			}
+		}
+
+		db.delete(TABLE_TASK, COLUMN_ID + " = ?",
+				new String[]{String.valueOf(job.getJobId())});
 	}
 	//endregion
 }
