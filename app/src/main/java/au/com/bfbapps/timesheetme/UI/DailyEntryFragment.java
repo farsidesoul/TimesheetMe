@@ -1,6 +1,8 @@
 package au.com.bfbapps.timesheetme.UI;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,12 +19,12 @@ import com.github.clans.fab.FloatingActionMenu;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import au.com.bfbapps.timesheetme.R;
+import au.com.bfbapps.timesheetme.UI.navdrawer.NavigationDrawerFragment;
 import au.com.bfbapps.timesheetme.Util.Dates;
 import au.com.bfbapps.timesheetme.adapters.DailyEntryRecyclerViewAdapter;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
@@ -70,8 +72,6 @@ public class DailyEntryFragment extends Fragment implements DailyEntryRecyclerVi
 
 		CreateTestData();
 
-		List<Entry> DailyEntries = mDb.getAllEntries();
-
 		mDailyEntries = mDb.getAllEntriesByDate(date);
 		mRecyclerView = (RecyclerView)v.findViewById(R.id.daily_entry_list);
 		mDailyEntryAdapter = new DailyEntryRecyclerViewAdapter(getActivity(), mDailyEntries);
@@ -89,9 +89,9 @@ public class DailyEntryFragment extends Fragment implements DailyEntryRecyclerVi
 	}
 
 	private void CreateTestData(){
-		Log.d("date format", Dates.ConvertStringToDate("20/05/2015").toString());
-		mDb.createEntry(new Entry(Dates.ConvertStringToDate("20/05/2015"), "08:00 AM", "11:00 AM", 0, 3, 1, 1));
-		mDb.createEntry(new Entry(Dates.ConvertStringToDate("04/06/2015"), "08:00 AM", "11:30 AM", 0, 3, 1, 2));
-		mDb.createEntry(new Entry(Dates.ConvertStringToDate("04/06/2015"), "12:30 PM", "03:00 PM", 0, 3, 2, 1));
+		mDb.createEntry(new Entry(Dates.ConvertStringToDate("04/06/2015"), "08:00 AM", "11:30 AM", 0, 3.5, 1, 1));
+		mDb.createEntry(new Entry(Dates.ConvertStringToDate("04/06/2015"), "12:30 PM", "01:00 PM", 0, 0.5, 2, 2));
+		mDb.createEntry(new Entry(Dates.ConvertStringToDate("04/06/2015"), "01:30 PM", "03:00 PM", 0, 1.5, 3, 3));
+		mDb.createEntry(new Entry(Dates.ConvertStringToDate("04/06/2015"), "03:30 PM", "05:00 PM", 0, 1.5, 4, 4));
 	}
 }

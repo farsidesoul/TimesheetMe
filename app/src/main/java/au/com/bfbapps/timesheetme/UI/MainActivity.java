@@ -1,5 +1,7 @@
 package au.com.bfbapps.timesheetme.UI;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -20,10 +22,12 @@ public class MainActivity extends ActionBarActivity {
 	private Toolbar mToolbar;
 	private User mUser;
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_appbar);
+
 
 		Bundle extras = getIntent().getExtras();
 		if(extras != null){
@@ -88,10 +92,15 @@ public class MainActivity extends ActionBarActivity {
 
 	private void CreateInitialJobAndTaskDate(){
 		DatabaseHelper db = new DatabaseHelper(getApplicationContext());
-		db.createJob(new Job("Job 1"));
-		db.createJob(new Job("JOb 2"));
 
-		db.createTask(new Task("Task 1"));
-		db.createTask(new Task("Task 2"));
+		db.createJob(new Job("Big Ship"));
+		db.createJob(new Job("Show and Tell"));
+		db.createJob(new Job("Website"));
+		db.createJob(new Job("Business Meeting"));
+
+		db.createTask(new Task("Ship Design"));
+		db.createTask(new Task("School stuff"));
+		db.createTask(new Task("Design and Development"));
+		db.createTask(new Task("Boring old people"));
 	}
 }
