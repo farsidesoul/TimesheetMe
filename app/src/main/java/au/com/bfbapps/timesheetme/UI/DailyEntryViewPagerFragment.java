@@ -42,7 +42,7 @@ public class DailyEntryViewPagerFragment extends Fragment implements DailyEntryR
 		View v = inflater.inflate(R.layout.fragment_daily_entry_view_pager, container, false);
 
 		Bundle fragmentExtras = getArguments();
-		Date dateToShow = new Date(fragmentExtras.getString("date"));
+		Date dateToShow = Dates.ConvertStringToDate(fragmentExtras.getString("date"));
 
 		mDb = new DatabaseHelper(getActivity().getApplicationContext());
 
