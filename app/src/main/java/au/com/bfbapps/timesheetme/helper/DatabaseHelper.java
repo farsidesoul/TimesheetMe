@@ -343,7 +343,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			do {
 				Task task = new Task();
 				task.setTaskId(c.getInt(c.getColumnIndex(COLUMN_ID)));
-				task.setTaskName(c.getString(c.getColumnIndex(COLUMN_JOB_NAME)));
+				task.setTaskName(c.getString(c.getColumnIndex(COLUMN_TASK_NAME)));
 
 				tasks.add(task);
 			} while (c.moveToNext());

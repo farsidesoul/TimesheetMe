@@ -24,10 +24,8 @@ public class DailyEntryViewPagerAdapter extends FragmentPagerAdapter {
 	public Fragment getItem(int position) {
 		Date pagerDate = new Date();
 
-		Calendar c = Calendar.getInstance();
-		c.setTime(pagerDate);
-		c.add(Calendar.DATE, position - 5000);  // number of days to add
-		String dayToShow = Dates.ConvertDateToString(c.getTime());  // dt is now the new date
+		String dayToShow = Dates.ConvertDateToString(
+				Dates.AddDaysToDate(pagerDate, position - 5000));
 
 		Bundle bundle = new Bundle();
 		bundle.putString("date", dayToShow);

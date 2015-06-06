@@ -2,6 +2,7 @@ package au.com.bfbapps.timesheetme.Util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Dates {
@@ -42,5 +43,13 @@ public class Dates {
 	public static String ConvertTimeToString(Date time){
 		SimpleDateFormat formatter = new SimpleDateFormat(TIME_FORMAT);
 		return formatter.format(time);
+	}
+
+
+	public static Date AddDaysToDate(Date date, int daysToAdd){
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.add(Calendar.DATE, daysToAdd);
+		return c.getTime();
 	}
 }
