@@ -222,9 +222,9 @@ public class DailyEntryFragment extends Fragment {
 						&& !taskTextView.getText().toString().equals("")) {
 					mDb.createEntry(new Entry(getDateFromActionBar(mDateTextView.getText().toString()),
 							mStartTime, mFinishTime, 0, 0, 1, 1));
-					mViewPager.setAdapter(new DailyEntryViewPagerAdapter(getResources(),
-							getActivity().getSupportFragmentManager()));
-					mViewPager.setCurrentItem(currentPosition);
+//					mViewPager.setAdapter(new DailyEntryViewPagerAdapter(getResources(),
+//							getActivity().getSupportFragmentManager()));
+//					mViewPager.setCurrentItem(currentPosition);
 					mViewPager.getAdapter().notifyDataSetChanged();
 				}
 				dialog.dismiss();
