@@ -73,9 +73,9 @@
 			android:id="@+id/daily_entry_item_total_hours"
 			android:layout_width="0dp"
 			android:layout_weight="1"
-			android:layout_height="wrap_content"
-			android:layout_gravity="center_vertical"
-			android:gravity="right"
+			android:layout_height="30dp"
+			android:layout_marginTop="24dp"
+			android:gravity="end|center_vertical"
 			android:text="2.5"
 			android:textSize="20sp"
 			android:textColor="@color/primaryText" />

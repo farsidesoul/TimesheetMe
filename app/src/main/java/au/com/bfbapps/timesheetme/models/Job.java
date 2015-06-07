@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class Job {
 
 	@SerializedName("jobId")
-	private int mJobId;
+	private long mJobId;
 	@SerializedName("jobName")
 	private String mJobName;
 
@@ -17,16 +17,16 @@ public class Job {
 		mJobName = jobName;
 	}
 
-	public Job( int jobId, String jobName){
+	public Job(long jobId, String jobName){
 		mJobId = jobId;
 		mJobName = jobName;
 	}
 
-	public int getJobId() {
+	public long getJobId() {
 		return mJobId;
 	}
 
-	public void setJobId(int jobId) {
+	public void setJobId(long jobId) {
 		mJobId = jobId;
 	}
 

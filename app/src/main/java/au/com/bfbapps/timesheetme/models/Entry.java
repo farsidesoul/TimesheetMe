@@ -7,7 +7,7 @@ import java.util.Date;
 public class Entry {
 
 	@SerializedName("entryId")
-	private int mEntryId;
+	private long mEntryId;
 	@SerializedName("date")
 	private Date mDate;
 	@SerializedName("startTime")
@@ -19,15 +19,15 @@ public class Entry {
 	@SerializedName("totalHoursWorked")
 	private double mTotalHoursWorked;
     @SerializedName("jobId")
-    private int mJobId;
+    private long mJobId;
     @SerializedName("taskId")
-    private int mTaskId;
+    private long mTaskId;
 
 	public Entry(){
 
 	}
 
-	public Entry(Date mDate, String mStart, String mFinish, double mTotalBreak, double mTotalHoursWorked, int mJobId, int mtaskId) {
+	public Entry(Date mDate, String mStart, String mFinish, double mTotalBreak, double mTotalHoursWorked, long mJobId, long mtaskId) {
 		this.mDate = mDate;
 		this.mStart = mStart;
 		this.mFinish = mFinish;
@@ -37,7 +37,7 @@ public class Entry {
 		this.mTaskId = mtaskId;
 	}
 
-    public Entry(int mEntryId, Date mDate, String mStart, String mFinish, double mTotalBreak, double mTotalHoursWorked, int mJobId, int mtaskId) {
+    public Entry(long mEntryId, Date mDate, String mStart, String mFinish, double mTotalBreak, double mTotalHoursWorked, long mJobId, long mtaskId) {
         this.mEntryId = mEntryId;
         this.mDate = mDate;
         this.mStart = mStart;
@@ -48,11 +48,11 @@ public class Entry {
         this.mTaskId = mtaskId;
     }
 
-	public int getEntryId() {
+	public long getEntryId() {
 		return mEntryId;
 	}
 
-	public void setEntryId(int entryId) {
+	public void setEntryId(long entryId) {
 		mEntryId = entryId;
 	}
 
@@ -96,19 +96,19 @@ public class Entry {
 		mTotalHoursWorked = totalHoursWorked;
 	}
 
-	public int getJobId() {
+	public long getJobId() {
 		return mJobId;
 	}
 
-	public void setJobId(int jobId) {
+	public void setJobId(long jobId) {
 		mJobId = jobId;
 	}
 
-	public int getTaskId() {
+	public long getTaskId() {
 		return mTaskId;
 	}
 
-	public void setTaskId(int mtaskId) {
+	public void setTaskId(long mtaskId) {
 		this.mTaskId = mtaskId;
 	}
 }

@@ -51,7 +51,7 @@ public class DailyEntryRecyclerViewAdapter
 		holder.subTitle.setText(currentItemTask.getTaskName());
 		holder.start.setText(currentItem.getStart());
 		holder.finish.setText(currentItem.getFinish());
-		holder.totalHours.setText(currentItem.getTotalHoursWorked() + "");
+		holder.totalHours.setText(String.format("%.2g%n", currentItem.getTotalHoursWorked()));
 	}
 
 	@Override

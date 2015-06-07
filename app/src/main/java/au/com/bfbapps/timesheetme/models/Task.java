@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class Task {
 
 	@SerializedName("taskId")
-	private int mTaskId;
+	private long mTaskId;
 	@SerializedName("taskName")
 	private String mTaskName;
 
@@ -17,16 +17,16 @@ public class Task {
 		mTaskName = taskName;
 	}
 
-	public Task(int taskId, String taskName){
+	public Task(long taskId, String taskName){
 		mTaskId = taskId;
 		mTaskName = taskName;
 	}
 
-	public int getTaskId() {
+	public long getTaskId() {
 		return mTaskId;
 	}
 
-	public void setTaskId(int taskId) {
+	public void setTaskId(long taskId) {
 		mTaskId = taskId;
 	}
 

@@ -214,7 +214,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	 * @param jobId job Id to get entries for
 	 * @return list of entries
 	 */
-	public List<Entry> getAllEntriesByJobId(int jobId){
+	public List<Entry> getAllEntriesByJobId(long jobId){
 		List<Entry> entries = new ArrayList<>();
 
 		String selectQuery = "SELECT * FROM " + TABLE_ENTRY + " te, "
@@ -245,7 +245,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return entries;
 	}
 
-	public List<Entry> getAllEntriesByTaskId(int taskId){
+	public List<Entry> getAllEntriesByTaskId(long taskId){
 		List<Entry> entries = new ArrayList<>();
 
 		String selectQuery = "SELECT * FROM " + TABLE_ENTRY + " te, "
@@ -352,7 +352,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return tasks;
 	}
 
-	public Task getTaskById(int taskId){
+	public Task getTaskById(long taskId){
 		Task task = new Task();
 		String selectQuery = "SELECT * FROM " + TABLE_TASK + " WHERE " + COLUMN_ID + " = " + taskId;
 
@@ -361,7 +361,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor c = db.rawQuery(selectQuery, null);
 
-		if (c != null){
+		if (c.getCount() > 0){
 			c.moveToFirst();
 
 			task.setTaskId(c.getInt(c.getColumnIndex(COLUMN_ID)));
@@ -370,7 +370,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			c.close();
 			return task;
 		}
-		return new Task(0, "");
+		return null;
+	}
+
+	/**
+	 * Get task by name
+	 * @param taskName task name to search for
+	 * @return new Task
+	 */
+	public Task getTaskByName(String taskName){
+		Task task = new Task();
+		String selectQuery = "SELECT * FROM " + TABLE_TASK + " WHERE "
+				+ COLUMN_TASK_NAME + " = '" + taskName + "'";
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		if (c.getCount() > 0){
+			c.moveToFirst();
+
+			task.setTaskId(c.getInt(c.getColumnIndex(COLUMN_ID)));
+			task.setTaskName(c.getString(c.getColumnIndex(COLUMN_TASK_NAME)));
+
+			c.close();
+			return task;
+		}
+		return null;
 	}
 
 	/**
@@ -455,7 +480,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return jobs;
 	}
 
-	public Job getJobById(int jobId){
+	public Job getJobById(long jobId){
 
 		String selectQuery = "SELECT * FROM " + TABLE_JOB + " WHERE " + COLUMN_ID + " = " + jobId;
 
@@ -464,7 +489,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor c = db.rawQuery(selectQuery, null);
 
-		if (c != null){
+		if (c.getCount() > 0){
 			c.moveToFirst();
 			Job job = new Job();
 			job.setJobId(c.getInt(c.getColumnIndex(COLUMN_ID)));
@@ -473,7 +498,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			c.close();
 			return job;
 		}
-		return new Job(0, "");
+		return null;
+	}
+
+	/**
+	 * Get Job by name
+	 * @param jobName job name to search for
+	 * @return job
+	 */
+	public Job getJobByName(String jobName){
+
+		String selectQuery = "SELECT * FROM " + TABLE_JOB + " WHERE "
+				+ COLUMN_JOB_NAME + " = '" + jobName + "'";
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		if (c.getCount() > 0){
+			c.moveToFirst();
+			Job job = new Job();
+			job.setJobId(c.getInt(c.getColumnIndex(COLUMN_ID)));
+			job.setJobName(c.getString(c.getColumnIndex(COLUMN_JOB_NAME)));
+
+			c.close();
+			return job;
+		}
+		return null;
 	}
 
 	/**

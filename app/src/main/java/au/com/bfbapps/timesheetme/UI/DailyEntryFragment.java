@@ -54,8 +54,6 @@ public class DailyEntryFragment extends Fragment {
 	private long mStartLong;
 	private long mFinishLong;
 	private double mTotalHoursWorked;
-	private int mJobId;
-	private int mTaskId;
 
 	private DatabaseHelper mDb;
 
@@ -143,22 +141,23 @@ public class DailyEntryFragment extends Fragment {
 		String minuteString;
 		String amPm;
 
-		if(hour < 10){
-			hourString = "0" + hour;
+		if (hour < 13){
+			amPm = "AM";
 		} else {
-			hourString = "" + hour;
+			amPm = "PM";
 		}
+
+		if (hour > 12){
+			hour -= 12;
+		} else if (hour == 0){
+			hour = 12;
+		}
+		hourString = "" + hour;
 
 		if(minute < 10){
 			minuteString = "0" + minute;
 		} else {
 			minuteString = "" + minute;
-		}
-
-		if (hour < 13){
-			amPm = "AM";
-		} else {
-			amPm = "PM";
 		}
 
 		return hourString + ":" + minuteString + " " + amPm;
@@ -225,14 +224,30 @@ public class DailyEntryFragment extends Fragment {
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+
 				if (!jobTextView.getText().toString().equals("")
 						&& !taskTextView.getText().toString().equals("")) {
+
+					long mJobId;
+					long mTaskId;
+
+					if(mDb.getJobByName(jobTextView.getText().toString()) != null){
+						mJobId = mDb.getJobByName(jobTextView.getText().toString()).getJobId();
+					} else {
+						mJobId = mDb.createJob(new Job(jobTextView.getText().toString()));
+					}
+
+					if(mDb.getTaskByName(taskTextView.getText().toString()) != null){
+						mTaskId = mDb.getTaskByName(taskTextView.getText().toString()).getTaskId();
+					} else {
+						mTaskId = mDb.createTask(new Task(taskTextView.getText().toString()));
+					}
 
 					mBreak = (totalBreakEditText.getText().toString().equals("") ? 0 : Double.valueOf(totalBreakEditText.getText().toString()));
 					mTotalHoursWorked = calculateHoursWorked(mStartLong, mFinishLong) - (mBreak / 60);
 
 					mDb.createEntry(new Entry(getDateFromActionBar(mDateTextView.getText().toString()),
-							mStartTime, mFinishTime, mBreak, mTotalHoursWorked, 1, 1));
+							mStartTime, mFinishTime, mBreak, mTotalHoursWorked, mJobId, mTaskId));
 					mViewPager.getAdapter().notifyDataSetChanged();
 				}
 				dialog.dismiss();
@@ -244,8 +259,6 @@ public class DailyEntryFragment extends Fragment {
 			public void onClick(View view) {
 				mStartTime = null;
 				mFinishTime = null;
-				mJobId = 0;
-				mTaskId = 0;
 				dialog.dismiss();
 			}
 		});
