@@ -14,6 +14,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -192,7 +193,15 @@ public class DailyEntryFragment extends Fragment {
 						mFinishTime = convertTimeToString(hour, minute);
 						Date date = Dates.ConvertTimeToDate(mFinishTime);
 						mFinishLong = date.getTime();
-						enterJobAndTask();
+						if (mFinishLong <= mStartLong){
+							Toast.makeText(getActivity(),
+									"Finish time must be after start",
+									Toast.LENGTH_SHORT)
+									.show();
+							enterFinishTime();
+						} else {
+							enterJobAndTask();
+						}
 					}
 				}, hour, minute, true);
 		timePickerDialog.setTitle("Enter Finish Time");
