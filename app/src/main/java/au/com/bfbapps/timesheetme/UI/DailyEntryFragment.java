@@ -2,12 +2,14 @@ package au.com.bfbapps.timesheetme.UI;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -228,6 +230,10 @@ public class DailyEntryFragment extends Fragment {
 
 		jobTextView.setThreshold(1);
 		taskTextView.setThreshold(1);
+
+		totalBreakEditText.requestFocus();
+		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
