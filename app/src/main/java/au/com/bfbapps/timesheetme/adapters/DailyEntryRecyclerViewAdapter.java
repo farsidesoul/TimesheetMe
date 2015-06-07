@@ -3,6 +3,7 @@ package au.com.bfbapps.timesheetme.adapters;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ public class DailyEntryRecyclerViewAdapter
 
 	private DatabaseHelper mDb;
 
+	private boolean isOpen = false;
+
 	public DailyEntryRecyclerViewAdapter(Context context, List<Entry> data){
 		mContext = context;
 		mEntryItemList = data;
@@ -45,7 +48,7 @@ public class DailyEntryRecyclerViewAdapter
 	}
 
 	@Override
-	public void onBindViewHolder(DailyEntryItemViewHolder holder, final int position) {
+	public void onBindViewHolder(final DailyEntryItemViewHolder holder, final int position) {
 		mDb = new DatabaseHelper(mContext.getApplicationContext());
 
 		Entry currentItem = mEntryItemList.get(position);
@@ -53,38 +56,33 @@ public class DailyEntryRecyclerViewAdapter
 		Task currentItemTask = mDb.getTaskById(currentItem.getTaskId());
 
 		holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
-		holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, holder.bottomWrapper);
-		holder.swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
+		holder.swipeLayout.setSwipeEnabled(false);
+		Log.d("Swipe", "Disabled");
+		holder.swipeLayout.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
-			public void onStartOpen(SwipeLayout swipeLayout) {
+			public boolean onLongClick(View view) {
+				if (isOpen) {
+					holder.swipeLayout.close();
+					isOpen = false;
+				} else {
+					holder.swipeLayout.open();
+					isOpen = true;
+				}
 
-			}
-
-			@Override
-			public void onOpen(SwipeLayout swipeLayout) {
-
-			}
-
-			@Override
-			public void onStartClose(SwipeLayout swipeLayout) {
-
-			}
-
-			@Override
-			public void onClose(SwipeLayout swipeLayout) {
-
-			}
-
-			@Override
-			public void onUpdate(SwipeLayout swipeLayout, int i, int i1) {
-
-			}
-
-			@Override
-			public void onHandRelease(SwipeLayout swipeLayout, float v, float v1) {
-
+				return true;
 			}
 		});
+
+		holder.swipeLayout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (isOpen) {
+					holder.swipeLayout.close();
+					isOpen = false;
+				}
+			}
+		});
+
 
 		holder.deleteButton.setOnClickListener(new View.OnClickListener() {
 			@Override
