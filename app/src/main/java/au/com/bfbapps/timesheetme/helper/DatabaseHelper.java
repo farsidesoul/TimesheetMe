@@ -55,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_DAILY_ENTRY = "CREATE TABLE "
             + TABLE_ENTRY + "(" + COLUMN_ID + " INTEGER PRIMARY KEY," + COLUMN_DATE
             + " DATE," + COLUMN_START_TIME + " DATETIME," + COLUMN_FINISH_TIME + " DATETIME,"
-            + COLUMN_TOTAL_BREAK + " REAL," + COLUMN_TOTAL_HOURS_WORKED + " REAL,"
+            + COLUMN_TOTAL_BREAK + " INTEGER," + COLUMN_TOTAL_HOURS_WORKED + " REAL,"
             + COLUMN_JOB_ID + " INTEGER," + COLUMN_TASK_ID + " INTEGER, FOREIGN KEY("
             + COLUMN_JOB_ID + ") REFERENCES " + TABLE_JOB + "(" + COLUMN_ID + "), FOREIGN KEY("
             + COLUMN_TASK_ID + ") REFERENCES " + TABLE_TASK + "(" + COLUMN_ID + "))";

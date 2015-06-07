@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -51,6 +51,8 @@ public class DailyEntryFragment extends Fragment {
 	private String mStartTime;
 	private String mFinishTime;
 	private double mBreak;
+	private long mStartLong;
+	private long mFinishLong;
 	private double mTotalHoursWorked;
 	private int mJobId;
 	private int mTaskId;
@@ -171,6 +173,8 @@ public class DailyEntryFragment extends Fragment {
 					@Override
 					public void onTimeSet(TimePicker timePicker, int hour, int minute) {
 						mStartTime = convertTimeToString(hour, minute);
+						Date date = Dates.ConvertTimeToDate(mStartTime);
+						mStartLong = date.getTime();
 						enterFinishTime();
 					}
 				}, hour, minute, true);
@@ -187,6 +191,8 @@ public class DailyEntryFragment extends Fragment {
 					@Override
 					public void onTimeSet(TimePicker timePicker, int hour, int minute) {
 						mFinishTime = convertTimeToString(hour, minute);
+						Date date = Dates.ConvertTimeToDate(mFinishTime);
+						mFinishLong = date.getTime();
 						enterJobAndTask();
 					}
 				}, hour, minute, true);
@@ -199,6 +205,7 @@ public class DailyEntryFragment extends Fragment {
 		dialog.setContentView(R.layout.fragment_daily_entry_add_job_task_popup);
 		dialog.setTitle("Enter Job and Task");
 
+		final EditText totalBreakEditText = (EditText)dialog.findViewById(R.id.daily_entry_break_editText);
 		final AutoCompleteTextView jobTextView =
 				(AutoCompleteTextView) dialog.findViewById(R.id.daily_entry_job_picker);
 		final AutoCompleteTextView taskTextView =
@@ -220,11 +227,12 @@ public class DailyEntryFragment extends Fragment {
 			public void onClick(View view) {
 				if (!jobTextView.getText().toString().equals("")
 						&& !taskTextView.getText().toString().equals("")) {
+
+					mBreak = (totalBreakEditText.getText().toString().equals("") ? 0 : Double.valueOf(totalBreakEditText.getText().toString()));
+					mTotalHoursWorked = calculateHoursWorked(mStartLong, mFinishLong) - (mBreak / 60);
+
 					mDb.createEntry(new Entry(getDateFromActionBar(mDateTextView.getText().toString()),
-							mStartTime, mFinishTime, 0, 0, 1, 1));
-//					mViewPager.setAdapter(new DailyEntryViewPagerAdapter(getResources(),
-//							getActivity().getSupportFragmentManager()));
-//					mViewPager.setCurrentItem(currentPosition);
+							mStartTime, mFinishTime, mBreak, mTotalHoursWorked, 1, 1));
 					mViewPager.getAdapter().notifyDataSetChanged();
 				}
 				dialog.dismiss();
@@ -244,6 +252,16 @@ public class DailyEntryFragment extends Fragment {
 
 		dialog.show();
 
+	}
+
+	/**
+	 * Calculates the total worked hours
+	 * @param start start time in long format
+	 * @param finish finish time in long format
+	 * @return total hours worked
+	 */
+	private double calculateHoursWorked(long start, long finish){
+		return (double)(((finish - start) / 60000) / 60);
 	}
 
 	private ArrayList<String> extractJobName(List<Job> list){

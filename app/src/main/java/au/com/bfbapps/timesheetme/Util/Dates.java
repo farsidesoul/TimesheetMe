@@ -1,5 +1,7 @@
 package au.com.bfbapps.timesheetme.Util;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,7 +9,7 @@ import java.util.Date;
 
 public class Dates {
 	public static final String DATE_FORMAT = "dd/MM/yyyy";
-	public static final String TIME_FORMAT = "hh:mm:ss a";
+	public static final String TIME_FORMAT = "hh:mm a";
 
 	/**
 	 * Convert String date into Java Date
@@ -43,6 +45,17 @@ public class Dates {
 	public static String ConvertTimeToString(Date time){
 		SimpleDateFormat formatter = new SimpleDateFormat(TIME_FORMAT);
 		return formatter.format(time);
+	}
+
+	public static Date ConvertTimeToDate(String time){
+		SimpleDateFormat formatter = new SimpleDateFormat(TIME_FORMAT);
+		try {
+			return formatter.parse(time);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			Log.d("DATE", "UNABLE TO PARSE");
+		}
+		return null;
 	}
 
 
