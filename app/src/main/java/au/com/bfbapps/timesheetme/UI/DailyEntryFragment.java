@@ -5,7 +5,6 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -257,6 +256,11 @@ public class DailyEntryFragment extends Fragment {
 
 					mDb.createEntry(new Entry(getDateFromActionBar(mDateTextView.getText().toString()),
 							mStartTime, mFinishTime, mBreak, mTotalHoursWorked, mJobId, mTaskId));
+
+					// Re-populate the job and task lists so we can re-use them immediately
+					mJobList = mDb.getAllJobs();
+					mTaskList = mDb.getAllTasks();
+
 					mViewPager.getAdapter().notifyDataSetChanged();
 				}
 				dialog.dismiss();

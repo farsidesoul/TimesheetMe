@@ -59,6 +59,7 @@ public class DailyEntryViewPagerFragment extends Fragment implements DailyEntryR
 	@Override
 	public void itemClicked(View view, int position) {
 		//TODO: Create method to go to detailed view of item clicked
+		//mDailyEntryAdapter.delete(position);
 	}
 
 	

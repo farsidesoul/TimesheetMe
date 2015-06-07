@@ -1,11 +1,15 @@
 package au.com.bfbapps.timesheetme.adapters;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.daimajia.swipe.SwipeLayout;
 
 import java.util.List;
 
@@ -35,17 +39,59 @@ public class DailyEntryRecyclerViewAdapter
 	@Override
 	public DailyEntryItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View view = mInflater.inflate(R.layout.fragment_daily_entry_item, parent, false);
+
 		DailyEntryItemViewHolder holder = new DailyEntryItemViewHolder(view);
 		return holder;
 	}
 
 	@Override
-	public void onBindViewHolder(DailyEntryItemViewHolder holder, int position) {
+	public void onBindViewHolder(DailyEntryItemViewHolder holder, final int position) {
 		mDb = new DatabaseHelper(mContext.getApplicationContext());
 
 		Entry currentItem = mEntryItemList.get(position);
 		Job currentItemJob = mDb.getJobById(currentItem.getJobId());
 		Task currentItemTask = mDb.getTaskById(currentItem.getTaskId());
+
+		holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
+		holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, holder.bottomWrapper);
+		holder.swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
+			@Override
+			public void onStartOpen(SwipeLayout swipeLayout) {
+
+			}
+
+			@Override
+			public void onOpen(SwipeLayout swipeLayout) {
+
+			}
+
+			@Override
+			public void onStartClose(SwipeLayout swipeLayout) {
+
+			}
+
+			@Override
+			public void onClose(SwipeLayout swipeLayout) {
+
+			}
+
+			@Override
+			public void onUpdate(SwipeLayout swipeLayout, int i, int i1) {
+
+			}
+
+			@Override
+			public void onHandRelease(SwipeLayout swipeLayout, float v, float v1) {
+
+			}
+		});
+
+		holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				delete(position);
+			}
+		});
 
 		holder.title.setText(currentItemJob.getJobName());
 		holder.subTitle.setText(currentItemTask.getTaskName());
@@ -61,6 +107,7 @@ public class DailyEntryRecyclerViewAdapter
 
 	public void delete(int position){
 		//TODO: Create call to DB to remove item from DB
+		mDb.deleteEntry(mEntryItemList.get(position).getEntryId());
 		mEntryItemList.remove(position);
 		notifyItemRemoved(position);
 	}
@@ -69,30 +116,39 @@ public class DailyEntryRecyclerViewAdapter
 		mClickListener = clickListener;
 	}
 
-	class DailyEntryItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+	class DailyEntryItemViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
 
+		SwipeLayout swipeLayout;
 		TextView title;
 		TextView subTitle;
 		TextView start;
 		TextView finish;
 		TextView totalHours;
+		LinearLayout bottomWrapper;
+		TextView deleteButton;
 
 		public DailyEntryItemViewHolder(View itemView) {
 			super(itemView);
-			itemView.setOnClickListener(this);
+			itemView.setOnLongClickListener(this);
 			title = (TextView)itemView.findViewById(R.id.daily_entry_item_title);
 			subTitle = (TextView)itemView.findViewById(R.id.daily_entry_item_sub_title);
 			start = (TextView)itemView.findViewById(R.id.daily_entry_item_start_time);
 			finish = (TextView)itemView.findViewById(R.id.daily_entry_item_finish_time);
 			totalHours = (TextView)itemView.findViewById(R.id.daily_entry_item_total_hours);
+			swipeLayout = (SwipeLayout)itemView.findViewById(R.id.swipeLayout);
+			bottomWrapper = (LinearLayout)itemView.findViewById(R.id.bottom_wrapper);
+			deleteButton = (TextView)itemView.findViewById(R.id.daily_entry_delete_button);
 		}
 
 		@Override
-		public void onClick(View view) {
+		public boolean onLongClick(View view) {
 			if (mClickListener != null){
 				mClickListener.itemClicked(view, getPosition());
 			}
+			return false;
 		}
+
+
 	}
 
 	public interface ClickListener {
