@@ -3,6 +3,7 @@
     <color name="primaryColor">#009688</color>
     <color name="primaryColorDark">#00796B</color>
     <color name="accentColor">#FFC107</color>
+    <color name="accentColorDark">#ffc49007</color>
     <color name="primaryColorLight">#B2DFDB</color>
     <color name="textIcons">#FFFFFF</color>
     <color name="primaryText">#D8000000</color>
@@ -11,6 +12,8 @@
     <color name="primaryHintText">#66212121</color>
     <color name="fabMenuBlue">#0BC9CD</color>
 	<color name="fabMenuBlueDark">#ff0b8488</color>
+	<color name="fabMenuBlueLight">#ff53edef</color>
 	<color name="fabMenuGreen">#52AA5E</color>
 	<color name="fabMenuGreenDark">#ff366c36</color>
+	<color name="fabMenuGreenLight">#ff93e8ae</color>
 </resources>

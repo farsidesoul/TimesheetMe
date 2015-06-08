@@ -59,13 +59,24 @@
 		fab:menu_openDirection="down">
 
 		<com.github.clans.fab.FloatingActionButton
+			android:id="@+id/back_to_today_menu"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@mipmap/ic_restore_white_24dp"
+			fab:fab_colorNormal="@color/accentColor"
+			fab:fab_colorPressed="@color/accentColorDark"
+			fab:fab_colorRipple="@color/primaryHintText"
+			fab:fab_label="Back to Today"
+			fab:fab_size="mini"/>
+
+		<com.github.clans.fab.FloatingActionButton
 			android:id="@+id/goto_date_menu"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:src="@mipmap/ic_search_white_24dp"
 			fab:fab_colorNormal="@color/fabMenuBlue"
 			fab:fab_colorPressed="@color/fabMenuBlueDark"
-			fab:fab_colorRipple="@color/fabMenuBlueDark"
+			fab:fab_colorRipple="@color/fabMenuBlueLight"
 			fab:fab_label="Go To Date"
 			fab:fab_size="mini"/>
 
@@ -76,7 +87,7 @@
 			android:src="@mipmap/ic_add_white_24dp"
 			fab:fab_colorNormal="@color/fabMenuGreen"
 			fab:fab_colorPressed="@color/fabMenuGreenDark"
-			fab:fab_colorRipple="@color/fabMenuGreenDark"
+			fab:fab_colorRipple="@color/fabMenuGreenLight"
 			fab:fab_label="Add Times"
 			fab:fab_size="mini"/>
 

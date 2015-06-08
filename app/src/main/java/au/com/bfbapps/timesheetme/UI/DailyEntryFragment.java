@@ -47,6 +47,7 @@ public class DailyEntryFragment extends Fragment {
 	private FloatingActionButton mAddTimesButton;
 	private FloatingActionButton mGotoDateButton;
 	private FloatingActionMenu mFloatingActionMenu;
+	private FloatingActionButton mBackToTodayButton;
 
 	private ViewPager mViewPager;
 
@@ -112,6 +113,7 @@ public class DailyEntryFragment extends Fragment {
 		mFloatingActionMenu = (FloatingActionMenu)v.findViewById(R.id.fab);
 		mAddTimesButton = (FloatingActionButton)v.findViewById(R.id.add_times_menu);
 		mGotoDateButton = (FloatingActionButton)v.findViewById(R.id.goto_date_menu);
+		mBackToTodayButton = (FloatingActionButton)v.findViewById(R.id.back_to_today_menu);
 
 		mAddTimesButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -130,7 +132,16 @@ public class DailyEntryFragment extends Fragment {
 			}
 		});
 
-
+		mBackToTodayButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				mViewPager.setCurrentItem(5000, false);
+				currentPosition = 5000;
+				setDateOnActionBar(new Date());
+				mViewPager.getAdapter().notifyDataSetChanged();
+				mFloatingActionMenu.close(true);
+			}
+		});
 
 		return v;
 	}
@@ -322,6 +333,7 @@ public class DailyEntryFragment extends Fragment {
 
 		datePickerDialog.setTitle("Select Date");
 		datePickerDialog.show();
+
 	}
 
 	/**
