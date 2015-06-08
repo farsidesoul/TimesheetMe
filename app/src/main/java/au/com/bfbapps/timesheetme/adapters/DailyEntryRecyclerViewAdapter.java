@@ -58,7 +58,6 @@ public class DailyEntryRecyclerViewAdapter
 		holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
 		holder.swipeLayout.close();
 		holder.swipeLayout.setSwipeEnabled(false);
-		Log.d("Swipe", "Disabled");
 		holder.swipeLayout.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View view) {
@@ -97,7 +96,6 @@ public class DailyEntryRecyclerViewAdapter
 		holder.start.setText(currentItem.getStart());
 		holder.finish.setText(currentItem.getFinish());
 		holder.totalHours.setText(String.format("%.2g%n", currentItem.getTotalHoursWorked()));
-		Log.d("Date", currentItem.getDate().toString());
 	}
 
 	@Override
