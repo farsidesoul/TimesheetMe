@@ -106,7 +106,6 @@ public class DailyEntryRecyclerViewAdapter
 	}
 
 	public void delete(int position){
-		//TODO: Create call to DB to remove item from DB
 		mDb.deleteEntry(mEntryItemList.get(position).getEntryId());
 		mEntryItemList.remove(position);
 		notifyItemRemoved(position);
