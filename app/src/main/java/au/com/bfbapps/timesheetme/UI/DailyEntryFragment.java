@@ -71,6 +71,8 @@ public class DailyEntryFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_daily_entry, container, false);
 		((MainActivity)getActivity()).setActionBarTitle("");
 
+		Log.d("day int", Dates.GetDayNameFromDate(new Date()) + "");
+
 		mDb = new DatabaseHelper(getActivity().getApplicationContext());
 		mJobList = mDb.getAllJobs();
 		mTaskList = mDb.getAllTasks();

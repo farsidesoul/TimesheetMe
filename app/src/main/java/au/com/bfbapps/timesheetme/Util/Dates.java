@@ -58,11 +58,38 @@ public class Dates {
 		return null;
 	}
 
-
+	/**
+	 * Add an amount of dates to a date
+	 * @param date start date
+	 * @param daysToAdd amount of dates to add (can be negative)
+	 * @return new Date
+	 */
 	public static Date AddDaysToDate(Date date, int daysToAdd){
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
 		c.add(Calendar.DATE, daysToAdd);
 		return c.getTime();
+	}
+
+	public static String GetDayNameFromDate(Date date){
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		switch (c.get(Calendar.DAY_OF_WEEK)){
+			case 1:
+				return "Sunday";
+			case 2:
+				return "Monday";
+			case 3:
+				return "Tuesday";
+			case 4:
+				return "Wednesday";
+			case 5:
+				return "Thursday";
+			case 6:
+				return "Friday";
+			case 7:
+				return "Saturday";
+		}
+		return "";
 	}
 }

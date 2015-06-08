@@ -28,7 +28,7 @@ public class WeeklyScheduleFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_weekly_entry, container, false);
-		mWeeklyListView = (ListView)v.findViewById(R.id.weekly_entry_listView);
+//		mWeeklyListView = (ListView)v.findViewById(R.id.weekly_entry_list);
 
 		((MainActivity)getActivity()).setActionBarTitle("Week in Review");
 		createTestData();

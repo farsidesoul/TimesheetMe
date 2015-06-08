@@ -7,15 +7,33 @@
 			  android:paddingRight="16dp"
     android:background="#fafafa">
 
-    <TextView
-        android:id="@+id/weekly_entry_day_of_week"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:text="A date/day"
-        android:textSize="17sp"
-        android:textColor="@color/primaryText"
-        android:gravity="center_vertical"
-        android:textStyle="bold"/>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="35dp"
+		android:orientation="horizontal">
+		<TextView
+			android:id="@+id/weekly_entry_day_of_week"
+			android:layout_width="0dp"
+			android:layout_weight="0.5"
+			android:layout_height="match_parent"
+			android:text="A date/day"
+			android:textSize="17sp"
+			android:textColor="@color/primaryText"
+			android:gravity="center_vertical"/>
+
+		<TextView
+			android:id="@+id/weekly_entry_date"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="0.5"
+			android:text="Date"
+			android:textSize="17sp"
+			android:textColor="@color/primaryText"
+			android:gravity="center_vertical|end"/>
+
+	</LinearLayout>
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -46,6 +64,7 @@
 		android:layout_height="wrap_content">
 
 		<TextView
+			android:id="@+id/weekly_entry_task_name"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="Task Name"
@@ -55,7 +74,7 @@
 			android:textStyle="bold"/>
 
 		<TextView
-			android:id="@+id/weekly_entry_task_name"
+			android:id="@+id/weekly_entry_task_hours"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerVertical="true"

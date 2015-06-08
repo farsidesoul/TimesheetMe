@@ -33,7 +33,7 @@ public class WeeklyViewListAdapter extends ArrayAdapter<String[]> {
 
 			holder = new ViewHolder();
 			holder.day = (TextView)convertView.findViewById(R.id.weekly_entry_day_of_week);
-			holder.hoursWorked = (TextView)convertView.findViewById(R.id.weekly_entry_hours_worked);
+//			holder.hoursWorked = (TextView)convertView.findViewById(R.id.weekly_entry_hours_worked);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder)convertView.getTag();
