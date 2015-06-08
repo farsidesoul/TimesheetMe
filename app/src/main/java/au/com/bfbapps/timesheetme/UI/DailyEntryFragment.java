@@ -1,5 +1,6 @@
 package au.com.bfbapps.timesheetme.UI;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -42,7 +44,7 @@ public class DailyEntryFragment extends Fragment {
 	private TextView mDateTextView;
 
 	private FloatingActionButton mAddTimesButton;
-	private FloatingActionButton mSubmitTimesButton;
+	private FloatingActionButton mGotoDateButton;
 	private FloatingActionMenu mFloatingActionMenu;
 
 	private ViewPager mViewPager;
@@ -107,7 +109,7 @@ public class DailyEntryFragment extends Fragment {
 		// Floating Action Button menu
 		mFloatingActionMenu = (FloatingActionMenu)v.findViewById(R.id.fab);
 		mAddTimesButton = (FloatingActionButton)v.findViewById(R.id.add_times_menu);
-		mSubmitTimesButton = (FloatingActionButton)v.findViewById(R.id.submit_times_menu);
+		mGotoDateButton = (FloatingActionButton)v.findViewById(R.id.goto_date_menu);
 
 		mAddTimesButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -115,6 +117,14 @@ public class DailyEntryFragment extends Fragment {
 				enterStartTime();
 				mFloatingActionMenu.close(true);
 
+			}
+		});
+
+		mGotoDateButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				selectDate();
+				mFloatingActionMenu.close(true);
 			}
 		});
 
@@ -286,6 +296,31 @@ public class DailyEntryFragment extends Fragment {
 
 	}
 
+	private void selectDate(){
+		Calendar mCurrentDate = Calendar.getInstance();
+		int day = mCurrentDate.get(Calendar.DAY_OF_MONTH);
+		int month = mCurrentDate.get(Calendar.MINUTE);
+		int year = mCurrentDate.get(Calendar.YEAR);
+
+		final DatePickerDialog datePickerDialog =
+				new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+					@Override
+					public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+						Calendar selectedDate = Calendar.getInstance();
+						selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+						selectedDate.set(Calendar.MONTH, monthOfYear);
+						selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+						//TODO: Fix this so it works.
+						mViewPager.setCurrentItem(getPositionOfSelection(selectedDate.getTime()));
+						mViewPager.getAdapter().notifyDataSetChanged();
+						setDateOnActionBar(selectedDate.getTime());
+					}
+				}, year, month, day);
+
+		datePickerDialog.setTitle("Select Date");
+		datePickerDialog.show();
+	}
+
 	/**
 	 * Calculates the total worked hours
 	 * @param start start time in long format
@@ -294,6 +329,14 @@ public class DailyEntryFragment extends Fragment {
 	 */
 	private double calculateHoursWorked(long start, long finish){
 		return (double)(((finish - start) / 60000) / 60);
+	}
+
+	private int getPositionOfSelection(Date selection){
+		long today = new Date().getTime();
+		today = today / (1000*60*60*24);
+		long newPosition = selection.getTime();
+		newPosition = newPosition / (1000*60*60*24);
+		return (int)(today - newPosition);
 	}
 
 	private ArrayList<String> extractJobName(List<Job> list){

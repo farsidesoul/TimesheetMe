@@ -59,7 +59,7 @@
 		fab:menu_openDirection="down">
 
 		<com.github.clans.fab.FloatingActionButton
-			android:id="@+id/submit_times_menu"
+			android:id="@+id/goto_date_menu"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:src="@mipmap/ic_search_white_24dp"
