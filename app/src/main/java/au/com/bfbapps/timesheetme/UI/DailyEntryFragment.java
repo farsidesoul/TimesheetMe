@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,6 +94,7 @@ public class DailyEntryFragment extends Fragment {
 
 			@Override
 			public void onPageSelected(int position) {
+				Log.d("Position", position + "");
 				setDateOnActionBar(Dates.AddDaysToDate(new Date(), position - 5000));
 				currentPosition = position;
 			}
@@ -299,20 +301,20 @@ public class DailyEntryFragment extends Fragment {
 	private void selectDate(){
 		Calendar mCurrentDate = Calendar.getInstance();
 		int day = mCurrentDate.get(Calendar.DAY_OF_MONTH);
-		int month = mCurrentDate.get(Calendar.MINUTE);
+		int month = mCurrentDate.get(Calendar.MONTH);
 		int year = mCurrentDate.get(Calendar.YEAR);
 
 		final DatePickerDialog datePickerDialog =
 				new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
 					@Override
-					public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+					public void onDateSet(DatePicker view, int yearSelected, int monthOfYearSelected, int dayOfMonthSelected) {
 						Calendar selectedDate = Calendar.getInstance();
-						selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-						selectedDate.set(Calendar.MONTH, monthOfYear);
-						selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-						//TODO: Fix this so it works.
-						mViewPager.setCurrentItem(getPositionOfSelection(selectedDate.getTime()) - 5000);
-						currentPosition = getPositionOfSelection(selectedDate.getTime()) - 5000;
+						selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonthSelected);
+						selectedDate.set(Calendar.MONTH, monthOfYearSelected);
+						selectedDate.set(Calendar.YEAR, yearSelected);
+						int positionOfSelection = getPositionOfSelection(selectedDate.getTime());
+						mViewPager.setCurrentItem(positionOfSelection);
+						currentPosition = positionOfSelection;
 						mViewPager.getAdapter().notifyDataSetChanged();
 						setDateOnActionBar(selectedDate.getTime());
 					}
@@ -332,12 +334,18 @@ public class DailyEntryFragment extends Fragment {
 		return (double)(((finish - start) / 60000) / 60);
 	}
 
+	/**
+	 * Gets todays date and selection, converts both to long format and
+	 * calculates the position.
+	 * @param selection Date to get the current position of
+	 * @return position for the date selected
+	 */
 	private int getPositionOfSelection(Date selection){
 		long today = new Date().getTime();
 		today = today / (1000*60*60*24);
 		long newPosition = selection.getTime();
 		newPosition = newPosition / (1000*60*60*24);
-		return (int)(today - newPosition);
+		return (int)(5000 - (today - newPosition));
 	}
 
 	private ArrayList<String> extractJobName(List<Job> list){
