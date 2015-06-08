@@ -105,15 +105,15 @@ public class DailyEntryFragment extends Fragment {
 		setDateOnActionBar(new Date());
 
 		// Floating Action Button menu
-//		mFloatingActionMenu = (FloatingActionMenu)v.findViewById(R.id.fab);
+		mFloatingActionMenu = (FloatingActionMenu)v.findViewById(R.id.fab);
 		mAddTimesButton = (FloatingActionButton)v.findViewById(R.id.add_times_menu);
-//		mSubmitTimesButton = (FloatingActionButton)v.findViewById(R.id.submit_times_menu);
+		mSubmitTimesButton = (FloatingActionButton)v.findViewById(R.id.submit_times_menu);
 
 		mAddTimesButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				enterStartTime();
-//				mFloatingActionMenu.close(true);
+				mFloatingActionMenu.close(true);
 
 			}
 		});

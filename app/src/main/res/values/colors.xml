@@ -9,4 +9,8 @@
     <color name="secondaryText">#727272</color>
     <color name="dividerColor">#B6B6B6</color>
     <color name="primaryHintText">#66212121</color>
+    <color name="fabMenuBlue">#0BC9CD</color>
+	<color name="fabMenuBlueDark">#ff0b8488</color>
+	<color name="fabMenuGreen">#52AA5E</color>
+	<color name="fabMenuGreenDark">#ff366c36</color>
 </resources>
