@@ -311,7 +311,8 @@ public class DailyEntryFragment extends Fragment {
 						selectedDate.set(Calendar.MONTH, monthOfYear);
 						selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 						//TODO: Fix this so it works.
-						mViewPager.setCurrentItem(getPositionOfSelection(selectedDate.getTime()));
+						mViewPager.setCurrentItem(getPositionOfSelection(selectedDate.getTime()) - 5000);
+						currentPosition = getPositionOfSelection(selectedDate.getTime()) - 5000;
 						mViewPager.getAdapter().notifyDataSetChanged();
 						setDateOnActionBar(selectedDate.getTime());
 					}
