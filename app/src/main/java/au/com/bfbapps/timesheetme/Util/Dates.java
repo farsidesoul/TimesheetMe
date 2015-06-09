@@ -71,6 +71,27 @@ public class Dates {
 		return c.getTime();
 	}
 
+	/**
+	 * Add am amount of weeks to a date
+	 * @param date start of week date
+	 * @param weeksToAdd number of weeks to add to date (can be negative)
+	 * @return new date
+	 */
+	public static Date AddWeeksToDate(Date date, int weeksToAdd){
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.add(Calendar.WEEK_OF_YEAR, weeksToAdd);
+		return c.getTime();
+	}
+
+	public static Date GetStartOfWeek(Date date){
+		Calendar c = Calendar.getInstance();
+		c.setFirstDayOfWeek(Calendar.MONDAY);
+		c.setTime(date);
+		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		return c.getTime();
+	}
+
 	public static String GetDayNameFromDate(Date date){
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);

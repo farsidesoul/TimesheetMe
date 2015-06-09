@@ -3,6 +3,7 @@ package au.com.bfbapps.timesheetme.UI;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,11 +33,15 @@ public class WeeklyEntryViewPagerFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_weekly_entry, container, false);
+		View v = inflater.inflate(R.layout.fragment_weekly_entry_view_pager, container, false);
 
-		((MainActivity)getActivity()).setActionBarTitle("Week in Review");
+		mDb = new DatabaseHelper(getActivity().getApplicationContext());
 
+		// add in database method to grab weekly entries
+		mRecyclerView = (RecyclerView)v.findViewById(R.id.weekly_entry_list);
 		mWeeklyEntryAdapter = new WeeklyEntryRecyclerViewAdapter(getActivity(), mWeeklyEntryList);
+		mRecyclerView.setAdapter(mWeeklyEntryAdapter);
+		mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 		return v;
 	}

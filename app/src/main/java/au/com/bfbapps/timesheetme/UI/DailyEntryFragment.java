@@ -63,8 +63,6 @@ public class DailyEntryFragment extends Fragment {
 
 	private DatabaseHelper mDb;
 
-	private int currentPosition;
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
@@ -80,7 +78,6 @@ public class DailyEntryFragment extends Fragment {
 		mViewPager = (ViewPager)v.findViewById(R.id.daily_entry_pager);
 		mViewPager.setAdapter(new DailyEntryViewPagerAdapter(getResources(), getActivity().getSupportFragmentManager()));
 		mViewPager.setCurrentItem(5000, false);
-		currentPosition = 5000;
 
 		mViewPager.post(new Runnable() {
 			public void run() {
@@ -99,7 +96,6 @@ public class DailyEntryFragment extends Fragment {
 			public void onPageSelected(int position) {
 				Log.d("Position", position + "");
 				setDateOnActionBar(Dates.AddDaysToDate(new Date(), position - 5000));
-				currentPosition = position;
 			}
 
 			@Override
@@ -138,7 +134,6 @@ public class DailyEntryFragment extends Fragment {
 			@Override
 			public void onClick(View view) {
 				mViewPager.setCurrentItem(5000, false);
-				currentPosition = 5000;
 				setDateOnActionBar(new Date());
 				mViewPager.getAdapter().notifyDataSetChanged();
 				mFloatingActionMenu.close(true);
@@ -327,7 +322,6 @@ public class DailyEntryFragment extends Fragment {
 						selectedDate.set(Calendar.YEAR, yearSelected);
 						int positionOfSelection = getPositionOfSelection(selectedDate.getTime());
 						mViewPager.setCurrentItem(positionOfSelection);
-						currentPosition = positionOfSelection;
 						mViewPager.getAdapter().notifyDataSetChanged();
 						setDateOnActionBar(selectedDate.getTime());
 					}
