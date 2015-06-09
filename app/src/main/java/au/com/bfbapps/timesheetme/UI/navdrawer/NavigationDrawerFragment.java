@@ -19,7 +19,7 @@ import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
 import au.com.bfbapps.timesheetme.UI.DailyEntryFragment;
-import au.com.bfbapps.timesheetme.UI.WeeklyScheduleFragment;
+import au.com.bfbapps.timesheetme.UI.WeeklyEntryViewPagerFragment;
 import au.com.bfbapps.timesheetme.adapters.NavViewAdapter;
 
 /**
@@ -157,10 +157,10 @@ public class NavigationDrawerFragment extends Fragment implements NavViewAdapter
 				break;
 			case 1:
 				// Create the fragment
-				WeeklyScheduleFragment weeklyScheduleFragment = new WeeklyScheduleFragment();
+				WeeklyEntryViewPagerFragment weeklyEntryViewPagerFragment = new WeeklyEntryViewPagerFragment();
 				mDrawerLayout.closeDrawers();
 				getActivity().getSupportFragmentManager().beginTransaction()
-						.replace(R.id.main_content_pager, weeklyScheduleFragment)
+						.replace(R.id.main_content_pager, weeklyEntryViewPagerFragment)
 						.commit();
 				break;
 		}

@@ -16,21 +16,18 @@ import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
 import au.com.bfbapps.timesheetme.models.Entry;
 import au.com.bfbapps.timesheetme.models.Job;
 import au.com.bfbapps.timesheetme.models.Task;
+import au.com.bfbapps.timesheetme.models.WeeklyEntry;
 
 public class WeeklyEntryRecyclerViewAdapter extends RecyclerView.Adapter<WeeklyEntryRecyclerViewAdapter.WeeklyEntryItemViewHolder> {
 
 	private Context mContext;
-	private List<Entry> mEntries;
-	private Date mStartDate;
-	private Date mFinishDate;
+	private List<WeeklyEntry> mEntries;
 	private LayoutInflater mInflater;
 	private DatabaseHelper mDb;
 
-	public WeeklyEntryRecyclerViewAdapter(Context context, List<Entry> entries, Date startDate, Date finishDate){
+	public WeeklyEntryRecyclerViewAdapter(Context context, List<WeeklyEntry> entries){
 		mContext = context;
 		mEntries = entries;
-		mStartDate = startDate;
-		mFinishDate = finishDate;
 		mInflater = LayoutInflater.from(context);
 	}
 
@@ -46,16 +43,18 @@ public class WeeklyEntryRecyclerViewAdapter extends RecyclerView.Adapter<WeeklyE
 	public void onBindViewHolder(WeeklyEntryItemViewHolder holder, int position) {
 		mDb = new DatabaseHelper(mContext.getApplicationContext());
 
-		Entry currentItem = mEntries.get(position);
-		Job currentItemJob = mDb.getJobById(currentItem.getJobId());
-		Task currentItemTask = mDb.getTaskById(currentItem.getTaskId());
+		WeeklyEntry currentItem = mEntries.get(position);
 
-		holder.dayName.setText(Dates.GetDayNameFromDate(currentItem.getDate()));
+		holder.dayName.setText(currentItem.getDayOfWeek());
 	}
 
 	@Override
 	public int getItemCount() {
 		return mEntries.size();
+	}
+
+	private void getRelevantEntries(){
+
 	}
 
 	class WeeklyEntryItemViewHolder extends RecyclerView.ViewHolder {
