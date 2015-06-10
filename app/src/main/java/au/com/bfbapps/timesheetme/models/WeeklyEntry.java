@@ -1,10 +1,12 @@
 package au.com.bfbapps.timesheetme.models;
 
+import java.util.Date;
 import java.util.List;
 
 public class WeeklyEntry {
 
 	private String mDayOfWeek;
+	private Date mDayDate;
 	private List<Entry> mEntries;
 
 	public WeeklyEntry(){
@@ -15,8 +17,9 @@ public class WeeklyEntry {
 		mDayOfWeek = dayOfWeek;
 	}
 
-	public WeeklyEntry(String dayOfWeek, List<Entry> entries){
+	public WeeklyEntry(String dayOfWeek, Date dayDate, List<Entry> entries){
 		mDayOfWeek = dayOfWeek;
+		mDayDate = dayDate;
 		mEntries = entries;
 	}
 
@@ -34,5 +37,13 @@ public class WeeklyEntry {
 
 	public void setEntries(List<Entry> entries) {
 		mEntries = entries;
+	}
+
+	public Date getDayDate() {
+		return mDayDate;
+	}
+
+	public void setDayDate(Date dayDate) {
+		mDayDate = dayDate;
 	}
 }

@@ -262,26 +262,28 @@ public class DailyEntryFragment extends Fragment {
 				if (!jobTextView.getText().toString().equals("")
 						&& !taskTextView.getText().toString().equals("")) {
 
-					long mJobId;
-					long mTaskId;
+					Job job;
+					Task task;
 
 					if(mDb.getJobByName(jobTextView.getText().toString()) != null){
-						mJobId = mDb.getJobByName(jobTextView.getText().toString()).getJobId();
+						job = mDb.getJobByName(jobTextView.getText().toString());
 					} else {
-						mJobId = mDb.createJob(new Job(jobTextView.getText().toString()));
+						long jobId = mDb.createJob(new Job(jobTextView.getText().toString()));
+						job = mDb.getJobById(jobId);
 					}
 
 					if(mDb.getTaskByName(taskTextView.getText().toString()) != null){
-						mTaskId = mDb.getTaskByName(taskTextView.getText().toString()).getTaskId();
+						task = mDb.getTaskByName(taskTextView.getText().toString());
 					} else {
-						mTaskId = mDb.createTask(new Task(taskTextView.getText().toString()));
+						long taskId = mDb.createTask(new Task(taskTextView.getText().toString()));
+						task = mDb.getTaskById(taskId);
 					}
 
 					mBreak = (totalBreakEditText.getText().toString().equals("") ? 0 : Double.valueOf(totalBreakEditText.getText().toString()));
 					mTotalHoursWorked = calculateHoursWorked(mStartLong, mFinishLong) - (mBreak / 60);
 
 					mDb.createEntry(new Entry(getDateFromActionBar(mDateTextView.getText().toString()),
-							mStartTime, mFinishTime, mBreak, mTotalHoursWorked, mJobId, mTaskId));
+							mStartTime, mFinishTime, mBreak, mTotalHoursWorked, job, task));
 
 					// Re-populate the job and task lists so we can re-use them immediately
 					mJobList = mDb.getAllJobs();

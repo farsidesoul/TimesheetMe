@@ -106,8 +106,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(COLUMN_FINISH_TIME, entry.getFinish());
 		values.put(COLUMN_TOTAL_BREAK, entry.getTotalBreak());
 		values.put(COLUMN_TOTAL_HOURS_WORKED, entry.getTotalHoursWorked());
-		values.put(COLUMN_JOB_ID, entry.getJobId());
-		values.put(COLUMN_TASK_ID, entry.getTaskId());
+		values.put(COLUMN_JOB_ID, entry.getJob().getJobId());
+		values.put(COLUMN_TASK_ID, entry.getTask().getTaskId());
 
 		// insert row
 		return db.insert(TABLE_ENTRY, null, values);
@@ -139,8 +139,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			entry.setFinish(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME)));
 			entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
 			entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
-			entry.setJobId(c.getInt(c.getColumnIndex(COLUMN_JOB_ID)));
-			entry.setTaskId(c.getInt(c.getColumnIndex(COLUMN_TASK_ID)));
+			entry.setJob(getJobById(c.getInt(c.getColumnIndex(COLUMN_JOB_ID))));
+			entry.setTask(getTaskById(c.getInt(c.getColumnIndex(COLUMN_TASK_ID))));
 		}
 		return entry;
 	}
@@ -168,8 +168,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				entry.setFinish(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME)));
 				entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
 				entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
-				entry.setJobId(c.getInt(c.getColumnIndex(COLUMN_JOB_ID)));
-				entry.setTaskId(c.getInt(c.getColumnIndex(COLUMN_TASK_ID)));
+				entry.setJob(getJobById(c.getInt(c.getColumnIndex(COLUMN_JOB_ID))));
+				entry.setTask(getTaskById(c.getInt(c.getColumnIndex(COLUMN_TASK_ID))));
 
 				entries.add(entry);
 
@@ -199,8 +199,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				entry.setFinish(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME)));
 				entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
 				entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
-				entry.setJobId(c.getInt(c.getColumnIndex(COLUMN_JOB_ID)));
-				entry.setTaskId(c.getInt(c.getColumnIndex(COLUMN_TASK_ID)));
+				entry.setJob(getJobById(c.getInt(c.getColumnIndex(COLUMN_JOB_ID))));
+				entry.setTask(getTaskById(c.getInt(c.getColumnIndex(COLUMN_TASK_ID))));
 
 				entries.add(entry);
 			} while (c.moveToNext());
@@ -236,8 +236,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				entry.setFinish(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME)));
 				entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
 				entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
-				entry.setJobId(c.getInt(c.getColumnIndex(COLUMN_JOB_ID)));
-				entry.setTaskId(c.getInt(c.getColumnIndex(COLUMN_TASK_ID)));
+				entry.setJob(getJobById(c.getInt(c.getColumnIndex(COLUMN_JOB_ID))));
+				entry.setTask(getTaskById(c.getInt(c.getColumnIndex(COLUMN_TASK_ID))));
 
 				entries.add(entry);
 			} while (c.moveToNext());
@@ -267,8 +267,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				entry.setFinish(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME)));
 				entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
 				entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
-				entry.setJobId(c.getInt(c.getColumnIndex(COLUMN_JOB_ID)));
-				entry.setTaskId(c.getInt(c.getColumnIndex(COLUMN_TASK_ID)));
+				entry.setJob(getJobById(c.getInt(c.getColumnIndex(COLUMN_JOB_ID))));
+				entry.setTask(getTaskById(c.getInt(c.getColumnIndex(COLUMN_TASK_ID))));
 
 				entries.add(entry);
 			} while (c.moveToNext());
@@ -291,8 +291,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(COLUMN_FINISH_TIME, entry.getFinish());
 		values.put(COLUMN_TOTAL_BREAK, entry.getTotalBreak());
 		values.put(COLUMN_TOTAL_HOURS_WORKED, entry.getTotalHoursWorked());
-		values.put(COLUMN_JOB_ID, entry.getJobId());
-		values.put(COLUMN_TASK_ID, entry.getTaskId());
+		values.put(COLUMN_JOB_ID, entry.getJob().getJobId());
+		values.put(COLUMN_TASK_ID, entry.getTask().getTaskId());
 
 		return db.update(TABLE_ENTRY, values, COLUMN_ID + " = ?",
 				new String[] { String.valueOf(entry.getEntryId())});
@@ -593,21 +593,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				entry.setFinish(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME)));
 				entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
 				entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
-				entry.setJobId(c.getInt(c.getColumnIndex(COLUMN_JOB_ID)));
-				entry.setTaskId(c.getInt(c.getColumnIndex(COLUMN_TASK_ID)));
+				entry.setJob(getJobById(c.getInt(c.getColumnIndex(COLUMN_JOB_ID))));
+				entry.setTask(getTaskById(c.getInt(c.getColumnIndex(COLUMN_TASK_ID))));
 
 				entries.add(entry);
 			} while (c.moveToNext());
 		}
 		c.close();
 
-		WeeklyEntry monday = new WeeklyEntry("Monday", new ArrayList<Entry>());
-		WeeklyEntry tuesday = new WeeklyEntry("Tuesday", new ArrayList<Entry>());
-		WeeklyEntry wednesday = new WeeklyEntry("Wednesday", new ArrayList<Entry>());
-		WeeklyEntry thursday = new WeeklyEntry("Thursday", new ArrayList<Entry>());
-		WeeklyEntry friday = new WeeklyEntry("Friday", new ArrayList<Entry>());
-		WeeklyEntry saturday = new WeeklyEntry("Saturday", new ArrayList<Entry>());
-		WeeklyEntry sunday = new WeeklyEntry("Sunday", new ArrayList<Entry>());
+		WeeklyEntry monday = new WeeklyEntry("Monday", date, new ArrayList<Entry>());
+		WeeklyEntry tuesday = new WeeklyEntry("Tuesday", Dates.AddDaysToDate(date, 1), new ArrayList<Entry>());
+		WeeklyEntry wednesday = new WeeklyEntry("Wednesday", Dates.AddDaysToDate(date, 2), new ArrayList<Entry>());
+		WeeklyEntry thursday = new WeeklyEntry("Thursday", Dates.AddDaysToDate(date, 3), new ArrayList<Entry>());
+		WeeklyEntry friday = new WeeklyEntry("Friday", Dates.AddDaysToDate(date, 4), new ArrayList<Entry>());
+		WeeklyEntry saturday = new WeeklyEntry("Saturday", Dates.AddDaysToDate(date, 5), new ArrayList<Entry>());
+		WeeklyEntry sunday = new WeeklyEntry("Sunday", Dates.AddDaysToDate(date, 6), new ArrayList<Entry>());
 
 
 		for (Entry entry : entries){

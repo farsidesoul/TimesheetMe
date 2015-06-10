@@ -19,33 +19,33 @@ public class Entry {
 	@SerializedName("totalHoursWorked")
 	private double mTotalHoursWorked;
     @SerializedName("jobId")
-    private long mJobId;
+    private Job mJob;
     @SerializedName("taskId")
-    private long mTaskId;
+    private Task mTask;
 
 	public Entry(){
 
 	}
 
-	public Entry(Date mDate, String mStart, String mFinish, double mTotalBreak, double mTotalHoursWorked, long mJobId, long mtaskId) {
+	public Entry(Date mDate, String mStart, String mFinish, double mTotalBreak, double mTotalHoursWorked, Job mJobId, Task mtaskId) {
 		this.mDate = mDate;
 		this.mStart = mStart;
 		this.mFinish = mFinish;
 		this.mTotalBreak = mTotalBreak;
 		this.mTotalHoursWorked = mTotalHoursWorked;
-		this.mJobId = mJobId;
-		this.mTaskId = mtaskId;
+		this.mJob = mJobId;
+		this.mTask = mtaskId;
 	}
 
-    public Entry(long mEntryId, Date mDate, String mStart, String mFinish, double mTotalBreak, double mTotalHoursWorked, long mJobId, long mtaskId) {
+    public Entry(long mEntryId, Date mDate, String mStart, String mFinish, double mTotalBreak, double mTotalHoursWorked, Job mJobId, Task mtaskId) {
         this.mEntryId = mEntryId;
         this.mDate = mDate;
         this.mStart = mStart;
         this.mFinish = mFinish;
         this.mTotalBreak = mTotalBreak;
         this.mTotalHoursWorked = mTotalHoursWorked;
-        this.mJobId = mJobId;
-        this.mTaskId = mtaskId;
+        this.mJob = mJobId;
+        this.mTask = mtaskId;
     }
 
 	public long getEntryId() {
@@ -96,19 +96,19 @@ public class Entry {
 		mTotalHoursWorked = totalHoursWorked;
 	}
 
-	public long getJobId() {
-		return mJobId;
+	public Job getJob() {
+		return mJob;
 	}
 
-	public void setJobId(long jobId) {
-		mJobId = jobId;
+	public void setJob(Job job) {
+		mJob = job;
 	}
 
-	public long getTaskId() {
-		return mTaskId;
+	public Task getTask() {
+		return mTask;
 	}
 
-	public void setTaskId(long mtaskId) {
-		this.mTaskId = mtaskId;
+	public void setTask(Task mtaskId) {
+		this.mTask = mtaskId;
 	}
 }

@@ -42,7 +42,7 @@ public class WeeklyEntryFragment extends Fragment {
 
 		mViewPager.post(new Runnable() {
 			public void run() {
-				mViewPager.setCurrentItem(5000, false);
+				mViewPager.setCurrentItem(1000, false);
 			}
 		});
 

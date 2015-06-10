@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
@@ -46,6 +46,18 @@ public class WeeklyEntryRecyclerViewAdapter extends RecyclerView.Adapter<WeeklyE
 		WeeklyEntry currentItem = mEntries.get(position);
 
 		holder.dayName.setText(currentItem.getDayOfWeek());
+		holder.dayDate.setText(Dates.ConvertDateToString(currentItem.getDayDate()));
+
+		List<String> jobList = new ArrayList<>();
+		List<Task> taskList = new ArrayList<>();
+
+		for (Entry entry : currentItem.getEntries()){
+			if (jobList.contains(entry.getJob().getJobName())){
+
+			} else {
+				jobList.add(entry.getJob().getJobName());
+			}
+		}
 	}
 
 	@Override

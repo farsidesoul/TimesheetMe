@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Date;
 import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
+import au.com.bfbapps.timesheetme.Util.Dates;
 import au.com.bfbapps.timesheetme.adapters.WeeklyEntryRecyclerViewAdapter;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
 import au.com.bfbapps.timesheetme.models.WeeklyEntry;
@@ -35,7 +37,12 @@ public class WeeklyEntryViewPagerFragment extends Fragment {
 							 Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_weekly_entry_view_pager, container, false);
 
+		Bundle fragmentExtras = getArguments();
+		Date startOfWeek = Dates.ConvertStringToDate(fragmentExtras.getString("weekStart"));
+
 		mDb = new DatabaseHelper(getActivity().getApplicationContext());
+
+		mWeeklyEntryList = mDb.getEntriesForWeek(startOfWeek);
 
 		// add in database method to grab weekly entries
 		mRecyclerView = (RecyclerView)v.findViewById(R.id.weekly_entry_list);

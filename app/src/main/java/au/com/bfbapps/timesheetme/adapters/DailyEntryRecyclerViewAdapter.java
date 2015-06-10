@@ -1,9 +1,7 @@
 package au.com.bfbapps.timesheetme.adapters;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +13,6 @@ import com.daimajia.swipe.SwipeLayout;
 import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
-import au.com.bfbapps.timesheetme.Util.Dates;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
 import au.com.bfbapps.timesheetme.models.Entry;
 import au.com.bfbapps.timesheetme.models.Job;
@@ -52,8 +49,6 @@ public class DailyEntryRecyclerViewAdapter
 		mDb = new DatabaseHelper(mContext.getApplicationContext());
 
 		Entry currentItem = mEntryItemList.get(position);
-		Job currentItemJob = mDb.getJobById(currentItem.getJobId());
-		Task currentItemTask = mDb.getTaskById(currentItem.getTaskId());
 
 		holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
 		holder.swipeLayout.close();
@@ -91,8 +86,8 @@ public class DailyEntryRecyclerViewAdapter
 			}
 		});
 
-		holder.title.setText(currentItemJob.getJobName());
-		holder.subTitle.setText(currentItemTask.getTaskName());
+		holder.title.setText(currentItem.getJob().getJobName());
+		holder.subTitle.setText(currentItem.getTask().getTaskName());
 		holder.start.setText(currentItem.getStart());
 		holder.finish.setText(currentItem.getFinish());
 		holder.totalHours.setText(String.format("%.2g%n", currentItem.getTotalHoursWorked()));
