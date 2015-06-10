@@ -15,6 +15,7 @@ import au.com.bfbapps.timesheetme.Util.Dates;
 import au.com.bfbapps.timesheetme.models.Entry;
 import au.com.bfbapps.timesheetme.models.Job;
 import au.com.bfbapps.timesheetme.models.Task;
+import au.com.bfbapps.timesheetme.models.WeeklyEntry;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -561,6 +562,90 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.delete(TABLE_TASK, COLUMN_ID + " = ?",
 				new String[]{String.valueOf(job.getJobId())});
 	}
+	//endregion
+
+	//region weekly entries
+
+	/**
+	 *
+	 * @param date start of week Monday date
+	 * @return list of weekly entries, arranged by day of week
+	 */
+	public List<WeeklyEntry> getEntriesForWeek(Date date){
+		SQLiteDatabase db = this.getReadableDatabase();
+		String dateString = Dates.ConvertDateToString(date);
+		String datePlusDays = Dates.ConvertDateToString(Dates.AddDaysToDate(date, 6));
+
+		String selectEntriesQuery = "SELECT * FROM " + TABLE_ENTRY + " WHERE "
+				+ COLUMN_DATE + " > '" + dateString + "' AND "
+				+ COLUMN_DATE + " < '" + datePlusDays + "'";
+
+		Cursor c = db.rawQuery(selectEntriesQuery, null);
+		List<Entry> entries = new ArrayList<>();
+		List<WeeklyEntry> weeklyEntries = new ArrayList<WeeklyEntry>();
+
+		if (c.moveToFirst()) {
+			do {
+				Entry entry = new Entry();
+				entry.setEntryId(c.getInt(c.getColumnIndex(COLUMN_ID)));
+				entry.setDate(Dates.ConvertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
+				entry.setStart(c.getString(c.getColumnIndex(COLUMN_START_TIME)));
+				entry.setFinish(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME)));
+				entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
+				entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
+				entry.setJobId(c.getInt(c.getColumnIndex(COLUMN_JOB_ID)));
+				entry.setTaskId(c.getInt(c.getColumnIndex(COLUMN_TASK_ID)));
+
+				entries.add(entry);
+			} while (c.moveToNext());
+		}
+		c.close();
+
+		WeeklyEntry monday = new WeeklyEntry("Monday", new ArrayList<Entry>());
+		WeeklyEntry tuesday = new WeeklyEntry("Tuesday", new ArrayList<Entry>());
+		WeeklyEntry wednesday = new WeeklyEntry("Wednesday", new ArrayList<Entry>());
+		WeeklyEntry thursday = new WeeklyEntry("Thursday", new ArrayList<Entry>());
+		WeeklyEntry friday = new WeeklyEntry("Friday", new ArrayList<Entry>());
+		WeeklyEntry saturday = new WeeklyEntry("Saturday", new ArrayList<Entry>());
+		WeeklyEntry sunday = new WeeklyEntry("Sunday", new ArrayList<Entry>());
+
+
+		for (Entry entry : entries){
+			if (Dates.ConvertDateToString(entry.getDate()).equals(Dates.ConvertDateToString(date))){
+				// Monday
+				monday.getEntries().add(entry);
+			} else if (Dates.ConvertDateToString(entry.getDate()).equals(Dates.ConvertDateToString(Dates.AddDaysToDate(date, 1)))){
+				// Tuesday
+				tuesday.getEntries().add(entry);
+			} else if (Dates.ConvertDateToString(entry.getDate()).equals(Dates.ConvertDateToString(Dates.AddDaysToDate(date, 2)))){
+				// Wednesday
+				wednesday.getEntries().add(entry);
+			} else if (Dates.ConvertDateToString(entry.getDate()).equals(Dates.ConvertDateToString(Dates.AddDaysToDate(date, 3)))){
+				// Thursday
+				thursday.getEntries().add(entry);
+			} else if (Dates.ConvertDateToString(entry.getDate()).equals(Dates.ConvertDateToString(Dates.AddDaysToDate(date, 4)))){
+				// Friday
+				friday.getEntries().add(entry);
+			} else if (Dates.ConvertDateToString(entry.getDate()).equals(Dates.ConvertDateToString(Dates.AddDaysToDate(date, 5)))){
+				// Saturday
+				saturday.getEntries().add(entry);
+			} else if (Dates.ConvertDateToString(entry.getDate()).equals(Dates.ConvertDateToString(Dates.AddDaysToDate(date, 6)))){
+				// Sunday
+				sunday.getEntries().add(entry);
+			}
+		}
+
+		weeklyEntries.add(monday);
+		weeklyEntries.add(tuesday);
+		weeklyEntries.add(wednesday);
+		weeklyEntries.add(thursday);
+		weeklyEntries.add(friday);
+		weeklyEntries.add(saturday);
+		weeklyEntries.add(sunday);
+
+		return weeklyEntries;
+	}
+
 	//endregion
 
 	// Close the db

@@ -7,6 +7,14 @@ public class WeeklyEntry {
 	private String mDayOfWeek;
 	private List<Entry> mEntries;
 
+	public WeeklyEntry(){
+
+	}
+
+	public WeeklyEntry(String dayOfWeek){
+		mDayOfWeek = dayOfWeek;
+	}
+
 	public WeeklyEntry(String dayOfWeek, List<Entry> entries){
 		mDayOfWeek = dayOfWeek;
 		mEntries = entries;
