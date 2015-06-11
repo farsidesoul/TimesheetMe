@@ -37,7 +37,7 @@ public class WeeklyEntryFragment extends Fragment {
 
 		mViewPager = (ViewPager)v.findViewById(R.id.weekly_entry_pager);
 		mViewPager.setAdapter(new WeeklyEntryViewPagerAdapter(getResources(),
-				getActivity().getSupportFragmentManager()));
+				getChildFragmentManager()));
 		mViewPager.setCurrentItem(1000, false);
 
 		mViewPager.post(new Runnable() {

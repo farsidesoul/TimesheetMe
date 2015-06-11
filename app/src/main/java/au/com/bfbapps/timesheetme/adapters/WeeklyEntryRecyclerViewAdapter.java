@@ -57,24 +57,22 @@ public class WeeklyEntryRecyclerViewAdapter extends RecyclerView.Adapter<WeeklyE
 		// This works for setting the job layout.
 		// Inside this we need to create each view dynamically
 		// We can then put the views into the layout in the order required.
-		RelativeLayout.LayoutParams jobTaskHourparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+		RelativeLayout.LayoutParams jobTaskHourparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		jobTaskHourparams.addRule(RelativeLayout.ALIGN_PARENT_END);
 
-		RelativeLayout.LayoutParams taskNameParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+		RelativeLayout.LayoutParams taskNameParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		taskNameParams.setMargins(20, 0, 0, 0);
 
 		LinearLayout dayLayout = new LinearLayout(mContext);
 		dayLayout.setOrientation(LinearLayout.VERTICAL);
 
-
 		List<Long> jobList = new ArrayList<>();
 
-
-
+		// Run through our entries listed in this day
 		for (Entry entry : currentItem.getEntries()){
-			if (jobList.contains(entry.getJob().getJobId())){
-				// do nothing
-			} else {
+			// If the job isn't within the jobList, we need to create the job and tasks assigned against it
+			if (!jobList.contains(entry.getJob().getJobId())) {
 				jobList.add(entry.getJob().getJobId());
 				RelativeLayout jobLayout = new RelativeLayout(mContext);
 				TextView jobName = new TextView(mContext);

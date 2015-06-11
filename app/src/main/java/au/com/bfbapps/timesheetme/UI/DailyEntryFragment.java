@@ -69,21 +69,19 @@ public class DailyEntryFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_daily_entry, container, false);
 		((MainActivity)getActivity()).setActionBarTitle("");
 
-		Log.d("day int", Dates.GetDayNameFromDate(new Date()) + "");
-
 		mDb = new DatabaseHelper(getActivity().getApplicationContext());
 		mJobList = mDb.getAllJobs();
 		mTaskList = mDb.getAllTasks();
 
 		mViewPager = (ViewPager)v.findViewById(R.id.daily_entry_pager);
-		mViewPager.setAdapter(new DailyEntryViewPagerAdapter(getResources(), getActivity().getSupportFragmentManager()));
+		mViewPager.setAdapter(new DailyEntryViewPagerAdapter(getResources(), getChildFragmentManager()));
 		mViewPager.setCurrentItem(5000, false);
-
-		mViewPager.post(new Runnable() {
-			public void run() {
-				mViewPager.setCurrentItem(5000, false);
-			}
-		});
+//
+//		mViewPager.post(new Runnable() {
+//			public void run() {
+//				mViewPager.setCurrentItem(5000, false);
+//			}
+//		});
 		mViewPager.getAdapter().notifyDataSetChanged();
 		mViewPager.setOffscreenPageLimit(0);
 		mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -94,7 +92,6 @@ public class DailyEntryFragment extends Fragment {
 
 			@Override
 			public void onPageSelected(int position) {
-				Log.d("Position", position + "");
 				setDateOnActionBar(Dates.AddDaysToDate(new Date(), position - 5000));
 			}
 
