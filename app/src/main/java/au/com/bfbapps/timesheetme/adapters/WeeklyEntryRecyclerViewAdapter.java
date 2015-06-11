@@ -4,6 +4,8 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,56 +57,79 @@ public class WeeklyEntryRecyclerViewAdapter extends RecyclerView.Adapter<WeeklyE
 		// This works for setting the job layout.
 		// Inside this we need to create each view dynamically
 		// We can then put the views into the layout in the order required.
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-		params.addRule(RelativeLayout.ALIGN_PARENT_END);
+		RelativeLayout.LayoutParams jobTaskHourparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+		jobTaskHourparams.addRule(RelativeLayout.ALIGN_PARENT_END);
 
-		LinearLayout l = new LinearLayout(mContext);
-		l.setOrientation(LinearLayout.VERTICAL);
+		RelativeLayout.LayoutParams taskNameParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+		taskNameParams.setMargins(20, 0, 0, 0);
+
+		LinearLayout dayLayout = new LinearLayout(mContext);
+		dayLayout.setOrientation(LinearLayout.VERTICAL);
 
 
-		List<Job> jobList = new ArrayList<>();
-		List<Task> taskList = new ArrayList<>();
+		List<Long> jobList = new ArrayList<>();
+
+
 
 		for (Entry entry : currentItem.getEntries()){
-			if (jobList.contains(entry.getJob())){
-
-
+			if (jobList.contains(entry.getJob().getJobId())){
+				// do nothing
 			} else {
-				jobList.add(entry.getJob());
-//				TextView t = new TextView(mContext);
-//				t.setText(entry.getJob().getJobName());
-//				t.setTextColor(mContext.getResources().getColor(R.color.primaryColor));
+				jobList.add(entry.getJob().getJobId());
+				RelativeLayout jobLayout = new RelativeLayout(mContext);
+				TextView jobName = new TextView(mContext);
+				jobName.setText(entry.getJob().getJobName());
+				jobName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+				jobName.setTextColor(mContext.getResources().getColor(R.color.primaryColor));
+
+				TextView hours = new TextView(mContext);
+				hours.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+				hours.setTextColor(mContext.getResources().getColor(R.color.primaryColor));
+
+
+				double totalHours = 0;
+				List<View> taskViewList = new ArrayList<>();
+				for (int i = 0; i < currentItem.getEntries().size(); i++){
+					if(currentItem.getEntries().get(i).getJob().getJobId() == (entry.getJob().getJobId())){
+						RelativeLayout taskLayout = new RelativeLayout(mContext);
+						TextView task = new TextView(mContext);
+						task.setText(currentItem.getEntries().get(i).getTask().getTaskName());
+						task.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+						task.setTextColor(mContext.getResources().getColor(R.color.primaryColor));
+
+						TextView taskHours = new TextView(mContext);
+						taskHours.setText(String.format("%.2f", currentItem.getEntries().get(i).getTotalHoursWorked()));
+						taskHours.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+						taskHours.setTextColor(mContext.getResources().getColor(R.color.primaryColor));
+
+						taskLayout.addView(task, taskNameParams);
+						taskLayout.addView(taskHours, jobTaskHourparams);
+
+						taskViewList.add(taskLayout);
+						totalHours += currentItem.getEntries().get(i).getTotalHoursWorked();
+					}
+				}
+
+				hours.setText(String.format("%.2f", totalHours));
+				// Add the job name and hours to the view
+				jobLayout.addView(jobName);
+				jobLayout.addView(hours, jobTaskHourparams);
+				dayLayout.addView(jobLayout);
+				for(View v : taskViewList){
+					Log.d("TASK", "Inflated Task");
+					dayLayout.addView(v);
+				}
 			}
-			RelativeLayout layout = new RelativeLayout(mContext);
-			TextView t = new TextView(mContext);
-			t.setText(entry.getJob().getJobName());
-			t.setTextColor(mContext.getResources().getColor(R.color.primaryColor));
-
-			TextView hours = new TextView(mContext);
-			hours.setText(entry.getTotalHoursWorked() + "");
-			hours.setTextColor(mContext.getResources().getColor(R.color.primaryColor));
-
-			layout.addView(t);
-			layout.addView(hours, params);
-
-			RelativeLayout layout2 = new RelativeLayout(mContext);
-			TextView task = new TextView(mContext);
-			task.setText(entry.getTask().getTaskName());
-			task.setTextColor(mContext.getResources().getColor(R.color.primaryColor));
-
-			TextView taskHours = new TextView(mContext);
-			taskHours.setText(entry.getTotalHoursWorked() + "");
-			taskHours.setTextColor(mContext.getResources().getColor(R.color.primaryColor));
-
-			layout2.addView(task);
-			layout2.addView(taskHours, params);
-
-			l.addView(layout);
-			l.addView(layout2);
 		}
 
-
-		holder.entryLayout.addView(l);
+		if(jobList.isEmpty()){
+			TextView noJobsOnDay = new TextView(mContext);
+			noJobsOnDay.setText("No entries for today");
+			noJobsOnDay.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+			noJobsOnDay.setTextColor(mContext.getResources().getColor(R.color.primaryColor));
+			dayLayout.addView(noJobsOnDay);
+		}
+		holder.entryLayout.addView(dayLayout);
 	}
 
 	@Override
@@ -112,29 +137,17 @@ public class WeeklyEntryRecyclerViewAdapter extends RecyclerView.Adapter<WeeklyE
 		return mEntries.size();
 	}
 
-	private void getRelevantEntries(){
-
-	}
-
 	class WeeklyEntryItemViewHolder extends RecyclerView.ViewHolder {
 
 		LinearLayout entryLayout;
 		TextView dayName;
 		TextView dayDate;
-		TextView jobName;
-		TextView taskList;
-		TextView totalHours;
-		TextView taskHours;
 
 		public WeeklyEntryItemViewHolder(View itemView) {
 			super(itemView);
 			entryLayout = (LinearLayout)itemView.findViewById(R.id.weekly_entry_linear_layout);
 			dayName = (TextView)itemView.findViewById(R.id.weekly_entry_day_of_week);
 			dayDate = (TextView)itemView.findViewById(R.id.weekly_entry_date);
-			jobName = (TextView)itemView.findViewById(R.id.weekly_entry_job_name);
-			taskList = (TextView)itemView.findViewById(R.id.weekly_entry_task_name);
-			totalHours = (TextView)itemView.findViewById(R.id.weekly_entry_job_total_hours);
-			taskHours = (TextView)itemView.findViewById(R.id.weekly_entry_task_hours);
 		}
 
 
