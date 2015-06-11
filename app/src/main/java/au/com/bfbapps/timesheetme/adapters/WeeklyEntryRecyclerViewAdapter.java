@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,14 +58,11 @@ public class WeeklyEntryRecyclerViewAdapter extends RecyclerView.Adapter<WeeklyE
 		// This works for setting the job layout.
 		// Inside this we need to create each view dynamically
 		// We can then put the views into the layout in the order required.
-		RelativeLayout.LayoutParams jobTaskHourparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		jobTaskHourparams.addRule(RelativeLayout.ALIGN_PARENT_END);
-
-
-		RelativeLayout.LayoutParams taskNameParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		taskNameParams.setMargins(20, 0, 0, 0);
+		RelativeLayout.LayoutParams jobTaskHourParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		jobTaskHourParams.addRule(RelativeLayout.ALIGN_PARENT_END);
 
 		LinearLayout dayLayout = new LinearLayout(mContext);
+		LinearLayout.LayoutParams dayLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		dayLayout.setOrientation(LinearLayout.VERTICAL);
 
 		List<Long> jobList = new ArrayList<>();
@@ -78,11 +76,12 @@ public class WeeklyEntryRecyclerViewAdapter extends RecyclerView.Adapter<WeeklyE
 				TextView jobName = new TextView(mContext);
 				jobName.setText(entry.getJob().getJobName());
 				jobName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-				jobName.setTextColor(mContext.getResources().getColor(R.color.primaryColor));
+				jobName.setTextColor(mContext.getResources().getColor(R.color.primaryText));
 
 				TextView hours = new TextView(mContext);
 				hours.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-				hours.setTextColor(mContext.getResources().getColor(R.color.primaryColor));
+				hours.setTextColor(mContext.getResources().getColor(R.color.primaryText));
+				hours.setGravity(Gravity.END);
 
 
 				double totalHours = 0;
@@ -93,15 +92,17 @@ public class WeeklyEntryRecyclerViewAdapter extends RecyclerView.Adapter<WeeklyE
 						TextView task = new TextView(mContext);
 						task.setText(currentItem.getEntries().get(i).getTask().getTaskName());
 						task.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-						task.setTextColor(mContext.getResources().getColor(R.color.primaryColor));
+						task.setTextColor(mContext.getResources().getColor(R.color.secondaryText));
+						task.setPadding(16, 0, 16, 0);
 
 						TextView taskHours = new TextView(mContext);
 						taskHours.setText(String.format("%.2f", currentItem.getEntries().get(i).getTotalHoursWorked()));
 						taskHours.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-						taskHours.setTextColor(mContext.getResources().getColor(R.color.primaryColor));
+						taskHours.setTextColor(mContext.getResources().getColor(R.color.secondaryText));
+						taskHours.setGravity(Gravity.END);
 
-						taskLayout.addView(task, taskNameParams);
-						taskLayout.addView(taskHours, jobTaskHourparams);
+						taskLayout.addView(task);
+						taskLayout.addView(taskHours, jobTaskHourParams);
 
 						taskViewList.add(taskLayout);
 						totalHours += currentItem.getEntries().get(i).getTotalHoursWorked();
@@ -111,7 +112,7 @@ public class WeeklyEntryRecyclerViewAdapter extends RecyclerView.Adapter<WeeklyE
 				hours.setText(String.format("%.2f", totalHours));
 				// Add the job name and hours to the view
 				jobLayout.addView(jobName);
-				jobLayout.addView(hours, jobTaskHourparams);
+				jobLayout.addView(hours, jobTaskHourParams);
 				dayLayout.addView(jobLayout);
 				for(View v : taskViewList){
 					Log.d("TASK", "Inflated Task");
@@ -123,11 +124,19 @@ public class WeeklyEntryRecyclerViewAdapter extends RecyclerView.Adapter<WeeklyE
 		if(jobList.isEmpty()){
 			TextView noJobsOnDay = new TextView(mContext);
 			noJobsOnDay.setText("No entries for today");
-			noJobsOnDay.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-			noJobsOnDay.setTextColor(mContext.getResources().getColor(R.color.primaryColor));
+			noJobsOnDay.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+			noJobsOnDay.setTextColor(mContext.getResources().getColor(R.color.secondaryText));
+			noJobsOnDay.setPadding(16, 0, 16, 0);
 			dayLayout.addView(noJobsOnDay);
 		}
-		holder.entryLayout.addView(dayLayout);
+
+		// Add an empty view to add some spacing
+		View blankView = new View(mContext);
+		blankView.setMinimumHeight(40);
+
+		holder.entryLayout.addView(dayLayout, dayLayoutParams);
+		holder.entryLayout.addView(blankView);
+
 	}
 
 	@Override
