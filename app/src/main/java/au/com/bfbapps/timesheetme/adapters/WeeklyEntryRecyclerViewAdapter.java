@@ -16,7 +16,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import au.com.bfbapps.timesheetme.R;
 import au.com.bfbapps.timesheetme.Util.Dates;
@@ -86,27 +88,38 @@ public class WeeklyEntryRecyclerViewAdapter extends RecyclerView.Adapter<WeeklyE
 
 				double totalHours = 0;
 				List<View> taskViewList = new ArrayList<>();
+				Map<String, Double> taskIds = new HashMap<>();
 				for (int i = 0; i < currentItem.getEntries().size(); i++){
 					if(currentItem.getEntries().get(i).getJob().getJobId() == (entry.getJob().getJobId())){
-						RelativeLayout taskLayout = new RelativeLayout(mContext);
-						TextView task = new TextView(mContext);
-						task.setText(currentItem.getEntries().get(i).getTask().getTaskName());
-						task.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-						task.setTextColor(mContext.getResources().getColor(R.color.secondaryText));
-						task.setPadding(16, 0, 16, 0);
+						if(!taskIds.containsKey(currentItem.getEntries().get(i).getTask().getTaskName())) {
+							taskIds.put(currentItem.getEntries().get(i).getTask().getTaskName(), currentItem.getEntries().get(i).getTotalHoursWorked());
 
-						TextView taskHours = new TextView(mContext);
-						taskHours.setText(String.format("%.2f", currentItem.getEntries().get(i).getTotalHoursWorked()));
-						taskHours.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-						taskHours.setTextColor(mContext.getResources().getColor(R.color.secondaryText));
-						taskHours.setGravity(Gravity.END);
-
-						taskLayout.addView(task);
-						taskLayout.addView(taskHours, jobTaskHourParams);
-
-						taskViewList.add(taskLayout);
+						} else {
+							double currentTotal = taskIds.get(currentItem.getEntries().get(i).getTask().getTaskName());
+							taskIds.put(currentItem.getEntries().get(i).getTask().getTaskName(), currentTotal + currentItem.getEntries().get(i).getTotalHoursWorked());
+						}
 						totalHours += currentItem.getEntries().get(i).getTotalHoursWorked();
 					}
+				}
+
+				for (Map.Entry<String, Double> kv : taskIds.entrySet()){
+					RelativeLayout taskLayout = new RelativeLayout(mContext);
+					TextView task = new TextView(mContext);
+					task.setText(kv.getKey());
+					task.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+					task.setTextColor(mContext.getResources().getColor(R.color.secondaryText));
+					task.setPadding(16, 0, 16, 0);
+
+					TextView taskHours = new TextView(mContext);
+					taskHours.setText(String.format("%.2f", kv.getValue()));
+					taskHours.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+					taskHours.setTextColor(mContext.getResources().getColor(R.color.secondaryText));
+					taskHours.setGravity(Gravity.END);
+
+					taskLayout.addView(task);
+					taskLayout.addView(taskHours, jobTaskHourParams);
+
+					taskViewList.add(taskLayout);
 				}
 
 				hours.setText(String.format("%.2f", totalHours));
