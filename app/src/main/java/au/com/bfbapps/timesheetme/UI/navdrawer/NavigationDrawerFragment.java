@@ -1,8 +1,10 @@
 package au.com.bfbapps.timesheetme.UI.navdrawer;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -74,10 +76,9 @@ public class NavigationDrawerFragment extends Fragment implements NavViewAdapter
 		List<NavDrawerItem> data = new ArrayList<>();
 		int[] icons = {R.mipmap.ic_home_black_48dp,
 				R.mipmap.ic_assessment_black_48dp,
-				R.mipmap.ic_get_app_black_48dp,
-				R.mipmap.ic_input_black_48dp};
+				R.mipmap.ic_get_app_black_48dp};
 
-		String[] titles = {"Home", "Weekly Review", "Download", "Logout"};
+		String[] titles = {"Home", "Weekly Review", "Export"};
 
 		for (int i = 0; i< titles.length && i < icons.length; i++){
 			NavDrawerItem currentItem = new NavDrawerItem(icons[i], titles[i]);
@@ -164,6 +165,14 @@ public class NavigationDrawerFragment extends Fragment implements NavViewAdapter
 						.replace(R.id.main_content_pager, weeklyEntryFragment)
 						.commit();
 				break;
+			case 2:
+				// Show export dialog
+				Dialog dialog = new Dialog(getActivity());
+				dialog.setContentView(R.layout.dialog_export);
+				dialog.setTitle("Select dates for export");
+
+				dialog.show();
+
 		}
 		Toast.makeText(getActivity(), "Clicked item at position: " + position, Toast.LENGTH_SHORT).show();
 	}
