@@ -1,41 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			  android:orientation="vertical"
-			  android:layout_width="match_parent"
-			  android:layout_height="match_parent">
+			  android:layout_width="280dp"
+			  android:layout_height="match_parent"
+	android:gravity="center"
+			  android:padding="16dp">
 
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:orientation="horizontal">
+		android:orientation="horizontal"
+		android:padding="8dp">
 
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="Start: "/>
+			android:text="Start: "
+			android:textSize="20sp"/>
 
 		<TextView
+			android:id="@+id/export_start_date_textView"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="Select start date"/>
+			android:text="Select start date"
+			android:fontFamily="sans-serif-thin"
+			android:textSize="20sp"
+			android:textColor="@color/accentColor"/>
 
 	</LinearLayout>
 
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:orientation="horizontal">
+		android:orientation="horizontal"
+		android:padding="8dp">
 
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="Finish: "/>
+			android:text="Finish: "
+			android:textSize="20sp"/>
 
 		<TextView
+			android:id="@+id/export_finish_date_textView"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="Select finish date"/>
+			android:text="Select finish date"
+			android:fontFamily="sans-serif-thin"
+			android:textSize="20sp"
+			android:textColor="@color/accentColor"/>
 
 	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:gravity="end|center_vertical"
+		android:layout_marginTop="24dp"
+		android:layout_marginBottom="8dp">
+		<TextView
+			android:id="@+id/export_cancel_button"
+			android:layout_width="wrap_content"
+			android:layout_height="36dp"
+			android:minWidth="64dp"
+			android:layout_marginEnd="8dp"
+			android:layout_marginStart="8dp"
+			android:paddingEnd="8dp"
+			android:paddingStart="8dp"
+			android:gravity="center"
+			android:text="Cancel"
+			android:textSize="20sp"
+			android:textColor="@color/accentColor"/>
+
+		<TextView
+			android:id="@+id/export_save_button"
+			android:layout_width="wrap_content"
+			android:layout_height="36dp"
+			android:minWidth="64dp"
+			android:layout_marginEnd="8dp"
+			android:layout_marginStart="8dp"
+			android:paddingEnd="8dp"
+			android:paddingStart="8dp"
+			android:text="Export"
+			android:gravity="center"
+			android:textSize="20sp"
+			android:textColor="@color/accentColor"/>
+
+	</LinearLayout>
+
 
 </LinearLayout>
