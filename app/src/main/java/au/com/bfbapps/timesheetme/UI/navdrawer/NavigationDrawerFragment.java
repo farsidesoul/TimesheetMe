@@ -33,6 +33,7 @@ import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
 import au.com.bfbapps.timesheetme.UI.DailyEntryFragment;
+import au.com.bfbapps.timesheetme.UI.MainActivity;
 import au.com.bfbapps.timesheetme.UI.WeeklyEntryFragment;
 import au.com.bfbapps.timesheetme.UI.WeeklyEntryViewPagerFragment;
 import au.com.bfbapps.timesheetme.Util.Dates;
@@ -188,7 +189,6 @@ public class NavigationDrawerFragment extends Fragment implements NavViewAdapter
 				break;
 
 		}
-		Toast.makeText(getActivity(), "Clicked item at position: " + position, Toast.LENGTH_SHORT).show();
 	}
 
 	private void showExportDialog() {

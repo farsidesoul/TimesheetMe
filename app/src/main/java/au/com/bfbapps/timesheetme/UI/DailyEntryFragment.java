@@ -44,10 +44,7 @@ public class DailyEntryFragment extends Fragment {
 
 	private TextView mDateTextView;
 
-	private FloatingActionButton mAddTimesButton;
-	private FloatingActionButton mGotoDateButton;
 	private FloatingActionMenu mFloatingActionMenu;
-	private FloatingActionButton mBackToTodayButton;
 
 	private ViewPager mViewPager;
 
@@ -67,7 +64,7 @@ public class DailyEntryFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_daily_entry, container, false);
-		((MainActivity)getActivity()).setActionBarTitle("");
+		((MainActivity)getActivity()).setActionBarTitle("TimesheetMe");
 
 		mDb = new DatabaseHelper(getActivity().getApplicationContext());
 		mJobList = mDb.getAllJobs();
@@ -106,11 +103,11 @@ public class DailyEntryFragment extends Fragment {
 
 		// Floating Action Button menu
 		mFloatingActionMenu = (FloatingActionMenu)v.findViewById(R.id.fab);
-		mAddTimesButton = (FloatingActionButton)v.findViewById(R.id.add_times_menu);
-		mGotoDateButton = (FloatingActionButton)v.findViewById(R.id.goto_date_menu);
-		mBackToTodayButton = (FloatingActionButton)v.findViewById(R.id.back_to_today_menu);
+		FloatingActionButton addTimesButton = (FloatingActionButton) v.findViewById(R.id.add_times_menu);
+		FloatingActionButton gotoDateButton = (FloatingActionButton) v.findViewById(R.id.goto_date_menu);
+		FloatingActionButton backToTodayButton = (FloatingActionButton) v.findViewById(R.id.back_to_today_menu);
 
-		mAddTimesButton.setOnClickListener(new View.OnClickListener() {
+		addTimesButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				enterStartTime();
@@ -119,7 +116,7 @@ public class DailyEntryFragment extends Fragment {
 			}
 		});
 
-		mGotoDateButton.setOnClickListener(new View.OnClickListener() {
+		gotoDateButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				selectDate();
@@ -127,7 +124,7 @@ public class DailyEntryFragment extends Fragment {
 			}
 		});
 
-		mBackToTodayButton.setOnClickListener(new View.OnClickListener() {
+		backToTodayButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				mViewPager.setCurrentItem(5000, false);
@@ -277,7 +274,7 @@ public class DailyEntryFragment extends Fragment {
 					}
 
 					mBreak = (totalBreakEditText.getText().toString().equals("") ? 0 : Double.valueOf(totalBreakEditText.getText().toString()));
-					mTotalHoursWorked = calculateHoursWorked(mStartLong, mFinishLong) - (mBreak / 60);
+					mTotalHoursWorked = calculateHoursWorked(mStartLong, mFinishLong) - (mBreak / 60.0);
 
 					mDb.createEntry(new Entry(getDateFromActionBar(mDateTextView.getText().toString()),
 							mStartTime, mFinishTime, mBreak, mTotalHoursWorked, job, task));
@@ -338,7 +335,7 @@ public class DailyEntryFragment extends Fragment {
 	 * @return total hours worked
 	 */
 	private double calculateHoursWorked(long start, long finish){
-		return (double)(((finish - start) / 60000) / 60);
+		return (double)(((finish - start) / 60000.0) / 60.0);
 	}
 
 	/**
