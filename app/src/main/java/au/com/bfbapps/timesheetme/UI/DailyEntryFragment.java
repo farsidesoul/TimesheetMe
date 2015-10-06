@@ -73,12 +73,6 @@ public class DailyEntryFragment extends Fragment {
 		mViewPager = (ViewPager)v.findViewById(R.id.daily_entry_pager);
 		mViewPager.setAdapter(new DailyEntryViewPagerAdapter(getResources(), getChildFragmentManager()));
 		mViewPager.setCurrentItem(5000, false);
-//
-//		mViewPager.post(new Runnable() {
-//			public void run() {
-//				mViewPager.setCurrentItem(5000, false);
-//			}
-//		});
 		mViewPager.getAdapter().notifyDataSetChanged();
 		mViewPager.setOffscreenPageLimit(0);
 		mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
