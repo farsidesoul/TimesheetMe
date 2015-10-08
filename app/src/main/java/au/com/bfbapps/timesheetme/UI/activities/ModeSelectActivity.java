@@ -1,4 +1,4 @@
-package au.com.bfbapps.timesheetme.UI;
+package au.com.bfbapps.timesheetme.UI.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

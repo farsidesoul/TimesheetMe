@@ -5,10 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -32,10 +30,8 @@ import java.util.Date;
 import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
-import au.com.bfbapps.timesheetme.UI.DailyEntryFragment;
-import au.com.bfbapps.timesheetme.UI.MainActivity;
-import au.com.bfbapps.timesheetme.UI.WeeklyEntryFragment;
-import au.com.bfbapps.timesheetme.UI.WeeklyEntryViewPagerFragment;
+import au.com.bfbapps.timesheetme.UI.fragments.AdvancedDailyEntryFragment;
+import au.com.bfbapps.timesheetme.UI.fragments.WeeklyEntryFragment;
 import au.com.bfbapps.timesheetme.Util.Dates;
 import au.com.bfbapps.timesheetme.adapters.NavViewAdapter;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
@@ -170,19 +166,10 @@ public class NavigationDrawerFragment extends Fragment implements NavViewAdapter
 
 		switch (position) {
 			case 0:
-				DailyEntryFragment dailyEntryFragment = new DailyEntryFragment();
-				mDrawerLayout.closeDrawers();
-				getActivity().getSupportFragmentManager().beginTransaction()
-						.replace(R.id.main_content_pager, dailyEntryFragment)
-						.commit();
+
 				break;
 			case 1:
-				// Create the fragment
-				WeeklyEntryFragment weeklyEntryFragment = new WeeklyEntryFragment();
-				mDrawerLayout.closeDrawers();
-				getActivity().getSupportFragmentManager().beginTransaction()
-						.replace(R.id.main_content_pager, weeklyEntryFragment)
-						.commit();
+
 				break;
 			case 2:
 				showExportDialog();

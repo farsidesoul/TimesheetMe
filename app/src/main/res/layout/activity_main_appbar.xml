@@ -1,34 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/app_bar"/>
+			  xmlns:app="http://schemas.android.com/apk/res-auto"
+			  xmlns:tools="http://schemas.android.com/tools"
+			  android:layout_width="match_parent"
+			  android:layout_height="match_parent"
+			  android:orientation="vertical">
 
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+	<include
+		android:id="@+id/app_bar"
+		layout="@layout/app_bar"/>
 
-        <FrameLayout
-            android:id="@+id/main_content_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+	<android.support.v4.widget.DrawerLayout
+		android:id="@+id/drawer_layout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
 
-        <fragment
-            android:id="@+id/fragment_navigation_drawer"
-            android:name="au.com.bfbapps.timesheetme.UI.navdrawer.NavigationDrawerFragment"
-            android:layout_width="@dimen/nav_drawer_width"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            app:layout="@layout/fragment_navigation_drawer"
-            tools:layout="@layout/fragment_navigation_drawer"/>
+		<RelativeLayout
+			xmlns:fab="http://schemas.android.com/apk/res-auto"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
 
-    </android.support.v4.widget.DrawerLayout>
+			<RelativeLayout
+				android:id="@+id/fake_bar_linear_layout"
+				android:layout_width="match_parent"
+				android:layout_height="125dp"
+				android:background="@color/primaryColor"
+				android:gravity="center_vertical"
+				android:padding="16dp">
+
+				<TextView
+					android:id="@+id/daily_entry_date_field"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:fontFamily="sans-serif"
+					android:text="Date"
+					android:textColor="@color/textIcons"
+					android:textSize="35sp"
+					android:textStyle="bold"/>
+
+
+				<TextClock
+					android:id="@+id/daily_entry_time_field"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentStart="true"
+					android:layout_below="@+id/daily_entry_date_field"
+					android:layout_marginStart="43dp"
+					android:fontFamily="sans-serif-thin"
+					android:textColor="@color/textIcons"
+					android:textSize="35sp"/>
+
+			</RelativeLayout>
+
+
+			<android.support.v4.view.ViewPager
+				android:id="@+id/daily_entry_pager"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_below="@+id/fake_bar_linear_layout"/>
+
+			<com.github.clans.fab.FloatingActionMenu
+				android:id="@+id/fab"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentEnd="true"
+				android:layout_alignParentTop="true"
+				android:layout_marginEnd="16dp"
+				android:layout_marginTop="90dp"
+				fab:menu_colorNormal="@color/accentColor"
+				fab:menu_colorPressed="@color/accentColor"
+				fab:menu_colorRipple="@color/accentColor"
+				fab:menu_openDirection="down">
+
+				<com.github.clans.fab.FloatingActionButton
+					android:id="@+id/back_to_today_menu"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:src="@mipmap/ic_restore_white_24dp"
+					fab:fab_colorNormal="@color/accentColor"
+					fab:fab_colorPressed="@color/accentColorDark"
+					fab:fab_colorRipple="@color/primaryHintText"
+					fab:fab_label="Back to Today"
+					fab:fab_size="mini"/>
+
+				<com.github.clans.fab.FloatingActionButton
+					android:id="@+id/goto_date_menu"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:src="@mipmap/ic_search_white_24dp"
+					fab:fab_colorNormal="@color/fabMenuBlue"
+					fab:fab_colorPressed="@color/fabMenuBlueDark"
+					fab:fab_colorRipple="@color/fabMenuBlueLight"
+					fab:fab_label="Go To Date"
+					fab:fab_size="mini"/>
+
+				<com.github.clans.fab.FloatingActionButton
+					android:id="@+id/add_times_menu"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:src="@mipmap/ic_add_white_24dp"
+					fab:fab_colorNormal="@color/fabMenuGreen"
+					fab:fab_colorPressed="@color/fabMenuGreenDark"
+					fab:fab_colorRipple="@color/fabMenuGreenLight"
+					fab:fab_label="Add Times"
+					fab:fab_size="mini"/>
+
+			</com.github.clans.fab.FloatingActionMenu>
+
+		</RelativeLayout>
+
+		<fragment
+			android:id="@+id/fragment_navigation_drawer"
+			android:name="au.com.bfbapps.timesheetme.UI.navdrawer.NavigationDrawerFragment"
+			android:layout_width="@dimen/nav_drawer_width"
+			android:layout_height="match_parent"
+			android:layout_gravity="start"
+			app:layout="@layout/fragment_navigation_drawer"
+			tools:layout="@layout/fragment_navigation_drawer"/>
+
+	</android.support.v4.widget.DrawerLayout>
 
 
 </LinearLayout>

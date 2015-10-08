@@ -7,11 +7,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
-import au.com.bfbapps.timesheetme.UI.DailyEntryViewPagerFragment;
+import au.com.bfbapps.timesheetme.UI.activities.BaseModeActivity;
+import au.com.bfbapps.timesheetme.UI.fragments.DailyEntryViewPagerFragment;
 import au.com.bfbapps.timesheetme.Util.Dates;
 
 public class DailyEntryViewPagerAdapter extends FragmentPagerAdapter {
@@ -25,7 +24,7 @@ public class DailyEntryViewPagerAdapter extends FragmentPagerAdapter {
 		Date pagerDate = new Date();
 
 		String dayToShow = Dates.ConvertDateToString(
-				Dates.AddDaysToDate(pagerDate, position - 5000));
+				Dates.AddDaysToDate(pagerDate, position - BaseModeActivity.CURRENT_DAY_PAGE));
 
 		Bundle bundle = new Bundle();
 		bundle.putString("date", dayToShow);
@@ -43,6 +42,6 @@ public class DailyEntryViewPagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getCount() {
-		return 10000;
+		return BaseModeActivity.MAX_PAGES;
 	}
 }

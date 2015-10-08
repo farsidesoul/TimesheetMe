@@ -1,4 +1,4 @@
-package au.com.bfbapps.timesheetme.UI;
+package au.com.bfbapps.timesheetme.UI.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
+import au.com.bfbapps.timesheetme.UI.activities.BaseModeActivity;
 import au.com.bfbapps.timesheetme.adapters.WeeklyEntryViewPagerAdapter;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
 import au.com.bfbapps.timesheetme.models.Job;
@@ -29,7 +30,7 @@ public class WeeklyEntryFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_weekly_entry, container, false);
-		((MainActivity)getActivity()).setActionBarTitle("Week in Review");
+		((BaseModeActivity)getActivity()).setActionBarTitle("Week in Review");
 
 		mDb = new DatabaseHelper(getActivity().getApplicationContext());
 		mJobList = mDb.getAllJobs();

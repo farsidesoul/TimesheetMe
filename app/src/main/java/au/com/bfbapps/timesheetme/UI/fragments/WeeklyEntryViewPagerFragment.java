@@ -1,4 +1,4 @@
-package au.com.bfbapps.timesheetme.UI;
+package au.com.bfbapps.timesheetme.UI.fragments;
 
 
 import android.os.Bundle;

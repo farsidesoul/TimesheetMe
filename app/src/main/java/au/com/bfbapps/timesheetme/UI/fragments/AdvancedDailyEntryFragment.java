@@ -1,4 +1,4 @@
-package au.com.bfbapps.timesheetme.UI;
+package au.com.bfbapps.timesheetme.UI.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -7,7 +7,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +32,7 @@ import java.util.List;
 import java.util.Locale;
 
 import au.com.bfbapps.timesheetme.R;
+import au.com.bfbapps.timesheetme.UI.activities.BaseModeActivity;
 import au.com.bfbapps.timesheetme.Util.Dates;
 import au.com.bfbapps.timesheetme.adapters.DailyEntryViewPagerAdapter;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
@@ -40,7 +40,7 @@ import au.com.bfbapps.timesheetme.models.Entry;
 import au.com.bfbapps.timesheetme.models.Job;
 import au.com.bfbapps.timesheetme.models.Task;
 
-public class DailyEntryFragment extends Fragment {
+public class AdvancedDailyEntryFragment extends Fragment {
 
 	private TextView mDateTextView;
 
@@ -64,36 +64,16 @@ public class DailyEntryFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_daily_entry, container, false);
-		((MainActivity)getActivity()).setActionBarTitle("TimesheetMe");
+		((BaseModeActivity)getActivity()).setActionBarTitle("TimesheetMe");
 
-		mDb = new DatabaseHelper(getActivity().getApplicationContext());
+//		mDb = getDb();
 		mJobList = mDb.getAllJobs();
 		mTaskList = mDb.getAllTasks();
 
-		mViewPager = (ViewPager)v.findViewById(R.id.daily_entry_pager);
-		mViewPager.setAdapter(new DailyEntryViewPagerAdapter(getResources(), getChildFragmentManager()));
-		mViewPager.setCurrentItem(5000, false);
-		mViewPager.getAdapter().notifyDataSetChanged();
-		mViewPager.setOffscreenPageLimit(0);
-		mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-			@Override
-			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-			}
-
-			@Override
-			public void onPageSelected(int position) {
-				setDateOnActionBar(Dates.AddDaysToDate(new Date(), position - 5000));
-			}
-
-			@Override
-			public void onPageScrollStateChanged(int state) {
-
-			}
-		});
+//		mViewPager = getViewPager();
 
 		mDateTextView = (TextView)v.findViewById(R.id.daily_entry_date_field);
-		setDateOnActionBar(new Date());
+//		setDateOnActionBar(new Date());
 
 		// Floating Action Button menu
 		mFloatingActionMenu = (FloatingActionMenu)v.findViewById(R.id.fab);
@@ -122,55 +102,13 @@ public class DailyEntryFragment extends Fragment {
 			@Override
 			public void onClick(View view) {
 				mViewPager.setCurrentItem(5000, false);
-				setDateOnActionBar(new Date());
+//				setDateOnActionBar(new Date());
 				mViewPager.getAdapter().notifyDataSetChanged();
 				mFloatingActionMenu.close(true);
 			}
 		});
 
 		return v;
-	}
-
-	private void setDateOnActionBar(Date date){
-		DateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
-		mDateTextView.setText(dateFormat.format(date));
-	}
-
-	private Date getDateFromActionBar(String date){
-		DateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
-		try {
-			return dateFormat.parse(date);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	private String convertTimeToString(int hour, int minute){
-		String hourString;
-		String minuteString;
-		String amPm;
-
-		if (hour < 13){
-			amPm = "AM";
-		} else {
-			amPm = "PM";
-		}
-
-		if (hour > 12){
-			hour -= 12;
-		} else if (hour == 0){
-			hour = 12;
-		}
-		hourString = "" + hour;
-
-		if(minute < 10){
-			minuteString = "0" + minute;
-		} else {
-			minuteString = "" + minute;
-		}
-
-		return hourString + ":" + minuteString + " " + amPm;
 	}
 
 	private void enterStartTime(){
@@ -181,7 +119,7 @@ public class DailyEntryFragment extends Fragment {
 				new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
 					@Override
 					public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-						mStartTime = convertTimeToString(hour, minute);
+//						mStartTime = convertTimeToString(hour, minute);
 						Date date = Dates.ConvertTimeToDate(mStartTime);
 						mStartLong = date.getTime();
 						enterFinishTime();
@@ -199,7 +137,7 @@ public class DailyEntryFragment extends Fragment {
 				new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
 					@Override
 					public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-						mFinishTime = convertTimeToString(hour, minute);
+//						mFinishTime = convertTimeToString(hour, minute);
 						Date date = Dates.ConvertTimeToDate(mFinishTime);
 						mFinishLong = date.getTime();
 						if (mFinishLong <= mStartLong){
@@ -270,8 +208,8 @@ public class DailyEntryFragment extends Fragment {
 					mBreak = (totalBreakEditText.getText().toString().equals("") ? 0 : Double.valueOf(totalBreakEditText.getText().toString()));
 					mTotalHoursWorked = calculateHoursWorked(mStartLong, mFinishLong) - (mBreak / 60.0);
 
-					mDb.createEntry(new Entry(getDateFromActionBar(mDateTextView.getText().toString()),
-							mStartTime, mFinishTime, mBreak, mTotalHoursWorked, job, task));
+//					mDb.createEntry(new Entry(getDateFromActionBar(mDateTextView.getText().toString()),
+//							mStartTime, mFinishTime, mBreak, mTotalHoursWorked, job, task));
 
 					// Re-populate the job and task lists so we can re-use them immediately
 					mJobList = mDb.getAllJobs();
@@ -313,7 +251,7 @@ public class DailyEntryFragment extends Fragment {
 						int positionOfSelection = getPositionOfSelection(selectedDate.getTime());
 						mViewPager.setCurrentItem(positionOfSelection);
 						mViewPager.getAdapter().notifyDataSetChanged();
-						setDateOnActionBar(selectedDate.getTime());
+//						setDateOnActionBar(selectedDate.getTime());
 					}
 				}, year, month, day);
 

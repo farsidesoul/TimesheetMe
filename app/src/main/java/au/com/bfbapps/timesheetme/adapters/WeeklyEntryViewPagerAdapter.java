@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.Date;
 
-import au.com.bfbapps.timesheetme.UI.WeeklyEntryViewPagerFragment;
+import au.com.bfbapps.timesheetme.UI.fragments.WeeklyEntryViewPagerFragment;
 import au.com.bfbapps.timesheetme.Util.Dates;
 
 public class WeeklyEntryViewPagerAdapter extends FragmentPagerAdapter {
