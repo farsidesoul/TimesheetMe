@@ -1,4 +1,4 @@
-package au.com.bfbapps.timesheetme.uis.activities;
+package au.com.bfbapps.timesheetme.ui.activities;
 
 import android.support.v7.app.AppCompatActivity;
 

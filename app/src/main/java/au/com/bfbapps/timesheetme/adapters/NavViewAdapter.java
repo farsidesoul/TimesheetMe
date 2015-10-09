@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
-import au.com.bfbapps.timesheetme.uis.navdrawer.NavDrawerItem;
+import au.com.bfbapps.timesheetme.ui.navdrawer.NavDrawerItem;
 
 public class NavViewAdapter extends RecyclerView.Adapter<NavViewAdapter.NavItemViewHolder> {
 

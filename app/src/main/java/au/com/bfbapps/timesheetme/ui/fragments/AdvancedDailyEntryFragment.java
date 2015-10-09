@@ -1,4 +1,4 @@
-package au.com.bfbapps.timesheetme.uis.fragments;
+package au.com.bfbapps.timesheetme.ui.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
-import au.com.bfbapps.timesheetme.uis.activities.BaseModeActivity;
+import au.com.bfbapps.timesheetme.ui.activities.BaseModeActivity;
 import au.com.bfbapps.timesheetme.Util.Dates;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
 import au.com.bfbapps.timesheetme.models.Job;

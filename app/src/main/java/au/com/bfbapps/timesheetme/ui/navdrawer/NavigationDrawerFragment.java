@@ -1,4 +1,4 @@
-package au.com.bfbapps.timesheetme.uis.navdrawer;
+package au.com.bfbapps.timesheetme.ui.navdrawer;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

@@ -9,8 +9,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.Date;
 
-import au.com.bfbapps.timesheetme.uis.activities.BaseModeActivity;
-import au.com.bfbapps.timesheetme.uis.fragments.DailyEntryViewPagerFragment;
+import au.com.bfbapps.timesheetme.ui.activities.BaseModeActivity;
+import au.com.bfbapps.timesheetme.ui.fragments.DailyEntryViewPagerFragment;
 import au.com.bfbapps.timesheetme.Util.Dates;
 
 public class DailyEntryViewPagerAdapter extends FragmentPagerAdapter {

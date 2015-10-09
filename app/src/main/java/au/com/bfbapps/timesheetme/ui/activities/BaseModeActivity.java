@@ -1,4 +1,4 @@
-package au.com.bfbapps.timesheetme.uis.activities;
+package au.com.bfbapps.timesheetme.ui.activities;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import au.com.bfbapps.timesheetme.R;
-import au.com.bfbapps.timesheetme.uis.navdrawer.NavigationDrawerFragment;
+import au.com.bfbapps.timesheetme.ui.navdrawer.NavigationDrawerFragment;
 import au.com.bfbapps.timesheetme.Util.Dates;
 import au.com.bfbapps.timesheetme.adapters.DailyEntryViewPagerAdapter;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
