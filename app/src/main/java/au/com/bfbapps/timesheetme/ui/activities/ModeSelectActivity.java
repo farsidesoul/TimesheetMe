@@ -34,9 +34,10 @@ public class ModeSelectActivity extends AppCompatActivity implements View.OnClic
 
 	public void onClick(View v){
 		if (v == mSimpleMode){
-			mPrefs.edit().putInt("mode", MODE_SIMPLE);
+			mPrefs.edit().putInt("mode", MODE_SIMPLE).apply();
+
 		} else if(v == mAdvancedMode){
-			mPrefs.edit().putInt("mode", MODE_ADVANCED);
+			mPrefs.edit().putInt("mode", MODE_ADVANCED).apply();
 		}
 	}
 	
