@@ -1,4 +1,4 @@
-package au.com.bfbapps.timesheetme.UI.fragments;
+package au.com.bfbapps.timesheetme.uis.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -22,21 +22,15 @@ import android.widget.Toast;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import au.com.bfbapps.timesheetme.R;
-import au.com.bfbapps.timesheetme.UI.activities.BaseModeActivity;
+import au.com.bfbapps.timesheetme.uis.activities.BaseModeActivity;
 import au.com.bfbapps.timesheetme.Util.Dates;
-import au.com.bfbapps.timesheetme.adapters.DailyEntryViewPagerAdapter;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
-import au.com.bfbapps.timesheetme.models.Entry;
 import au.com.bfbapps.timesheetme.models.Job;
 import au.com.bfbapps.timesheetme.models.Task;
 

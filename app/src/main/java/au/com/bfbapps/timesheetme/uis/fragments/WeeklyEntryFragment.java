@@ -1,4 +1,4 @@
-package au.com.bfbapps.timesheetme.UI.fragments;
+package au.com.bfbapps.timesheetme.uis.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
-import au.com.bfbapps.timesheetme.UI.activities.BaseModeActivity;
+import au.com.bfbapps.timesheetme.uis.activities.BaseModeActivity;
 import au.com.bfbapps.timesheetme.adapters.WeeklyEntryViewPagerAdapter;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
 import au.com.bfbapps.timesheetme.models.Job;

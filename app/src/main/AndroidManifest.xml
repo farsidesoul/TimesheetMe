@@ -11,12 +11,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
-        <activity android:name=".UI.activities.BaseModeActivity"
-                  android:label="@string/app_name"
-                  android:theme="@style/AppTheme">
-        </activity>
-
-		<activity android:name=".UI.activities.SimpleDailyEntryActivity"
+		<activity android:name=".uis.activities.LauncherActivity"
 				  android:label="@string/app_name"
 				  android:theme="@style/AppTheme">
 			<intent-filter>
@@ -26,8 +21,17 @@
 			</intent-filter>
 		</activity>
 
+		<activity android:name=".uis.activities.SimpleDailyEntryActivity"
+				  android:label="@string/app_name"
+				  android:theme="@style/AppTheme">
+		</activity>
+
+		<activity android:name=".uis.activities.AdvancedDailyEntryActivity"
+				  android:label="@string/app_name"
+				  android:theme="@style/AppTheme"/>
+
         <activity
-            android:name=".UI.activities.ModeSelectActivity"
+            android:name=".uis.activities.ModeSelectActivity"
             android:label="@string/title_activity_mode_select"
             android:theme="@style/AppTheme" >
         </activity>

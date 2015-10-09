@@ -1,4 +1,4 @@
-package au.com.bfbapps.timesheetme.UI.navdrawer;
+package au.com.bfbapps.timesheetme.uis.navdrawer;
 
 public class NavDrawerItem {
 	private int mItemId;

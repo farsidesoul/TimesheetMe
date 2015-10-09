@@ -1,22 +1,23 @@
-package au.com.bfbapps.timesheetme.UI.activities;
+package au.com.bfbapps.timesheetme.uis.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import au.com.bfbapps.timesheetme.R;
 
 public class ModeSelectActivity extends AppCompatActivity implements View.OnClickListener {
 
+	public static final byte MODE_SIMPLE = 0;
+	public static final byte MODE_ADVANCED = 1;
+
 	private CardView mSimpleMode;
 	private CardView mAdvancedMode;
+
+	private SharedPreferences mPrefs;
 
 
 	@Override
@@ -24,6 +25,7 @@ public class ModeSelectActivity extends AppCompatActivity implements View.OnClic
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mode_select);
 
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 		mSimpleMode = (CardView) findViewById(R.id.card_simple_mode);
 		mAdvancedMode = (CardView) findViewById(R.id.card_advanced_mode);
 		mSimpleMode.setOnClickListener(this);
@@ -32,9 +34,9 @@ public class ModeSelectActivity extends AppCompatActivity implements View.OnClic
 
 	public void onClick(View v){
 		if (v == mSimpleMode){
-			Toast.makeText(this, "Simple Mode Bro", Toast.LENGTH_SHORT).show();
+			mPrefs.edit().putInt("mode", MODE_SIMPLE);
 		} else if(v == mAdvancedMode){
-			Toast.makeText(this, "Advanced Mode Bro", Toast.LENGTH_SHORT).show();
+			mPrefs.edit().putInt("mode", MODE_ADVANCED);
 		}
 	}
 	

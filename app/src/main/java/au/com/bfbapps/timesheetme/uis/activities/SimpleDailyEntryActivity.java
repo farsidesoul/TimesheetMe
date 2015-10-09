@@ -1,7 +1,6 @@
-package au.com.bfbapps.timesheetme.UI.activities;
+package au.com.bfbapps.timesheetme.uis.activities;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 public class SimpleDailyEntryActivity extends BaseModeActivity {
 
@@ -9,10 +8,11 @@ public class SimpleDailyEntryActivity extends BaseModeActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+
 	}
 
 	@Override
 	protected void onAddButtonClick() {
-		Toast.makeText(this, "Lalal", Toast.LENGTH_SHORT).show();
+
 	}
 }
