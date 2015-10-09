@@ -29,7 +29,7 @@ import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
 import au.com.bfbapps.timesheetme.ui.activities.BaseModeActivity;
-import au.com.bfbapps.timesheetme.Util.Dates;
+import au.com.bfbapps.timesheetme.utils.Dates;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
 import au.com.bfbapps.timesheetme.models.Job;
 import au.com.bfbapps.timesheetme.models.Task;

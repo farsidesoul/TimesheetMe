@@ -1,9 +1,7 @@
-package au.com.bfbapps.timesheetme.Util;
+package au.com.bfbapps.timesheetme.utils;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
-import org.json.JSONException;
 
 public class ResponseChecker {
 	public static boolean CheckForErrorInResponse(JsonObject s) {

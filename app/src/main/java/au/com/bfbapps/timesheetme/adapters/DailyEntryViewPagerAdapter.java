@@ -11,7 +11,7 @@ import java.util.Date;
 
 import au.com.bfbapps.timesheetme.ui.activities.BaseModeActivity;
 import au.com.bfbapps.timesheetme.ui.fragments.DailyEntryViewPagerFragment;
-import au.com.bfbapps.timesheetme.Util.Dates;
+import au.com.bfbapps.timesheetme.utils.Dates;
 
 public class DailyEntryViewPagerAdapter extends FragmentPagerAdapter {
 

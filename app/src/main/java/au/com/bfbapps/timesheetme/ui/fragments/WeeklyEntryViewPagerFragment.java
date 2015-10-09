@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
-import au.com.bfbapps.timesheetme.Util.Dates;
+import au.com.bfbapps.timesheetme.utils.Dates;
 import au.com.bfbapps.timesheetme.adapters.WeeklyEntryRecyclerViewAdapter;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
 import au.com.bfbapps.timesheetme.models.WeeklyEntry;

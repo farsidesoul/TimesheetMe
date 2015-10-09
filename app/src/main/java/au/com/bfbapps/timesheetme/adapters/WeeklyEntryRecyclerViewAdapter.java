@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import au.com.bfbapps.timesheetme.R;
-import au.com.bfbapps.timesheetme.Util.Dates;
+import au.com.bfbapps.timesheetme.utils.Dates;
 import au.com.bfbapps.timesheetme.models.Entry;
 import au.com.bfbapps.timesheetme.models.WeeklyEntry;
 

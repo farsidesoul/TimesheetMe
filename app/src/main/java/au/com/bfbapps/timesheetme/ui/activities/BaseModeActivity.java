@@ -22,7 +22,7 @@ import java.util.Locale;
 
 import au.com.bfbapps.timesheetme.R;
 import au.com.bfbapps.timesheetme.ui.navdrawer.NavigationDrawerFragment;
-import au.com.bfbapps.timesheetme.Util.Dates;
+import au.com.bfbapps.timesheetme.utils.Dates;
 import au.com.bfbapps.timesheetme.adapters.DailyEntryViewPagerAdapter;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
 

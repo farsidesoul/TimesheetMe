@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import au.com.bfbapps.timesheetme.Util.Dates;
+import au.com.bfbapps.timesheetme.utils.Dates;
 import au.com.bfbapps.timesheetme.models.Entry;
 import au.com.bfbapps.timesheetme.models.Job;
 import au.com.bfbapps.timesheetme.models.Task;

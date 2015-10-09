@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package au.com.bfbapps.timesheetme.Util;
+package au.com.bfbapps.timesheetme.utils;
 
 		import android.R;
 		import android.content.Context;

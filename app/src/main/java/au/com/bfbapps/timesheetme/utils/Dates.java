@@ -1,4 +1,4 @@
-package au.com.bfbapps.timesheetme.Util;
+package au.com.bfbapps.timesheetme.utils;
 
 import android.util.Log;
 
