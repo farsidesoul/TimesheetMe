@@ -22,31 +22,35 @@ public class Entry {
     private Job mJob;
     @SerializedName("taskId")
     private Task mTask;
+	@SerializedName("mode")
+	private int mMode;
 
 	public Entry(){
 
 	}
 
-	public Entry(Date mDate, String mStart, String mFinish, double mTotalBreak, double mTotalHoursWorked, Job mJobId, Task mtaskId) {
-		this.mDate = mDate;
-		this.mStart = mStart;
-		this.mFinish = mFinish;
-		this.mTotalBreak = mTotalBreak;
-		this.mTotalHoursWorked = mTotalHoursWorked;
-		this.mJob = mJobId;
-		this.mTask = mtaskId;
+	public Entry(Date date, String start, String finish, double totalBreak, double totalHoursWorked, Job job, Task task, int mode) {
+		mDate = date;
+		mStart = start;
+		mFinish = finish;
+		mTotalBreak = totalBreak;
+		mTotalHoursWorked = totalHoursWorked;
+		mJob = job;
+		mTask = task;
+		mMode = mode;
 	}
 
-    public Entry(long mEntryId, Date mDate, String mStart, String mFinish, double mTotalBreak, double mTotalHoursWorked, Job mJobId, Task mtaskId) {
-        this.mEntryId = mEntryId;
-        this.mDate = mDate;
-        this.mStart = mStart;
-        this.mFinish = mFinish;
-        this.mTotalBreak = mTotalBreak;
-        this.mTotalHoursWorked = mTotalHoursWorked;
-        this.mJob = mJobId;
-        this.mTask = mtaskId;
-    }
+	public Entry(long entryId, Date date, String start, String finish, double totalBreak, double totalHoursWorked, Job job, Task task, int mode) {
+		mEntryId = entryId;
+		mDate = date;
+		mStart = start;
+		mFinish = finish;
+		mTotalBreak = totalBreak;
+		mTotalHoursWorked = totalHoursWorked;
+		mJob = job;
+		mTask = task;
+		mMode = mode;
+	}
 
 	public long getEntryId() {
 		return mEntryId;
@@ -108,7 +112,15 @@ public class Entry {
 		return mTask;
 	}
 
-	public void setTask(Task mtaskId) {
-		this.mTask = mtaskId;
+	public void setTask(Task taskId) {
+		this.mTask = taskId;
+	}
+
+	public int getMode() {
+		return mMode;
+	}
+
+	public void setMode(int mode) {
+		mMode = mode;
 	}
 }

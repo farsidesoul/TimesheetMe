@@ -3,15 +3,14 @@ package au.com.bfbapps.timesheetme.ui.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
 public class LauncherActivity extends AppCompatActivity {
 
 	@Override
-	public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-		super.onCreate(savedInstanceState, persistentState);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -25,6 +24,8 @@ public class LauncherActivity extends AppCompatActivity {
 				case ModeSelectActivity.MODE_ADVANCED:
 					startClassActivity(AdvancedDailyEntryActivity.class);
 					break;
+				default:
+					startClassActivity(ModeSelectActivity.class);
 			}
 		} else {
 			startClassActivity(ModeSelectActivity.class);

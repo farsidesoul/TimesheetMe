@@ -5,4 +5,12 @@
     <dimen name="activity_all_padding">16dp</dimen>
     <dimen name="nav_drawer_width">280dp</dimen>
 	<dimen name="fab_margin">16dp</dimen>
+
+
+    <dimen name="minimum_text_button_width">64dp</dimen>
+    <dimen name="minimum_text_button_height">36dp</dimen>
+
+
+    <!-- Daily Entry -->
+    <dimen name="standard_card_padding">10dp</dimen>
 </resources>

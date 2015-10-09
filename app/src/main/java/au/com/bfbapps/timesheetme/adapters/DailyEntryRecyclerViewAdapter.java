@@ -8,15 +8,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.daimajia.swipe.SwipeLayout;
 
 import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
 import au.com.bfbapps.timesheetme.models.Entry;
-import au.com.bfbapps.timesheetme.models.Job;
-import au.com.bfbapps.timesheetme.models.Task;
 
 public class DailyEntryRecyclerViewAdapter
 		extends RecyclerView.Adapter<DailyEntryRecyclerViewAdapter.DailyEntryItemViewHolder> {
@@ -28,8 +25,6 @@ public class DailyEntryRecyclerViewAdapter
 
 	private DatabaseHelper mDb;
 
-	private boolean isOpen = false;
-
 	public DailyEntryRecyclerViewAdapter(Context context, List<Entry> data){
 		mContext = context;
 		mEntryItemList = data;
@@ -40,8 +35,7 @@ public class DailyEntryRecyclerViewAdapter
 	public DailyEntryItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View view = mInflater.inflate(R.layout.fragment_daily_entry_item, parent, false);
 
-		DailyEntryItemViewHolder holder = new DailyEntryItemViewHolder(view);
-		return holder;
+		return new DailyEntryItemViewHolder(view);
 	}
 
 	@Override
@@ -49,42 +43,6 @@ public class DailyEntryRecyclerViewAdapter
 		mDb = new DatabaseHelper(mContext.getApplicationContext());
 
 		Entry currentItem = mEntryItemList.get(position);
-
-		holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
-		holder.swipeLayout.close();
-		holder.swipeLayout.setSwipeEnabled(false);
-		holder.swipeLayout.setOnLongClickListener(new View.OnLongClickListener() {
-			@Override
-			public boolean onLongClick(View view) {
-				if (isOpen) {
-					holder.swipeLayout.close();
-					isOpen = false;
-				} else {
-					holder.swipeLayout.open();
-					isOpen = true;
-				}
-
-				return true;
-			}
-		});
-
-		holder.swipeLayout.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (isOpen) {
-					holder.swipeLayout.close();
-					isOpen = false;
-				}
-			}
-		});
-
-
-		holder.deleteButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				delete(position);
-			}
-		});
 
 		holder.title.setText(currentItem.getJob().getJobName());
 		holder.subTitle.setText(currentItem.getTask().getTaskName());
@@ -110,14 +68,11 @@ public class DailyEntryRecyclerViewAdapter
 
 	class DailyEntryItemViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
 
-		SwipeLayout swipeLayout;
 		TextView title;
 		TextView subTitle;
 		TextView start;
 		TextView finish;
 		TextView totalHours;
-		LinearLayout bottomWrapper;
-		TextView deleteButton;
 
 		public DailyEntryItemViewHolder(View itemView) {
 			super(itemView);
@@ -127,9 +82,6 @@ public class DailyEntryRecyclerViewAdapter
 			start = (TextView)itemView.findViewById(R.id.daily_entry_item_start_time);
 			finish = (TextView)itemView.findViewById(R.id.daily_entry_item_finish_time);
 			totalHours = (TextView)itemView.findViewById(R.id.daily_entry_item_total_hours);
-			swipeLayout = (SwipeLayout)itemView.findViewById(R.id.swipeLayout);
-			bottomWrapper = (LinearLayout)itemView.findViewById(R.id.bottom_wrapper);
-			deleteButton = (TextView)itemView.findViewById(R.id.daily_entry_delete_button);
 		}
 
 		@Override

@@ -1,5 +1,6 @@
 package au.com.bfbapps.timesheetme.ui.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -35,10 +36,15 @@ public class ModeSelectActivity extends AppCompatActivity implements View.OnClic
 	public void onClick(View v){
 		if (v == mSimpleMode){
 			mPrefs.edit().putInt("mode", MODE_SIMPLE).apply();
-
+			startClassActivity(SimpleDailyEntryActivity.class);
 		} else if(v == mAdvancedMode){
 			mPrefs.edit().putInt("mode", MODE_ADVANCED).apply();
+			startClassActivity(AdvancedDailyEntryActivity.class);
 		}
+	}
+
+	private void startClassActivity(Class c){
+		startActivity(new Intent(this, c));
 	}
 	
 }
