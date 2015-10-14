@@ -2,10 +2,13 @@ package au.com.bfbapps.timesheetme.ui.activities;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -21,7 +24,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import au.com.bfbapps.timesheetme.R;
-import au.com.bfbapps.timesheetme.ui.navdrawer.NavigationDrawerFragment;
 import au.com.bfbapps.timesheetme.utils.Dates;
 import au.com.bfbapps.timesheetme.adapters.DailyEntryViewPagerAdapter;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
@@ -32,6 +34,7 @@ public abstract class BaseModeActivity extends AppCompatActivity {
 	public static final int CURRENT_DAY_PAGE = MAX_PAGES / 2;
 
 	protected DatabaseHelper mDb;
+	private TextView mToolbarTitle;
 	private Toolbar mToolbar;
 	protected ViewPager mViewPager;
 	protected TextView mDateTextView;
@@ -46,13 +49,53 @@ public abstract class BaseModeActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main_appbar);
 
 		mToolbar = (Toolbar) findViewById(R.id.app_bar);
+		mToolbarTitle = (TextView) mToolbar.findViewById(R.id.text_title);
+		NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+		final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+		navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+			@Override
+			public boolean onNavigationItemSelected(MenuItem menuItem) {
+				if(menuItem.isChecked()) {
+					menuItem.setChecked(false);
+				}
+				else {
+					menuItem.setChecked(true);
+				}
+
+				drawerLayout.closeDrawers();
+
+				switch(menuItem.getItemId()){
+					case R.id.home:
+						break;
+					case R.id.weekly_report:
+						break;
+					case R.id.export:
+						break;
+				}
+				return true;
+			}
+		});
+
 		setupToolbar();
 
-		NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment)
-				getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-		drawerFragment.setUp(R.id.fragment_navigation_drawer,
-				(DrawerLayout) findViewById(R.id.drawer_layout),
-				mToolbar);
+		ActionBarDrawerToggle actionBarDrawerToggle =
+				new ActionBarDrawerToggle(this, drawerLayout, mToolbar, R.string.drawer_open,
+						R.string.drawer_closed) {
+			@Override
+			public void onDrawerClosed(View drawerView) {
+				super.onDrawerClosed(drawerView);
+			}
+
+			@Override
+			public void onDrawerOpened(View drawerView) {
+				super.onDrawerOpened(drawerView);
+			}
+		};
+
+		drawerLayout.setDrawerListener(actionBarDrawerToggle);
+		actionBarDrawerToggle.syncState();
+
 
 		mDb = new DatabaseHelper(getApplicationContext());
 
@@ -119,15 +162,14 @@ public abstract class BaseModeActivity extends AppCompatActivity {
 
 	private void setupToolbar() {
 		setSupportActionBar(mToolbar);
-		if (getSupportActionBar() != null) {
-			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-			getSupportActionBar().setTitle("");
+		if(getSupportActionBar() != null){
+			getSupportActionBar().setDisplayShowTitleEnabled(false);
 		}
+		setActionBarTitle("TimesheetMe");
 	}
 
 	public void setActionBarTitle(String title) {
-		if (getSupportActionBar() != null)
-			getSupportActionBar().setTitle(title);
+		mToolbarTitle.setText(title);
 	}
 
 	protected void setDateOnActionBar(Date date){

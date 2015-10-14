@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/home"
+		  android:icon="@mipmap/ic_home_black_48dp"
+		  android:title="Home"/>
+
+	<item android:id="@+id/weekly_report"
+		  android:icon="@mipmap/ic_assessment_black_48dp"
+		  android:title="Weekly Report"/>
+
+	<item android:id="@+id/export"
+		  android:icon="@mipmap/ic_get_app_black_48dp"
+		  android:title="Export"/>
+</menu>
