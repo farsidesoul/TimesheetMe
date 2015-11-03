@@ -8,7 +8,8 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:orientation="vertical"
-		android:padding="@dimen/standard_card_padding">
+		android:padding="@dimen/standard_card_padding"
+		android:animateLayoutChanges="true">
 
 		<TextView
 			android:layout_width="match_parent"
@@ -47,6 +48,7 @@
 			android:layout_marginBottom="10dp"/>
 
 		<CheckBox
+			android:id="@+id/checkbox_break"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="Took a break?"
@@ -54,11 +56,24 @@
 			android:textColor="@color/primaryText"
 			android:buttonTint="#555"/>
 
+		<TextView
+			android:id="@+id/text_break_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="Enter a break (minutes):"
+			android:visibility="gone"
+			android:textColor="@color/primaryText"/>
+
 		<EditText
 			android:id="@+id/edit_break"
 			android:layout_width="match_parent"
 			android:layout_height="48dp"
-			android:inputType="number"/>
+			android:inputType="number"
+			android:visibility="gone"
+			android:hint="Break time (minutes)"
+			android:textSize="12sp"
+			android:textColor="@color/secondaryText"
+			android:textColorHint="@color/secondaryText"/>
 
 		<LinearLayout
 			android:layout_width="match_parent"
@@ -68,6 +83,7 @@
 			android:paddingTop="24dp">
 
 			<TextView
+				android:id="@+id/text_cancel"
 				android:layout_width="@dimen/minimum_text_button_width"
 				android:layout_height="@dimen/minimum_text_button_height"
 				android:text="Cancel"
@@ -76,6 +92,7 @@
 				android:textColor="@color/accentColor"/>
 
 			<TextView
+				android:id="@+id/text_add"
 				android:layout_width="@dimen/minimum_text_button_width"
 				android:layout_height="@dimen/minimum_text_button_height"
 				android:text="Add"
