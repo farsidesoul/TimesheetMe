@@ -60,11 +60,11 @@ public class AdvancedDailyEntryFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_daily_entry, container, false);
 		((BaseModeActivity)getActivity()).setActionBarTitle("TimesheetMe");
 
-//		mDb = getDb();
+//		db = getDb();
 		mJobList = mDb.getAllJobs();
 		mTaskList = mDb.getAllTasks();
 
-//		mViewPager = getViewPager();
+//		entriesViewPager = getViewPager();
 
 		mDateTextView = (TextView)v.findViewById(R.id.daily_entry_date_field);
 //		setDateOnActionBar(new Date());
@@ -202,7 +202,7 @@ public class AdvancedDailyEntryFragment extends Fragment {
 					mBreak = (totalBreakEditText.getText().toString().equals("") ? 0 : Double.valueOf(totalBreakEditText.getText().toString()));
 					mTotalHoursWorked = calculateHoursWorked(mStartLong, mFinishLong) - (mBreak / 60.0);
 
-//					mDb.createEntry(new Entry(getDateFromActionBar(mDateTextView.getText().toString()),
+//					db.createEntry(new Entry(getDateFromActionBar(dateTextView.getText().toString()),
 //							mStartTime, mFinishTime, mBreak, mTotalHoursWorked, job, task));
 
 					// Re-populate the job and task lists so we can re-use them immediately

@@ -2,10 +2,10 @@
 <resources>
 
     <!-- Main App Colors -->
-    <color name="primaryColor">#512DA8</color>
-    <color name="primaryColorDark">#673AB7</color>
+    <color name="primaryColor">#2196f3</color>
+    <color name="primaryColorDark">#1976d2</color>
 	<color name="primaryColorLight">#D1C4E9</color>
-    <color name="accentColor">#FFC107</color>
+    <color name="accentColor">#b388ff</color>
     <color name="accentColorDark">#455A64</color>
 	<color name="accentColorLight">#CFD8DC</color>
     <color name="dividerColor">#B6B6B6</color>
@@ -17,6 +17,9 @@
 	<color name="fabMenuGreen">#52AA5E</color>
 	<color name="fabMenuGreenDark">#ff366c36</color>
 	<color name="fabMenuGreenLight">#ff93e8ae</color>
+	<color name="fabOptionOne">#67C6F5</color>
+	<color name="fabOptionTwo">#6E9EFF</color>
+	<color name="fabOptionThree">#7170E8</color>
 
     <!-- Text Colors -->
 	<color name="textIcons">#FFFFFF</color>
@@ -24,5 +27,7 @@
 	<color name="primaryText">#212121</color>
 	<color name="secondaryText">#727272</color>
 	<color name="primaryHintText">#66212121</color>
+	<color name="primary_material_dark">#2196f3</color>
+	<color name="primary_dark_material_dark">#1976d2</color>
 
 </resources>

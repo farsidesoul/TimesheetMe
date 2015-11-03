@@ -87,7 +87,7 @@ public class DailyEntryRecyclerViewAdapter
 		@Override
 		public boolean onLongClick(View view) {
 			if (mClickListener != null){
-				mClickListener.itemClicked(view, getPosition());
+				mClickListener.itemClicked(view, getAdapterPosition());
 			}
 			return false;
 		}

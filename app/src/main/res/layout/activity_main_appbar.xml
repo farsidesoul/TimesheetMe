@@ -85,9 +85,9 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:src="@mipmap/ic_restore_white_24dp"
-					fab:fab_colorNormal="@color/accentColor"
-					fab:fab_colorPressed="@color/accentColorDark"
-					fab:fab_colorRipple="@color/primaryHintText"
+					fab:fab_colorNormal="@color/fabOptionOne"
+					fab:fab_colorPressed="@color/fabOptionOne"
+					fab:fab_colorRipple="@color/fabOptionOne"
 					fab:fab_label="Back to Today"
 					fab:fab_size="mini"/>
 
@@ -96,9 +96,9 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:src="@mipmap/ic_search_white_24dp"
-					fab:fab_colorNormal="@color/fabMenuBlue"
-					fab:fab_colorPressed="@color/fabMenuBlueDark"
-					fab:fab_colorRipple="@color/fabMenuBlueLight"
+					fab:fab_colorNormal="@color/fabOptionTwo"
+					fab:fab_colorPressed="@color/fabOptionTwo"
+					fab:fab_colorRipple="@color/fabOptionTwo"
 					fab:fab_label="Go To Date"
 					fab:fab_size="mini"/>
 
@@ -107,9 +107,9 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:src="@mipmap/ic_add_white_24dp"
-					fab:fab_colorNormal="@color/fabMenuGreen"
-					fab:fab_colorPressed="@color/fabMenuGreenDark"
-					fab:fab_colorRipple="@color/fabMenuGreenLight"
+					fab:fab_colorNormal="@color/fabOptionThree"
+					fab:fab_colorPressed="@color/fabOptionThree"
+					fab:fab_colorRipple="@color/fabOptionThree"
 					fab:fab_label="Add Times"
 					fab:fab_size="mini"/>
 

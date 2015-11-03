@@ -2,10 +2,12 @@ package au.com.bfbapps.timesheetme.ui.fragments;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,6 +118,30 @@ public class SimpleEntryDialogFragment extends DialogFragment {
 
 	@OnClick(R.id.text_cancel)
 	public void cancelEntry(){
+		if(!startTime.getText().toString().equals("")
+				|| !finishTime.getText().toString().equals("")
+				|| !breakTime.getText().toString().equals("")){
+			final AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+					.setMessage("You have unsaved changes, are you sure you wish to cancel?")
+					.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							closeDialog();
+						}
+					})
+					.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// Do nothing
+						}
+					}).create();
+			alertDialog.show();
+		} else {
+			closeDialog();
+		}
+	}
+
+	private void closeDialog(){
 		dismiss();
 	}
 }
