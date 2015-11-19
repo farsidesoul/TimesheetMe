@@ -1,40 +1,36 @@
 package au.com.bfbapps.timesheetme.models;
 
-import com.google.gson.annotations.SerializedName;
-
 public class Task {
 
-	@SerializedName("taskId")
-	private long mTaskId;
-	@SerializedName("taskName")
-	private String mTaskName;
+	private long taskId;
+	private String taskName;
 
 	public Task(){
 
 	}
 
 	public Task(String taskName){
-		mTaskName = taskName;
+		this.taskName = taskName;
 	}
 
 	public Task(long taskId, String taskName){
-		mTaskId = taskId;
-		mTaskName = taskName;
+		this.taskId = taskId;
+		this.taskName = taskName;
 	}
 
 	public long getTaskId() {
-		return mTaskId;
+		return taskId;
 	}
 
 	public void setTaskId(long taskId) {
-		mTaskId = taskId;
+		this.taskId = taskId;
 	}
 
 	public String getTaskName() {
-		return mTaskName;
+		return taskName;
 	}
 
 	public void setTaskName(String taskName) {
-		mTaskName = taskName;
+		this.taskName = taskName;
 	}
 }

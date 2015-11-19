@@ -11,7 +11,7 @@ import java.util.Date;
 
 import au.com.bfbapps.timesheetme.ui.activities.BaseModeActivity;
 import au.com.bfbapps.timesheetme.ui.fragments.DailyEntryViewPagerFragment;
-import au.com.bfbapps.timesheetme.utils.Dates;
+import au.com.bfbapps.timesheetme.utils.DateUtil;
 
 public class DailyEntryViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -23,8 +23,8 @@ public class DailyEntryViewPagerAdapter extends FragmentPagerAdapter {
 	public Fragment getItem(int position) {
 		Date pagerDate = new Date();
 
-		String dayToShow = Dates.ConvertDateToString(
-				Dates.AddDaysToDate(pagerDate, position - BaseModeActivity.CURRENT_DAY_PAGE));
+		String dayToShow = DateUtil.convertDateToString(
+				DateUtil.addDaysToDate(pagerDate, position - BaseModeActivity.CURRENT_DAY_PAGE));
 
 		Bundle bundle = new Bundle();
 		bundle.putString("date", dayToShow);

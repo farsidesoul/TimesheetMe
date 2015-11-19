@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import au.com.bfbapps.timesheetme.R;
-import au.com.bfbapps.timesheetme.utils.Dates;
+import au.com.bfbapps.timesheetme.utils.DateUtil;
 import au.com.bfbapps.timesheetme.models.Entry;
 import au.com.bfbapps.timesheetme.models.WeeklyEntry;
 
@@ -45,7 +45,7 @@ public class WeeklyEntryRecyclerViewAdapter extends RecyclerView.Adapter<WeeklyE
 
 		WeeklyEntry currentItem = mEntries.get(position);
 		holder.dayName.setText(currentItem.getDayOfWeek());
-		holder.dayDate.setText(Dates.ConvertDateToString(currentItem.getDayDate()));
+		holder.dayDate.setText(DateUtil.convertDateToString(currentItem.getDayDate()));
 
 		// This works for setting the job layout.
 		// Inside this we need to create each view dynamically
@@ -80,7 +80,7 @@ public class WeeklyEntryRecyclerViewAdapter extends RecyclerView.Adapter<WeeklyE
 				// Used to add task list views to an array
 				List<View> taskViewList = new ArrayList<>();
 				// Key Value pair of task names and their hours assigned against them
-				Map<String, Double> taskIds = new HashMap<>();
+				Map<String, Integer> taskIds = new HashMap<>();
 
 				// Run through the list of entries within our current day
 				for (int i = 0; i < currentItem.getEntries().size(); i++){
@@ -88,18 +88,18 @@ public class WeeklyEntryRecyclerViewAdapter extends RecyclerView.Adapter<WeeklyE
 					if(currentItem.getEntries().get(i).getJob().getJobId() == (entry.getJob().getJobId())){
 						// If the task name does not exist within the HashMap, add it
 						if(!taskIds.containsKey(currentItem.getEntries().get(i).getTask().getTaskName())) {
-							taskIds.put(currentItem.getEntries().get(i).getTask().getTaskName(), currentItem.getEntries().get(i).getTotalHoursWorked());
+							taskIds.put(currentItem.getEntries().get(i).getTask().getTaskName(), currentItem.getEntries().get(i).getTotalTimeWorkedInMinutes());
 						} else {
 							// Else take the current total hours assigned for this entry and add it to key
-							double currentTotal = taskIds.get(currentItem.getEntries().get(i).getTask().getTaskName());
-							taskIds.put(currentItem.getEntries().get(i).getTask().getTaskName(), currentTotal + currentItem.getEntries().get(i).getTotalHoursWorked());
+							int currentTotal = taskIds.get(currentItem.getEntries().get(i).getTask().getTaskName());
+							taskIds.put(currentItem.getEntries().get(i).getTask().getTaskName(), currentTotal + currentItem.getEntries().get(i).getTotalTimeWorkedInMinutes());
 						}
-						totalHours += currentItem.getEntries().get(i).getTotalHoursWorked();
+						totalHours += currentItem.getEntries().get(i).getTotalTimeWorkedInMinutes();
 					}
 				}
 
 				// Run through each key value pair and assign the name and hours to appropriate view
-				for (Map.Entry<String, Double> kv : taskIds.entrySet()){
+				for (Map.Entry<String, Integer> kv : taskIds.entrySet()){
 					RelativeLayout taskLayout = new RelativeLayout(mContext);
 					TextView task = new TextView(mContext);
 					task.setText(kv.getKey());

@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.Date;
 
 import au.com.bfbapps.timesheetme.ui.fragments.WeeklyEntryViewPagerFragment;
-import au.com.bfbapps.timesheetme.utils.Dates;
+import au.com.bfbapps.timesheetme.utils.DateUtil;
 
 public class WeeklyEntryViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -24,9 +24,9 @@ public class WeeklyEntryViewPagerAdapter extends FragmentPagerAdapter {
 
 		Date pagerDate = new Date();
 
-		Date weekStart = Dates.GetStartOfWeek(Dates.AddWeeksToDate(pagerDate, position - 1000));
+		Date weekStart = DateUtil.getStartOfWeek(DateUtil.addWeeksToDate(pagerDate, position - 1000));
 		Bundle bundle = new Bundle();
-		bundle.putString("weekStart", Dates.ConvertDateToString(weekStart));
+		bundle.putString("weekStart", DateUtil.convertDateToString(weekStart));
 
 		WeeklyEntryViewPagerFragment weeklyEntry = new WeeklyEntryViewPagerFragment();
 		weeklyEntry.setArguments(bundle);

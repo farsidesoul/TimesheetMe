@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
-import au.com.bfbapps.timesheetme.utils.Dates;
+import au.com.bfbapps.timesheetme.utils.DateUtil;
 import au.com.bfbapps.timesheetme.adapters.WeeklyEntryRecyclerViewAdapter;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
 import au.com.bfbapps.timesheetme.models.WeeklyEntry;
@@ -38,7 +38,7 @@ public class WeeklyEntryViewPagerFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_weekly_entry_view_pager, container, false);
 
 		Bundle fragmentExtras = getArguments();
-		Date startOfWeek = Dates.ConvertStringToDate(fragmentExtras.getString("weekStart"));
+		Date startOfWeek = DateUtil.convertStringToDate(fragmentExtras.getString("weekStart"));
 
 		mDb = new DatabaseHelper(getActivity().getApplicationContext());
 

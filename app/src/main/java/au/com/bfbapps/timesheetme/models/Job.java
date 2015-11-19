@@ -1,40 +1,36 @@
 package au.com.bfbapps.timesheetme.models;
 
-import com.google.gson.annotations.SerializedName;
-
 public class Job {
 
-	@SerializedName("jobId")
-	private long mJobId;
-	@SerializedName("jobName")
-	private String mJobName;
+	private long jobId;
+	private String jobName;
 
 	public Job(){
 
 	}
 
 	public Job(String jobName){
-		mJobName = jobName;
+		this.jobName = jobName;
 	}
 
 	public Job(long jobId, String jobName){
-		mJobId = jobId;
-		mJobName = jobName;
+		this.jobId = jobId;
+		this.jobName = jobName;
 	}
 
 	public long getJobId() {
-		return mJobId;
+		return jobId;
 	}
 
 	public void setJobId(long jobId) {
-		mJobId = jobId;
+		this.jobId = jobId;
 	}
 
 	public String getJobName() {
-		return mJobName;
+		return jobName;
 	}
 
 	public void setJobName(String jobName) {
-		mJobName = jobName;
+		this.jobName = jobName;
 	}
 }

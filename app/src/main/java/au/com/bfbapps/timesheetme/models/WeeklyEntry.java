@@ -5,45 +5,45 @@ import java.util.List;
 
 public class WeeklyEntry {
 
-	private String mDayOfWeek;
-	private Date mDayDate;
-	private List<Entry> mEntries;
+	private String dayOfWeek;
+	private Date dayDate;
+	private List<Entry> entries;
 
 	public WeeklyEntry(){
 
 	}
 
 	public WeeklyEntry(String dayOfWeek){
-		mDayOfWeek = dayOfWeek;
+		this.dayOfWeek = dayOfWeek;
 	}
 
 	public WeeklyEntry(String dayOfWeek, Date dayDate, List<Entry> entries){
-		mDayOfWeek = dayOfWeek;
-		mDayDate = dayDate;
-		mEntries = entries;
+		this.dayOfWeek = dayOfWeek;
+		this.dayDate = dayDate;
+		this.entries = entries;
 	}
 
 	public String getDayOfWeek() {
-		return mDayOfWeek;
+		return dayOfWeek;
 	}
 
 	public void setDayOfWeek(String dayOfWeek) {
-		mDayOfWeek = dayOfWeek;
+		this.dayOfWeek = dayOfWeek;
 	}
 
 	public List<Entry> getEntries() {
-		return mEntries;
+		return entries;
 	}
 
 	public void setEntries(List<Entry> entries) {
-		mEntries = entries;
+		this.entries = entries;
 	}
 
 	public Date getDayDate() {
-		return mDayDate;
+		return dayDate;
 	}
 
 	public void setDayDate(Date dayDate) {
-		mDayDate = dayDate;
+		this.dayDate = dayDate;
 	}
 }

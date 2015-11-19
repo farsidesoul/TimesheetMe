@@ -14,6 +14,16 @@ public class SimpleDailyEntryActivity extends BaseModeActivity {
 	@Override
 	protected void onAddButtonClick() {
 		SimpleEntryDialogFragment fragment = new SimpleEntryDialogFragment();
+		fragment.setOnAddClickListener(onAddClickListener);
 		fragment.show(getSupportFragmentManager(), "");
 	}
+
+	private final SimpleEntryDialogFragment.OnAddClickListener onAddClickListener =
+			new SimpleEntryDialogFragment.OnAddClickListener() {
+		@Override
+		public void onAddClicked() {
+			entriesViewPager.getAdapter().notifyDataSetChanged();
+		}
+	};
+
 }

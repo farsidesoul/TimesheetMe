@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import au.com.bfbapps.timesheetme.utils.Dates;
+import au.com.bfbapps.timesheetme.utils.DateUtil;
 import au.com.bfbapps.timesheetme.models.Entry;
 import au.com.bfbapps.timesheetme.models.Job;
 import au.com.bfbapps.timesheetme.models.Task;
@@ -55,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Daily Entry Table create
     private static final String CREATE_TABLE_DAILY_ENTRY = "CREATE TABLE "
             + TABLE_ENTRY + "(" + COLUMN_ID + " INTEGER PRIMARY KEY," + COLUMN_DATE
-            + " DATE," + COLUMN_START_TIME + " DATETIME," + COLUMN_FINISH_TIME + " DATETIME,"
+            + " DATE," + COLUMN_START_TIME + " INTEGER," + COLUMN_FINISH_TIME + " INTEGER,"
             + COLUMN_TOTAL_BREAK + " INTEGER," + COLUMN_TOTAL_HOURS_WORKED + " REAL,"
             + COLUMN_JOB_ID + " INTEGER," + COLUMN_TASK_ID + " INTEGER, FOREIGN KEY("
             + COLUMN_JOB_ID + ") REFERENCES " + TABLE_JOB + "(" + COLUMN_ID + "), FOREIGN KEY("
@@ -101,18 +101,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put(COLUMN_DATE, Dates.ConvertDateToString(entry.getDate()));
+		values.put(COLUMN_DATE, DateUtil.convertDateToString(entry.getDate()));
 		values.put(COLUMN_START_TIME, entry.getStart());
 		values.put(COLUMN_FINISH_TIME, entry.getFinish());
 		values.put(COLUMN_TOTAL_BREAK, entry.getTotalBreak());
-		values.put(COLUMN_TOTAL_HOURS_WORKED, entry.getTotalHoursWorked());
-		values.put(COLUMN_JOB_ID, entry.getJob().getJobId());
-		values.put(COLUMN_TASK_ID, entry.getTask().getTaskId());
+		values.put(COLUMN_TOTAL_HOURS_WORKED, entry.getTotalTimeWorkedInMinutes());
+		values.put(COLUMN_JOB_ID, (entry.getMode() == Entry.MODE_SIMPLE ? Entry.NO_JOB_NO_TASK : entry.getJob().getJobId()));
+		values.put(COLUMN_TASK_ID, (entry.getMode() == Entry.MODE_SIMPLE ? Entry.NO_JOB_NO_TASK : entry.getTask().getTaskId()));
 
 		// insert row
 		return db.insert(TABLE_ENTRY, null, values);
-
-
     }
 
 	/**
@@ -134,11 +132,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			c.moveToFirst();
 
 			entry.setEntryId(c.getInt(c.getColumnIndex(COLUMN_ID)));
-			entry.setDate(Dates.ConvertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
-			entry.setStart(c.getString(c.getColumnIndex(COLUMN_START_TIME)));
-			entry.setFinish(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME)));
-			entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
-			entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
+			entry.setDate(DateUtil.convertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
+			entry.setStart(c.getLong(c.getColumnIndex(COLUMN_START_TIME)));
+			entry.setFinish(c.getLong(c.getColumnIndex(COLUMN_FINISH_TIME)));
+			entry.setTotalBreak(c.getInt(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
+			entry.setTotalTimeWorkedInMinutes(c.getInt(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
 			entry.setJob(getJobById(c.getInt(c.getColumnIndex(COLUMN_JOB_ID))));
 			entry.setTask(getTaskById(c.getInt(c.getColumnIndex(COLUMN_TASK_ID))));
 		}
@@ -163,11 +161,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			do{
 				Entry entry = new Entry();
 				entry.setEntryId(c.getInt(c.getColumnIndex(COLUMN_ID)));
-				entry.setDate(Dates.ConvertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
-				entry.setStart(c.getString(c.getColumnIndex(COLUMN_START_TIME)));
-				entry.setFinish(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME)));
-				entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
-				entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
+				entry.setDate(DateUtil.convertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
+				entry.setStart(c.getLong(c.getColumnIndex(COLUMN_START_TIME)));
+				entry.setFinish(c.getLong(c.getColumnIndex(COLUMN_FINISH_TIME)));
+				entry.setTotalBreak(c.getInt(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
+				entry.setTotalTimeWorkedInMinutes(c.getInt(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
 				entry.setJob(getJobById(c.getInt(c.getColumnIndex(COLUMN_JOB_ID))));
 				entry.setTask(getTaskById(c.getInt(c.getColumnIndex(COLUMN_TASK_ID))));
 
@@ -183,7 +181,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		List<Entry> entries = new ArrayList<>();
 
 		String selectQuery = "SELECT * FROM " + TABLE_ENTRY + " WHERE "
-				+ COLUMN_DATE + " = '" + Dates.ConvertDateToString(date) + "'";
+				+ COLUMN_DATE + " = '" + DateUtil.convertDateToString(date) + "'";
 
 		Log.e(TAG, selectQuery);
 
@@ -194,11 +192,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			do {
 				Entry entry = new Entry();
 				entry.setEntryId(c.getInt(c.getColumnIndex(COLUMN_ID)));
-				entry.setDate(Dates.ConvertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
-				entry.setStart(c.getString(c.getColumnIndex(COLUMN_START_TIME)));
-				entry.setFinish(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME)));
-				entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
-				entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
+				entry.setDate(DateUtil.convertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
+				entry.setStart(c.getLong(c.getColumnIndex(COLUMN_START_TIME)));
+				entry.setFinish(c.getLong(c.getColumnIndex(COLUMN_FINISH_TIME)));
+				entry.setTotalBreak(c.getInt(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
+				entry.setTotalTimeWorkedInMinutes(c.getInt(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
 				entry.setJob(getJobById(c.getInt(c.getColumnIndex(COLUMN_JOB_ID))));
 				entry.setTask(getTaskById(c.getInt(c.getColumnIndex(COLUMN_TASK_ID))));
 
@@ -230,11 +228,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			do {
 				Entry entry = new Entry();
 				entry.setEntryId(c.getInt(c.getColumnIndex(COLUMN_ID)));
-				entry.setDate(Dates.ConvertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
-				entry.setStart(c.getString(c.getColumnIndex(COLUMN_START_TIME)));
-				entry.setFinish(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME)));
-				entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
-				entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
+				entry.setDate(DateUtil.convertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
+				entry.setStart(c.getLong(c.getColumnIndex(COLUMN_START_TIME)));
+				entry.setFinish(c.getLong(c.getColumnIndex(COLUMN_FINISH_TIME)));
+				entry.setTotalBreak(c.getInt(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
+				entry.setTotalTimeWorkedInMinutes(c.getInt(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
 				entry.setJob(getJobById(c.getInt(c.getColumnIndex(COLUMN_JOB_ID))));
 				entry.setTask(getTaskById(c.getInt(c.getColumnIndex(COLUMN_TASK_ID))));
 
@@ -261,11 +259,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			do {
 				Entry entry = new Entry();
 				entry.setEntryId(c.getInt(c.getColumnIndex(COLUMN_ID)));
-				entry.setDate(Dates.ConvertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
-				entry.setStart(c.getString(c.getColumnIndex(COLUMN_START_TIME)));
-				entry.setFinish(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME)));
-				entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
-				entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
+				entry.setDate(DateUtil.convertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
+				entry.setStart(c.getLong(c.getColumnIndex(COLUMN_START_TIME)));
+				entry.setFinish(c.getLong(c.getColumnIndex(COLUMN_FINISH_TIME)));
+				entry.setTotalBreak(c.getInt(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
+				entry.setTotalTimeWorkedInMinutes(c.getInt(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
 				entry.setJob(getJobById(c.getInt(c.getColumnIndex(COLUMN_JOB_ID))));
 				entry.setTask(getTaskById(c.getInt(c.getColumnIndex(COLUMN_TASK_ID))));
 
@@ -285,11 +283,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put(COLUMN_DATE, Dates.ConvertDateToString(entry.getDate()));
+		values.put(COLUMN_DATE, DateUtil.convertDateToString(entry.getDate()));
 		values.put(COLUMN_START_TIME, entry.getStart());
 		values.put(COLUMN_FINISH_TIME, entry.getFinish());
 		values.put(COLUMN_TOTAL_BREAK, entry.getTotalBreak());
-		values.put(COLUMN_TOTAL_HOURS_WORKED, entry.getTotalHoursWorked());
+		values.put(COLUMN_TOTAL_HOURS_WORKED, entry.getTotalTimeWorkedInMinutes());
 		values.put(COLUMN_JOB_ID, entry.getJob().getJobId());
 		values.put(COLUMN_TASK_ID, entry.getTask().getTaskId());
 
@@ -550,10 +548,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		if(shouldDeleteAllEntries){
-			List<Entry> allEntires = getAllEntriesByJobId(job.getJobId());
+			List<Entry> allEntries = getAllEntriesByJobId(job.getJobId());
 
 			// Delete all Entries
-			for (Entry entries : allEntires){
+			for (Entry entries : allEntries){
 				deleteEntry(entries.getEntryId());
 			}
 		}
@@ -572,8 +570,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	 */
 	public List<WeeklyEntry> getEntriesForWeek(Date date){
 		SQLiteDatabase db = this.getReadableDatabase();
-		String dateString = Dates.ConvertDateToString(date);
-		String datePlusDays = Dates.ConvertDateToString(Dates.AddDaysToDate(date, 6));
+		String dateString = DateUtil.convertDateToString(date);
+		String datePlusDays = DateUtil.convertDateToString(DateUtil.addDaysToDate(date, 6));
 
 		String selectEntriesQuery = "SELECT * FROM " + TABLE_ENTRY + " WHERE "
 				+ COLUMN_DATE + " > '" + dateString + "' AND "
@@ -587,11 +585,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			do {
 				Entry entry = new Entry();
 				entry.setEntryId(c.getInt(c.getColumnIndex(COLUMN_ID)));
-				entry.setDate(Dates.ConvertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
-				entry.setStart(c.getString(c.getColumnIndex(COLUMN_START_TIME)));
-				entry.setFinish(c.getString(c.getColumnIndex(COLUMN_FINISH_TIME)));
-				entry.setTotalBreak(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
-				entry.setTotalHoursWorked(c.getDouble(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
+				entry.setDate(DateUtil.convertStringToDate(c.getString(c.getColumnIndex(COLUMN_DATE))));
+				entry.setStart(c.getLong(c.getColumnIndex(COLUMN_START_TIME)));
+				entry.setFinish(c.getLong(c.getColumnIndex(COLUMN_FINISH_TIME)));
+				entry.setTotalBreak(c.getInt(c.getColumnIndex(COLUMN_TOTAL_BREAK)));
+				entry.setTotalTimeWorkedInMinutes(c.getInt(c.getColumnIndex(COLUMN_TOTAL_HOURS_WORKED)));
 				entry.setJob(getJobById(c.getInt(c.getColumnIndex(COLUMN_JOB_ID))));
 				entry.setTask(getTaskById(c.getInt(c.getColumnIndex(COLUMN_TASK_ID))));
 
@@ -601,34 +599,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		c.close();
 
 		WeeklyEntry monday = new WeeklyEntry("Monday", date, new ArrayList<Entry>());
-		WeeklyEntry tuesday = new WeeklyEntry("Tuesday", Dates.AddDaysToDate(date, 1), new ArrayList<Entry>());
-		WeeklyEntry wednesday = new WeeklyEntry("Wednesday", Dates.AddDaysToDate(date, 2), new ArrayList<Entry>());
-		WeeklyEntry thursday = new WeeklyEntry("Thursday", Dates.AddDaysToDate(date, 3), new ArrayList<Entry>());
-		WeeklyEntry friday = new WeeklyEntry("Friday", Dates.AddDaysToDate(date, 4), new ArrayList<Entry>());
-		WeeklyEntry saturday = new WeeklyEntry("Saturday", Dates.AddDaysToDate(date, 5), new ArrayList<Entry>());
-		WeeklyEntry sunday = new WeeklyEntry("Sunday", Dates.AddDaysToDate(date, 6), new ArrayList<Entry>());
+		WeeklyEntry tuesday = new WeeklyEntry("Tuesday", DateUtil.addDaysToDate(date, 1), new ArrayList<Entry>());
+		WeeklyEntry wednesday = new WeeklyEntry("Wednesday", DateUtil.addDaysToDate(date, 2), new ArrayList<Entry>());
+		WeeklyEntry thursday = new WeeklyEntry("Thursday", DateUtil.addDaysToDate(date, 3), new ArrayList<Entry>());
+		WeeklyEntry friday = new WeeklyEntry("Friday", DateUtil.addDaysToDate(date, 4), new ArrayList<Entry>());
+		WeeklyEntry saturday = new WeeklyEntry("Saturday", DateUtil.addDaysToDate(date, 5), new ArrayList<Entry>());
+		WeeklyEntry sunday = new WeeklyEntry("Sunday", DateUtil.addDaysToDate(date, 6), new ArrayList<Entry>());
 
 
 		for (Entry entry : entries){
-			if (Dates.ConvertDateToString(entry.getDate()).equals(Dates.ConvertDateToString(date))){
+			if (DateUtil.convertDateToString(entry.getDate()).equals(DateUtil.convertDateToString(date))){
 				// Monday
 				monday.getEntries().add(entry);
-			} else if (Dates.ConvertDateToString(entry.getDate()).equals(Dates.ConvertDateToString(Dates.AddDaysToDate(date, 1)))){
+			} else if (DateUtil.convertDateToString(entry.getDate()).equals(DateUtil.convertDateToString(DateUtil.addDaysToDate(date, 1)))){
 				// Tuesday
 				tuesday.getEntries().add(entry);
-			} else if (Dates.ConvertDateToString(entry.getDate()).equals(Dates.ConvertDateToString(Dates.AddDaysToDate(date, 2)))){
+			} else if (DateUtil.convertDateToString(entry.getDate()).equals(DateUtil.convertDateToString(DateUtil.addDaysToDate(date, 2)))){
 				// Wednesday
 				wednesday.getEntries().add(entry);
-			} else if (Dates.ConvertDateToString(entry.getDate()).equals(Dates.ConvertDateToString(Dates.AddDaysToDate(date, 3)))){
+			} else if (DateUtil.convertDateToString(entry.getDate()).equals(DateUtil.convertDateToString(DateUtil.addDaysToDate(date, 3)))){
 				// Thursday
 				thursday.getEntries().add(entry);
-			} else if (Dates.ConvertDateToString(entry.getDate()).equals(Dates.ConvertDateToString(Dates.AddDaysToDate(date, 4)))){
+			} else if (DateUtil.convertDateToString(entry.getDate()).equals(DateUtil.convertDateToString(DateUtil.addDaysToDate(date, 4)))){
 				// Friday
 				friday.getEntries().add(entry);
-			} else if (Dates.ConvertDateToString(entry.getDate()).equals(Dates.ConvertDateToString(Dates.AddDaysToDate(date, 5)))){
+			} else if (DateUtil.convertDateToString(entry.getDate()).equals(DateUtil.convertDateToString(DateUtil.addDaysToDate(date, 5)))){
 				// Saturday
 				saturday.getEntries().add(entry);
-			} else if (Dates.ConvertDateToString(entry.getDate()).equals(Dates.ConvertDateToString(Dates.AddDaysToDate(date, 6)))){
+			} else if (DateUtil.convertDateToString(entry.getDate()).equals(DateUtil.convertDateToString(DateUtil.addDaysToDate(date, 6)))){
 				// Sunday
 				sunday.getEntries().add(entry);
 			}

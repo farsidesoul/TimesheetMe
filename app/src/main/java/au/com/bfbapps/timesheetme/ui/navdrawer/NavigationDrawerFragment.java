@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
-import au.com.bfbapps.timesheetme.utils.Dates;
+import au.com.bfbapps.timesheetme.utils.DateUtil;
 import au.com.bfbapps.timesheetme.adapters.NavViewAdapter;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
 import au.com.bfbapps.timesheetme.models.Entry;
@@ -199,7 +199,7 @@ public class NavigationDrawerFragment extends Fragment implements NavViewAdapter
 						Calendar startCalendar = Calendar.getInstance();
 						startCalendar.set(year, monthOfYear, dayOfMonth);
 						startDate = startCalendar.getTime();
-						startTextView.setText(Dates.ConvertDateToString(startDate));
+						startTextView.setText(DateUtil.convertDateToString(startDate));
 					}
 				}, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 
@@ -216,7 +216,7 @@ public class NavigationDrawerFragment extends Fragment implements NavViewAdapter
 						Calendar finishCalendar = Calendar.getInstance();
 						finishCalendar.set(year, monthOfYear, dayOfMonth);
 						finishDate = finishCalendar.getTime();
-						finishTextView.setText(Dates.ConvertDateToString(finishDate));
+						finishTextView.setText(DateUtil.convertDateToString(finishDate));
 					}
 				}, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 
@@ -263,8 +263,8 @@ public class NavigationDrawerFragment extends Fragment implements NavViewAdapter
 		directory.mkdirs();
 		File exportFile = new File(directory,
 				String.format("%s-%s Timesheet.csv",
-						Dates.ConvertDateToExportString(start),
-						Dates.ConvertDateToExportString(finish)));
+						DateUtil.convertDateToExportString(start),
+						DateUtil.convertDateToExportString(finish)));
 
 		if (exportFile.exists()) exportFile.delete();
 
@@ -281,11 +281,11 @@ public class NavigationDrawerFragment extends Fragment implements NavViewAdapter
 			for (Entry entry : entries) {
 				if (entry.getDate().after(start) && entry.getDate().before(finish)) {
 					String line = String.format("%s, %s, %s, %.2f, %.2f, %s, %s",
-							Dates.ConvertDateToString(entry.getDate()),
+							DateUtil.convertDateToString(entry.getDate()),
 							entry.getStart(),
 							entry.getFinish(),
 							entry.getTotalBreak(),
-							entry.getTotalHoursWorked(),
+							entry.getTotalTimeWorkedInMinutes(),
 							entry.getJob().getJobName(),
 							entry.getTask().getTaskName());
 					printWriter.println(line);

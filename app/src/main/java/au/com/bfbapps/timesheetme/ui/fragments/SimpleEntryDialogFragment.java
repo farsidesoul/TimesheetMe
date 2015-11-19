@@ -17,10 +17,15 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import au.com.bfbapps.timesheetme.R;
+import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
+import au.com.bfbapps.timesheetme.models.Entry;
+import au.com.bfbapps.timesheetme.utils.DateUtil;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -44,6 +49,11 @@ public class SimpleEntryDialogFragment extends DialogFragment {
 
 	Date now;
 	boolean breakIsVisible;
+
+	private long selectedStartTime;
+	private long selectedFinishTime;
+	private int selectedBreakLength;
+	private OnAddClickListener onAddClickListener;
 
 	@NonNull
 	@Override
@@ -69,19 +79,25 @@ public class SimpleEntryDialogFragment extends DialogFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.dialog_simple_entry, container, false);
 		ButterKnife.bind(this, v);
-
+		setDefaultTimes();
 		breakIsVisible = false;
 		now = new Date();
 
 		return v;
 	}
 
+	private void setDefaultTimes() {
+		startTime.setText("9:00 am");
+		finishTime.setText("5:00 pm");
+	}
+
 	@OnClick(R.id.text_start_time)
 	public void setStartTime() {
 		TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
 			@Override
-			public void onTimeSet(TimePicker timePicker, int i, int i1) {
-
+			public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+				selectedStartTime = getTimeFromPicker(hour, minute);
+				startTime.setText(DateUtil.convertLongToTimeString(selectedStartTime));
 			}
 		}, 9, 0, true);
 		timePickerDialog.show();
@@ -91,8 +107,9 @@ public class SimpleEntryDialogFragment extends DialogFragment {
 	public void selectFinishTime() {
 		TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
 			@Override
-			public void onTimeSet(TimePicker timePicker, int i, int i1) {
-
+			public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+				selectedFinishTime = getTimeFromPicker(hour, minute);
+				finishTime.setText(DateUtil.convertLongToTimeString(selectedFinishTime));
 			}
 		}, 17, 0, true);
 		timePickerDialog.show();
@@ -113,7 +130,30 @@ public class SimpleEntryDialogFragment extends DialogFragment {
 
 	@OnClick(R.id.text_add)
 	public void addTime(){
+		if(timesAreValid()){
+			Entry currentEntry = new Entry(now, selectedStartTime, selectedFinishTime,
+					selectedBreakLength, Entry.MODE_SIMPLE);
 
+			DatabaseHelper db = new DatabaseHelper(getActivity());
+			db.createEntry(currentEntry);
+
+			if(onAddClickListener != null) onAddClickListener.onAddClicked();
+		}
+	}
+
+	private boolean timesAreValid() {
+		if(selectedFinishTime - selectedStartTime < 0){
+			Toast.makeText(getActivity(),
+					"Please ensure finish time is after start time", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if(selectedFinishTime - selectedStartTime + (selectedBreakLength * 60 * 1000) < 0){
+			Toast.makeText(getActivity(),
+					"Please ensure finish time is after start time including the break time",
+					Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		return true;
 	}
 
 	@OnClick(R.id.text_cancel)
@@ -141,7 +181,23 @@ public class SimpleEntryDialogFragment extends DialogFragment {
 		}
 	}
 
+	private long getTimeFromPicker(int hour, int minute) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(now);
+		cal.set(Calendar.HOUR_OF_DAY, hour);
+		cal.set(Calendar.MINUTE, minute);
+		return cal.getTimeInMillis();
+	}
+
 	private void closeDialog(){
 		dismiss();
+	}
+
+	public void setOnAddClickListener(OnAddClickListener listener){
+		onAddClickListener = listener;
+	}
+
+	public interface OnAddClickListener {
+		void onAddClicked();
 	}
 }

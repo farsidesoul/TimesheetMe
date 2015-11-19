@@ -29,7 +29,7 @@ import java.util.List;
 
 import au.com.bfbapps.timesheetme.R;
 import au.com.bfbapps.timesheetme.ui.activities.BaseModeActivity;
-import au.com.bfbapps.timesheetme.utils.Dates;
+import au.com.bfbapps.timesheetme.utils.DateUtil;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
 import au.com.bfbapps.timesheetme.models.Job;
 import au.com.bfbapps.timesheetme.models.Task;
@@ -114,7 +114,7 @@ public class AdvancedDailyEntryFragment extends Fragment {
 					@Override
 					public void onTimeSet(TimePicker timePicker, int hour, int minute) {
 //						mStartTime = convertTimeToString(hour, minute);
-						Date date = Dates.ConvertTimeToDate(mStartTime);
+						Date date = DateUtil.convertTimeToDate(mStartTime);
 						mStartLong = date.getTime();
 						enterFinishTime();
 					}
@@ -132,7 +132,7 @@ public class AdvancedDailyEntryFragment extends Fragment {
 					@Override
 					public void onTimeSet(TimePicker timePicker, int hour, int minute) {
 //						mFinishTime = convertTimeToString(hour, minute);
-						Date date = Dates.ConvertTimeToDate(mFinishTime);
+						Date date = DateUtil.convertTimeToDate(mFinishTime);
 						mFinishLong = date.getTime();
 						if (mFinishLong <= mStartLong){
 							Toast.makeText(getActivity(),

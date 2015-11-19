@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -14,6 +13,7 @@ import java.util.List;
 import au.com.bfbapps.timesheetme.R;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
 import au.com.bfbapps.timesheetme.models.Entry;
+import au.com.bfbapps.timesheetme.utils.DateUtil;
 
 public class DailyEntryRecyclerViewAdapter
 		extends RecyclerView.Adapter<DailyEntryRecyclerViewAdapter.DailyEntryItemViewHolder> {
@@ -46,9 +46,9 @@ public class DailyEntryRecyclerViewAdapter
 
 		holder.title.setText(currentItem.getJob().getJobName());
 		holder.subTitle.setText(currentItem.getTask().getTaskName());
-		holder.start.setText(currentItem.getStart());
-		holder.finish.setText(currentItem.getFinish());
-		holder.totalHours.setText(String.format("%.2g%n", currentItem.getTotalHoursWorked()));
+		holder.start.setText(DateUtil.convertLongToTimeString(currentItem.getStart()));
+		holder.finish.setText(DateUtil.convertLongToTimeString(currentItem.getFinish()));
+		holder.totalHours.setText(String.format("%.2g%n", currentItem.getTotalTimeWorkedInMinutes()));
 	}
 
 	@Override

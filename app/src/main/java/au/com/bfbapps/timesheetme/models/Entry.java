@@ -1,126 +1,117 @@
 package au.com.bfbapps.timesheetme.models;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.Date;
 
 public class Entry {
 
-	@SerializedName("entryId")
-	private long mEntryId;
-	@SerializedName("date")
-	private Date mDate;
-	@SerializedName("startTime")
-	private String mStart;
-	@SerializedName("finishTime")
-	private String mFinish;
-    @SerializedName("totalBreak")
-    private double mTotalBreak;
-	@SerializedName("totalHoursWorked")
-	private double mTotalHoursWorked;
-    @SerializedName("jobId")
-    private Job mJob;
-    @SerializedName("taskId")
-    private Task mTask;
-	@SerializedName("mode")
-	private int mMode;
+	public static final byte NO_JOB_NO_TASK = -1;
+
+	public static final byte MODE_SIMPLE = 1;
+	public static final byte MODE_ADVANCED = 2;
+
+	private long entryId;
+	private Date date;
+	private long start;
+	private long finish;
+    private int totalBreak;
+	private int totalTimeWorkedInMinutes;
+    private Job job;
+    private Task task;
+	private int mode;
 
 	public Entry(){
 
 	}
 
-	public Entry(Date date, String start, String finish, double totalBreak, double totalHoursWorked, Job job, Task task, int mode) {
-		mDate = date;
-		mStart = start;
-		mFinish = finish;
-		mTotalBreak = totalBreak;
-		mTotalHoursWorked = totalHoursWorked;
-		mJob = job;
-		mTask = task;
-		mMode = mode;
+	public Entry(Date date, long start, long finish, int totalBreak, int mode) {
+		this.date = date;
+		this.start = start;
+		this.finish = finish;
+		this.totalBreak = totalBreak;
+		totalTimeWorkedInMinutes = (int)((finish / 60000) - (start / 60000) - (totalBreak));
+		this.mode = mode;
 	}
 
-	public Entry(long entryId, Date date, String start, String finish, double totalBreak, double totalHoursWorked, Job job, Task task, int mode) {
-		mEntryId = entryId;
-		mDate = date;
-		mStart = start;
-		mFinish = finish;
-		mTotalBreak = totalBreak;
-		mTotalHoursWorked = totalHoursWorked;
-		mJob = job;
-		mTask = task;
-		mMode = mode;
+	public Entry(Date date, long start, long finish, int totalBreak, Job job, Task task, int mode) {
+		this.date = date;
+		this.start = start;
+		this.finish = finish;
+		this.totalBreak = totalBreak;
+		totalTimeWorkedInMinutes = (int)((finish / 60000) - (start / 60000) - (totalBreak));
+		this.job = job;
+		this.task = task;
+		this.mode = mode;
 	}
 
 	public long getEntryId() {
-		return mEntryId;
+		return entryId;
 	}
 
 	public void setEntryId(long entryId) {
-		mEntryId = entryId;
+		this.entryId = entryId;
 	}
 
 	public Date getDate() {
-		return mDate;
+		return date;
 	}
 
 	public void setDate(Date date) {
-		mDate = date;
+		this.date = date;
 	}
 
-	public String getStart() {
-		return mStart;
+	public long getStart() {
+		return start;
 	}
 
-	public void setStart(String start) {
-		mStart = start;
+	public void setStart(long start) {
+		this.start = start;
 	}
 
-	public String getFinish() {
-		return mFinish;
+	public long getFinish() {
+		return finish;
 	}
 
-	public void setFinish(String finish) {
-		mFinish = finish;
+	public void setFinish(long finish) {
+		this.finish = finish;
 	}
 
-	public double getTotalBreak() {
-		return mTotalBreak;
+	public int getTotalBreak() {
+		return totalBreak;
 	}
 
-	public void setTotalBreak(double totalBreak) {
-		mTotalBreak = totalBreak;
+	public void setTotalBreak(int totalBreak) {
+		this.totalBreak = totalBreak;
 	}
 
-	public double getTotalHoursWorked() {
-		return mTotalHoursWorked;
+	public int getTotalTimeWorkedInMinutes() {
+		return totalTimeWorkedInMinutes;
 	}
 
-	public void setTotalHoursWorked(double totalHoursWorked) {
-		mTotalHoursWorked = totalHoursWorked;
+	public void setTotalTimeWorkedInMinutes(int totalTimeWorkedInMinutes) {
+		this.totalTimeWorkedInMinutes = totalTimeWorkedInMinutes;
 	}
 
 	public Job getJob() {
-		return mJob;
+		return job;
 	}
 
 	public void setJob(Job job) {
-		mJob = job;
+		this.job = job;
 	}
 
 	public Task getTask() {
-		return mTask;
+		return task;
 	}
 
 	public void setTask(Task taskId) {
-		this.mTask = taskId;
+		this.task = taskId;
 	}
 
 	public int getMode() {
-		return mMode;
+		return mode;
 	}
 
 	public void setMode(int mode) {
-		mMode = mode;
+		this.mode = mode;
 	}
 }

@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import au.com.bfbapps.timesheetme.R;
-import au.com.bfbapps.timesheetme.utils.Dates;
+import au.com.bfbapps.timesheetme.utils.DateUtil;
 import au.com.bfbapps.timesheetme.adapters.DailyEntryViewPagerAdapter;
 import au.com.bfbapps.timesheetme.helper.DatabaseHelper;
 import butterknife.Bind;
@@ -217,7 +217,7 @@ public abstract class BaseModeActivity extends AppCompatActivity {
 
 		@Override
 		public void onPageSelected(int position) {
-			setDateOnActionBar(Dates.AddDaysToDate(new Date(), position - CURRENT_DAY_PAGE));
+			setDateOnActionBar(DateUtil.addDaysToDate(new Date(), position - CURRENT_DAY_PAGE));
 		}
 
 		@Override

@@ -3,30 +3,22 @@ package au.com.bfbapps.timesheetme.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.SerializedName;
-
 public class User implements Parcelable {
 
-	@SerializedName("userId")
-	private String mUserId;
-	@SerializedName("firstName")
-	private String mFirstName;
-	@SerializedName("lastName")
-	private String mLastName;
-	@SerializedName("username")
-	private String mUsername;
-	@SerializedName("email")
-	private String mEmail;
-	@SerializedName("organisation")
-	private String mOrganisation;
+	private String userId;
+	private String firstName;
+	private String lastName;
+	private String username;
+	private String email;
+	private String organisation;
 
 	public User(String userId, String firstName, String lastName, String username, String email, String organisation){
-		mUserId = userId;
-		mFirstName = firstName;
-		mLastName = lastName;
-		mUsername = username;
-		mEmail = email;
-		mOrganisation = organisation;
+		this.userId = userId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.email = email;
+		this.organisation = organisation;
 	}
 
 	public User(Parcel in){
@@ -34,27 +26,27 @@ public class User implements Parcelable {
 	}
 
 	public String getUserId() {
-		return mUserId;
+		return userId;
 	}
 
 	public String getFirstName() {
-		return mFirstName;
+		return firstName;
 	}
 
 	public String getLastName() {
-		return mLastName;
+		return lastName;
 	}
 
 	public String getUsername() {
-		return mUsername;
+		return username;
 	}
 
 	public String getEmail() {
-		return mEmail;
+		return email;
 	}
 
 	public String getOrganisation() {
-		return mOrganisation;
+		return organisation;
 	}
 
 	@Override
@@ -64,21 +56,21 @@ public class User implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel parcel, int i) {
-		parcel.writeString(mUserId);
-		parcel.writeString(mFirstName);
-		parcel.writeString(mLastName);
-		parcel.writeString(mUsername);
-		parcel.writeString(mEmail);
-		parcel.writeString(mOrganisation);
+		parcel.writeString(userId);
+		parcel.writeString(firstName);
+		parcel.writeString(lastName);
+		parcel.writeString(username);
+		parcel.writeString(email);
+		parcel.writeString(organisation);
 	}
 
 	private void readFromParcel(Parcel in){
-		mUserId = in.readString();
-		mFirstName = in.readString();
-		mLastName = in.readString();
-		mUsername = in.readString();
-		mEmail = in.readString();
-		mOrganisation = in.readString();
+		userId = in.readString();
+		firstName = in.readString();
+		lastName = in.readString();
+		username = in.readString();
+		email = in.readString();
+		organisation = in.readString();
 	}
 
 	public static final Creator<User> CREATOR = new Creator<User>() {
